@@ -1,0 +1,53 @@
+.result_inner {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.result_title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.u_result, .p_result, .result_show {
+    margin-bottom: 15px;
+}
+
+.u_score, .p_score, .pass_check {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+}
+
+.u_prcnt, .p_prcnt, .u_points {
+    font-size: 18px;
+    color: #007bff;
+}
+
+.pass_check {
+    font-size: 20px;
+    color: #d9534f; /* Đỏ cho kết quả không đạt */
+}
+
+.pass_check:contains("You Passed!") {
+    color: #5cb85c; /* Xanh lá cho kết quả đạt */
+}
+
+.text-answer {
+    background-color: #e9ecef;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.text-answer strong {
+    color: #333;
+}
+

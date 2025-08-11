@@ -1,0 +1,43 @@
+#map {
+    width: 80%; /* Điều chỉnh chiều rộng theo ý muốn */
+    height: 80vh; /* Điều chỉnh chiều cao theo ý muốn */
+    margin-left: auto; /* Căn giữa theo chiều ngang */
+    margin-right: auto; /* Căn giữa theo chiều ngang */
+    display: flex; /* Sử dụng Flexbox */
+    justify-content: center; /* Căn giữa theo chiều ngang */
+    align-items: center; /* Căn giữa theo chiều dọc */
+  }
+  
+  
+  /* Đảm bảo thanh tìm kiếm hiển thị */
+.leaflet-control-geosearch {
+    z-index: 1000; /* Đảm bảo nó hiển thị trên cùng */
+    position: relative; /* Đảm bảo z-index hoạt động */
+    visibility: visible !important; /* Đảm bảo không bị ẩn */
+    display: block !important; /* Đảm bảo không bị ẩn */
+  }
+  
+  /* Tùy chỉnh input tìm kiếm */
+  .leaflet-control-geosearch input {
+    width: 250px; /* Chiều rộng của input */
+    padding: 8px; /* Padding để dễ tương tác */
+    border: 1px solid #ccc; /* Viền input */
+    border-radius: 3px; /* Bo góc */
+    font-size: 14px; /* Kích thước font */
+    color: #333; /* Màu chữ */
+  }
+  
+  /* Tùy chỉnh nút tìm kiếm */
+  .leaflet-control-geosearch button {
+    background-color: #0078a8; /* Màu nền nút */
+    color: white; /* Màu chữ */
+    border: none; /* Bỏ viền */
+    border-radius: 3px; /* Bo góc */
+    padding: 8px 12px; /* Padding */
+    cursor: pointer; /* Con trỏ khi hover */
+    font-size: 14px; /* Kích thước font */
+  }
+  
+  .leaflet-control-geosearch button:hover {
+    background-color: #005f87; /* Màu nền khi hover */
+  }

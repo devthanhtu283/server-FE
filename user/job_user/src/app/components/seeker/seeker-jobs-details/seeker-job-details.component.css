@@ -1,0 +1,152 @@
+.disabled-btn {
+    background-color: #dcdcdc; 
+    color: #9e9e9e; 
+    cursor: not-allowed;
+  }
+  .upload-zone {
+    border: 2px dashed #cbd5e1;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+    background-color: #f8fafc;
+    position: relative;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .upload-zone:hover {
+    border-color: #6366f1;
+  }
+  
+  .custom-upload-btn {
+    background-color: #6366f1;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .selected-file {
+    margin-top: 10px;
+    font-style: italic;
+    color: #374151;
+  }
+  
+
+  /* Modern dialog styles */
+.modern-dialog .ui-dialog-titlebar {
+  background-color: #007bff;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-radius: 8px 8px 0 0;
+}
+
+.modern-dialog-content {
+  padding: 1.5rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.uploaded-cv-section {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.uploaded-cv-title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.cv-link {
+  color: #007bff;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.cv-link i {
+  margin-right: 0.5rem;
+  color: #dc3545;
+}
+
+.modern-upload-zone {
+  border: 2px dashed #007bff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease;
+}
+
+.modern-upload-zone:hover {
+  background-color: #e9f5ff;
+}
+
+.upload-instruction {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.custom-upload-btn {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.custom-upload-btn:hover {
+  background-color: #0056b3;
+}
+
+.selected-file {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.modern-cancel-btn {
+  color: #666;
+}
+
+.modern-submit-btn {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.modern-submit-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.uploaded-cv-note {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.upload-note {
+  font-size: 0.85rem;
+  color: #666;
+  margin-top: 1rem;
+  text-align: center;
+}

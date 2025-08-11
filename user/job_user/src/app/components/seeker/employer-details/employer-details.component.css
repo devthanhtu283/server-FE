@@ -1,0 +1,347 @@
+.recent__post {
+    max-height: 700px;
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+/* Heading */
+.recent__post h6 {
+    font-size: 1.25rem;
+    color: #111827;
+    margin-bottom: 20px;
+}
+
+/* Job Card */
+.job__card {
+    position: relative;
+    padding: 15px;
+    background-color: #f9fafb;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.job__card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Job Header (Posted Date and Super Hot Badge) */
+.job__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.posted__date {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+.super__hot {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background-color: #ef4444;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 12px;
+}
+
+.super__hot i {
+    font-size: 0.9rem;
+}
+
+/* Company Icon */
+.job__card .company__icon img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 8px;
+    background-color: #f1f5f9;
+    padding: 5px;
+}
+
+/* Job Meta */
+.job__meta {
+    flex-grow: 1;
+    text-align: left;
+}
+
+/* Job Title */
+.job__title {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 1.15rem;
+    margin-bottom: 5px;
+    display: block;
+    text-decoration: none;
+}
+
+.job__title:hover {
+    color: #2563eb;
+    text-decoration: underline;
+}
+
+/* Company Info */
+.company__info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.company__name {
+    font-size: 0.9rem;
+    color: #4b5563;
+}
+
+.salary__info {
+    font-size: 0.9rem;
+    color: #4b5563;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.salary__info i {
+    color: #6b7280;
+}
+
+/* Job Details (Field and Location) */
+.job__details {
+    margin-bottom: 10px;
+}
+
+.job__details .d-flex {
+    font-size: 0.9rem;
+    color: #4b5563;
+}
+
+.job__details i {
+    color: #6b7280;
+    font-size: 0.9rem;
+}
+
+/* Skills Tags */
+.skills__tags {
+    margin-bottom: 10px;
+}
+
+.skill__tag {
+    background-color: #e5e7eb;
+    color: #1f2937;
+    font-size: 0.85rem;
+    padding: 4px 10px;
+    border-radius: 12px;
+}
+
+/* Benefits List */
+.benefits__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.benefits__list li {
+    font-size: 0.9rem;
+    color: #4b5563;
+    position: relative;
+    padding-left: 15px;
+    margin-bottom: 5px;
+}
+
+.benefits__list li::before {
+    content: "•";
+    color: #ef4444;
+    position: absolute;
+    left: 0;
+    font-size: 1.2rem;
+}
+
+/* Scrollbar */
+.recent__post::-webkit-scrollbar {
+    width: 6px;
+}
+
+.recent__post::-webkit-scrollbar-thumb {
+    background-color: #2563eb;
+    border-radius: 10px;
+}
+
+.recent__post::-webkit-scrollbar-thumb:hover {
+    background-color: #1d4ed8;
+}
+
+
+.review__card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 100%; 
+    box-sizing: border-box; 
+}
+
+.rating {
+    display: flex;
+    align-items: center; 
+    gap: 4px;
+}
+
+.rating i {
+    color: #f5c518; 
+    font-size: 16px; 
+}
+
+.rating-number {
+    display: flex;
+    align-items: center; 
+    font-size: 14px; 
+    color: #333; 
+}
+
+.rating-number i {
+    margin-left: 4px; 
+    font-size: 12px; 
+}
+
+.badge.bg-success {
+    background-color: #28a745 !important;
+    font-size: 14px;
+}
+
+.review-content {
+    word-wrap: break-word;
+    overflow-wrap: break-word; 
+    white-space: normal; 
+}
+
+.review-content p {
+    margin: 0; 
+    line-height: 1.5; 
+}
+
+
+.recommend-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.progress-circle {
+    position: relative;
+    width: 100px; /* Kích thước vòng tròn */
+    height: 100px;
+    border-radius: 50%;
+    background: conic-gradient(#28a745 0% 93%, #e0e0e0 93% 100%); /* Màu xanh và màu xám */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.progress-circle::before {
+    content: '';
+    position: absolute;
+    width: 80px; /* Kích thước vòng tròn trắng bên trong */
+    height: 80px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.percent {
+    position: relative;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.percent .small {
+    font-size: 14px;
+    vertical-align: top;
+}
+
+.label {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #333;
+    display: block;
+}
+
+
+.follow-btn {
+    width: 200px;
+    padding: 10px 20px;
+    margin-left: 16px;
+    border: 1px solid #ff3b30;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #333333;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .follow-btn:hover {
+    background-color: #f5f5f5;
+    border-color: #d0d0d0;
+  }
+  
+  .follow-btn.followed {
+    background-color: #fff;
+    border-color: #ed1b2f;
+    color: #ed1b2f;
+  }
+  
+  .follow-btn.followed:hover {
+    background-color: #ffeded;
+    border-color: #ff3b30;
+    color: #ff3b30;
+  }
+  
+  .follow-btn .icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+  }
+
+  
+  
+  /* .follow-btn .follow-text {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .follow-btn .follow-state,
+  .follow-btn .unfollow-state {
+    display: inline-flex;
+    align-items: center;
+    transition: opacity 0.2s ease;
+  }
+  
+  .follow-btn:hover .follow-state {
+    opacity: 0;
+    position: absolute;
+  } */
+  
+  .follow-btn:hover .unfollow-state {
+    opacity: 1;
+  }
+  
+  /* .follow-btn .unfollow-state {
+    opacity: 0;
+    position: absolute;
+  } */

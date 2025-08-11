@@ -1,0 +1,43 @@
+::ng-deep .p-confirm-dialog .p-dialog-footer button + button {
+  margin-left: 0.5rem;
+}
+.custom-dialog-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-dialog-overlay.visible {
+  display: flex;
+}
+
+.custom-dialog {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.custom-dialog h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.custom-dialog textarea {
+  resize: vertical;
+}

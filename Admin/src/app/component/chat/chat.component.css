@@ -1,0 +1,4 @@
+.chat-box-inner {
+    max-height: 600px; /* Điều chỉnh theo nhu cầu */
+    overflow-y: auto;
+  }

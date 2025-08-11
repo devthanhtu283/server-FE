@@ -1,0 +1,882 @@
+<!-- banner area -->
+<section class="rts__banner home__one__banner pt-260">
+    <div class="rts__banner__background">
+        <div class="shape__home__one __first d-none d-lg-block">
+            <img src="assets/img/home-1/banner/banner-shape.svg" alt="">
+        </div>
+        <div class="shape__home__one __second d-none d-lg-block">
+            <img src="assets/img/home-1/banner/banner-shape-2.svg" alt="">
+        </div>
+        <div class="shape__home__one __third"></div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="rts__banner__wrapper d-flex gap-2 justify-content-between">
+                <div class="rts__banner__content">
+                    <h1 class="rts__banner__title wow animated fadeInUp">
+                        TÌM CÔNG VIỆC MƠ ƯỚC CỦA BẠN VỚI
+                        <span>TJOBS</span>
+                    </h1>
+                    <p class="rts__banner__desc my-40 wow animated fadeInUp" data-wow-delay=".1s">
+                        Khám phá những con đường sự nghiệp mới, đặc biệt là thông qua hệ thống TJobs, cam kết mang lại cơ hội việc làm cao nhất, uy tín nhất!
+                    </p>
+                    <div class="rts__job__search wow animated fadeInUp" data-wow-delay=".2s">
+                        <form *ngIf="locations?.length && worktypes?.length && experiences?.length"
+                              [formGroup]="searchForm"
+                              (ngSubmit)="searchJobs(1)"
+                              class="p-4 bg-light rounded shadow">
+                            <div class="row g-3">
+                                <!-- Tiêu đề công việc -->
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="job_title" class="form-label">Tiêu đề công việc</label>
+                                        <input type="text" class="form-control" id="job_title" formControlName="title" placeholder="Nhập tiêu đề" />
+                                    </div>
+                                </div>
+
+                                <!-- Vị trí -->
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="location" class="form-label">Vị trí</label>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <select class="form-select" id="location" formControlName="locationId">
+                                                <option value="">Chọn vị trí</option>
+                                                <ng-container *ngFor="let location of locations">
+                                                    <option [value]="location.id">{{ location.name }}</option>
+                                                </ng-container>
+                                            </select>
+                                            <!-- Nút mở bản đồ -->
+                                            <button type="button" class="btn btn-outline-primary" (click)="openMap()"><i class="fa-solid fa-location-dot"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Hình thức làm việc -->
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="job_type" class="form-label">Hình thức làm việc</label>
+                                        <select class="form-select" id="job_type" formControlName="worktypeId">
+                                            <option value="">Chọn hình thức</option>
+                                            <ng-container *ngFor="let type of worktypes">
+                                                <option [value]="type.id">{{type.name}}</option>
+                                            </ng-container>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Kinh nghiệm -->
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="experience" class="form-label">Kinh nghiệm</label>
+                                        <select class="form-select" id="experience" formControlName="experienceId">
+                                            <option value="">Chọn kinh nghiệm</option>
+                                            <ng-container *ngFor="let ex of experiences">
+                                                <option [value]="ex.id">{{ex.name}}</option>
+                                                </ng-container>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Nút tìm kiếm -->
+                                    <div class="col-12 flex justify-content-center mt-3">
+                                        <button pButton type="submit" class="p-button p-button-primary"
+                                                style="width: 150px;">
+                                            <i class="pi pi-search me-2"></i> Tìm việc
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <ng-template #loading>
+                                <p>Đang tải bộ lọc tìm kiếm...</p>
+                            </ng-template>
+                        </div>
+                    </div>
+
+                    <div class="rts__banner__image position-relative">
+                        <figure class="banner__image">
+                            <img src="assets/img/home-1/banner/image_2x.webp" alt="banner">
+                        </figure>
+                        <div class="banner__image__shape">
+                            <div class="facebook">
+                                <i class="fab fa-facebook"></i>
+                            </div>
+                            <div class="twitter">
+                                <i class="fab fa-twitter"></i>
+                            </div>
+                            <div class="linkedin">
+                                <i class="fab fa-linkedin-in"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="rts__section section__padding">
+        <div class="container">
+            <div class="row justify-content-center mb-60">
+                <div class="col-xl-6 col-lg-10">
+                    <div class="rts__section__content text-center wow animated fadeInUp">
+                        <h3 class="rts__section__title section__mb">Có hơn 1000+ việc làm tại TJobs</h3>
+                        <p class="rts__section__desc">Khám phá các cơ hội việc làm từ cấp nhân viên đến vị trí lãnh đạo.</p>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="jobs.length > 0; else noData">
+                <div class="row g-30 wow animated fadeInUp" data-wow-delay=".0s">
+                    <!-- single job -->
+                    <ng-container *ngFor="let job of jobs">
+                        <div class="col-lg-6 col-xl-4 col-md-6">
+                            <div class="rts__job__card">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="company__icon">
+                                        <img src="{{imgBaseUrl + job.employerLogo}}" alt="">
+                                    </div>
+                                    <div class="featured__option">
+                                        <span>{{job.employerName}}</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-3 mt-4 flex-wrap">
+                                    <div class="d-flex gap-1 align-items-center">
+                                        <i class="fa-light fa-location-dot"></i> {{job.locationName}}
+                                    </div>
+                                    <div class="d-flex gap-1 align-items-center">
+                                        <i class="fa-light fa-briefcase"></i> {{job.worktypeName}}
+                                    </div>
+                                </div>
+                                <div style="height: 88px;" class="h6 job__title my-3">
+                                    <a href="/seeker/job-details/{{ job.id }}" aria-label="job">
+                                        {{ job.title.length > 50 ? (job.title | slice: 0: 50) + '...' : job.title }}
+                                    </a>
+                                    <p style="margin-top: 8px; margin-bottom: 8px;">
+                                        <a class="job__company" [href]="'/seeker/company/' + job.employerId" style="color: #424e5c">
+                                            {{ job.employerName.length > 20 ? (job.employerName | slice: 0: 20) + '...' : job.employerName.toUpperCase() }}
+                                        </a>
+                                    </p>
+                                </div>
+
+                                <p style="margin-top: 8px;">
+                                    {{ job.required.length > 90 ? (job.required | slice:0:90) + '...' : job.required }}
+                                </p>
+
+                                <div class="job__tags d-flex flex-wrap gap-3 mt-4">
+                                    <a href="#">{{job.requiredSkills}}</a>
+                                </div>
+                                <div class="job__tags d-flex flex-wrap gap-3 mt-4">
+                                    <a href="#">{{job.salary}}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="pagination mt-4">
+                        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Trang trước</button>
+                        <span *ngFor="let page of getPages()" (click)="changePage(page)" [class.active]="page === currentPage">
+                          {{ page }}
+                        </span>
+                        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Trang sau</button>
+                </div>
+            </div>
+            <ng-template #noData>
+                <div class="no-data">
+                    <img src="assets/img/no-data.jpg" alt="Không có dữ liệu" class="no-data__img">
+                    <h2>Không có việc làm nào</h2>
+                </div>
+            </ng-template>
+        </div>
+    </section>
+
+    <!-- work process area -->
+    <section class="rts__section section__padding">
+        <div class="container">
+            <div class="row justify-content-center mb-60">
+                <div class="col-xl-6 col-lg-10">
+                    <div class="rts__section__content text-center wow animated fadeInUp">
+                        <h3 class="rts__section__title section__mb">TJobs hoạt động như thế nào</h3>
+                        <p class="rts__section__desc">Trang web việc làm của chúng tôi cung cấp nhiều lựa chọn đa dạng</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-30 justify-content-center">
+                <div class="col-lg-4 col-md-10 wow animated fadeInUp" data-wow-delay=".1s">
+                    <div class="rts__workprocess__box">
+                        <div class="rts__icon">
+                            <img src="assets/img/home-1/process/icon-1.svg" alt="">
+                        </div>
+                        <span class="process__title h6 d-block">Tạo tài khoản miễn phí</span>
+                        <p>Tạo một tài khoản miễn phí để bắt đầu hành trình tìm kiếm việc làm của bạn.</p>
+                        <div class="work__readmore mt-3">
+                            <a href="#">Xem thêm <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-10 wow animated fadeInUp" data-wow-delay=".2s">
+                    <div class="rts__workprocess__box">
+                        <div class="rts__icon">
+                            <img src="assets/img/home-1/process/icon-2.svg" alt="">
+                        </div>
+                        <span class="process__title h6 d-block">Làm CV của bạn trở nên ấn tượng</span>
+                        <p>Cập nhật CV của bạn để nổi bật và thu hút nhà tuyển dụng.</p>
+                        <div class="work__readmore mt-3">
+                            <a href="/seeker/resume">Xem thêm <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-10 wow animated fadeInUp" data-wow-delay=".3s">
+                    <div class="rts__workprocess__box">
+                        <div class="rts__icon">
+                            <img src="assets/img/home-1/process/icon-3.svg" alt="">
+                        </div>
+                        <span class="process__title h6 d-block">Ứng tuyển công việc</span>
+                        <p>Tìm và ứng tuyển vào công việc phù hợp với bạn.</p>
+                        <div class="work__readmore mt-3">
+                            <a href="/seeker/list-jobs">Xem thêm <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- work process area end -->
+
+    <!-- brand area -->
+    <div class="rts__section rts__brand pb-120 pt-50 text-center">
+        <div class="container">
+            <div class="row">
+                <div class="section__title mb-40">
+                    <span class="h6 d-block fw-semibold">Được tin tưởng bởi hơn 300+ công ty hàng đầu</span>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="rts__brand__slider overflow-hidden swiper-data" data-swiper='{
+                    "slidesPerView":7,
+                    "loop": true,
+                    "speed": 1000,
+                    "autoplay":{
+                        "delay":"7000"
+                    },
+                    "breakpoints": {
+                        "0": {
+                            "slidesPerView": 2
+                        },
+                        "480": {
+                            "slidesPerView": 3
+                        },
+                        "768": {
+                            "slidesPerView": 4
+                        },
+                        "1024": {
+                            "slidesPerView": 4
+                        },
+                        "1200": {
+                            "slidesPerView": 6
+                        },
+                        "1400": {
+                            "slidesPerView": 7
+                        }
+                    }
+                }'>
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="brand__item">
+                                <a href="#" class="brand__item__link" aria-label="brand">
+                                    <img src="assets/img/home-1/brand/b51.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="brand__item">
+                                <a href="#" class="brand__item__link" aria-label="brand">
+                                    <img src="assets/img/home-1/brand/image1.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="brand__item">
+                                <a href="#" class="brand__item__link" aria-label="brand">
+                                    <img src="assets/img/home-1/brand/image2.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="brand__item">
+                                <a href="#" class="brand__item__link" aria-label="brand">
+                                    <img src="assets/img/home-1/brand/image3.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="brand__item">
+                                <a href="#" class="brand__item__link" aria-label="brand">
+                                    <img src="assets/img/home-1/brand/image4.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="brand__item">
+                                <a href="#" class="brand__item__link" aria-label="brand">
+                                    <img src="assets/img/home-1/brand/image5.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="brand__item">
+                                <a href="#" class="brand__item__link" aria-label="brand">
+                                    <img src="assets/img/home-1/brand/image1.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="brand__item">
+                                <a href="#" class="brand__item__link" aria-label="brand">
+                                    <img src="assets/img/home-1/brand/linkedin-logo-png-20321.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- brand area end -->
+
+    <!-- cat slider -->
+    <div class="rts__section overflow-hidden cat__slider__bg pt-100 pb-100">
+        <div class="container">
+            <div class="row justify-content-between mb-50 gap-4 position-relative mtn-1">
+                <div class="col-xl-6 col-lg-10">
+                    <div class="rts__section__content text-start wow animated fadeInUp">
+                        <h3 class="rts__section__title section__mb">Duyệt theo danh mục công việc</h3>
+                        <p class="rts__section__desc">Tìm kiếm cơ hội nghề nghiệp tiếp theo của bạn. Đừng bỏ lỡ!</p>
+                    </div>
+                </div>
+                <div class="rts__slider__control align-items-end
+                    position-relative position-md-absolute right-md-0 bottom-md-0 z-3 d-flex gap-2 max-contnet">
+                    <div class="rts__slide__next slider__btn"><i class="fa-sharp fa-solid fa-chevron-left"></i></div>
+                    <div class="rts__slide__prev slider__btn"><i class="fa-sharp fa-solid fa-chevron-right"></i></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="cat__slider overflow-hidden swiper-data @@style" data-swiper='
+                {
+                    "slidesPerView": 4,
+                    "spaceBetween": 30,
+                    "loop": true,
+                    "speed": 1000,
+                    "autoplay":{
+                        "delay":"7000"
+                    },
+                    "pagination": {
+                        "el": ".rts__pagination",
+                        "clickable": true
+                    },
+                    "navigation": {
+                        "nextEl": ".rts__slide__next",
+                        "prevEl": ".rts__slide__prev"
+                    },
+                    "breakpoints": {
+                        "0": {
+                            "slidesPerView": 1
+                        },
+                        "490": {
+                            "slidesPerView": 1.5
+                        },
+                        "768": {
+                            "slidesPerView": 2
+                        },
+                        "1024": {
+                            "slidesPerView": 3
+                        },
+                        "1200": {
+                            "slidesPerView": 3.5
+                        },
+                        "1400": {
+                            "slidesPerView": 4
+                        }
+                    }
+                }'>
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="single__cat d-flex gap-4">
+                                <div class="single__cat__icon color-1">
+                                    <img src="assets/img/home-1/cat/web-development.png" alt="">
+                                </div>
+                                <div class="single__cat__link d-flex flex-column">
+                                    <a href="/seeker/list-jobs?categoryId=5" aria-label="cat__label">Phát triển Web</a>
+                                    <span>150+ Việc làm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="single__cat d-flex gap-4">
+                                <div class="single__cat__icon color-2">
+                                    <img src="assets/img/home-1/cat/mobile-development.png" alt="">
+                                </div>
+                                <div class="single__cat__link d-flex flex-column">
+                                    <a href="/seeker/list-jobs?categoryId=4" aria-label="cat__label">Phát triển ứng dụng di động</a>
+                                    <span>120+ Việc làm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="single__cat d-flex gap-4">
+                                <div class="single__cat__icon color-3">
+                                    <img src="assets/img/home-1/cat/data-science.jpg" alt="">
+                                </div>
+                                <div class="single__cat__link d-flex flex-column">
+                                    <a href="/seeker/list-jobs?categoryId=23" aria-label="cat__label">Khoa học dữ liệu</a>
+                                    <span>100+ Việc làm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="single__cat d-flex gap-4">
+                                <div class="single__cat__icon color-4">
+                                    <img src="assets/img/home-1/cat/cybersecurity.jpg" alt="">
+                                </div>
+                                <div class="single__cat__link d-flex flex-column">
+                                    <a href="/seeker/list-jobs?categoryId=32" aria-label="cat__label">An ninh mạng</a>
+                                    <span>90+ Việc làm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="single__cat d-flex gap-4">
+                                <div class="single__cat__icon color-5">
+                                    <img src="assets/img/home-1/cat/cloud-computing.webp" alt="">
+                                </div>
+                                <div class="single__cat__link d-flex flex-column">
+                                    <a href="/seeker/list-jobs?categoryId=47" aria-label="cat__label">Điện toán đám mây</a>
+                                    <span>110+ Việc làm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="single__cat d-flex gap-4">
+                                <div class="single__cat__icon color-6">
+                                    <img src="assets/img/home-1/cat/devops.svg" alt="">
+                                </div>
+                                <div class="single__cat__link d-flex flex-column">
+                                    <a href="/seeker/list-jobs?categoryId=6" aria-label="cat__label">DevOps</a>
+                                    <span>80+ Việc làm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="single__cat d-flex gap-4">
+                                <div class="single__cat__icon color-7">
+                                    <img src="assets/img/home-1/cat/ui-ux.jpg" alt="">
+                                </div>
+                                <div class="single__cat__link d-flex flex-column">
+                                    <a href="/seeker/list-jobs?categoryId=12" aria-label="cat__label">Thiết kế UI/UX</a>
+                                    <span>130+ Việc làm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="single__cat d-flex gap-4">
+                                <div class="single__cat__icon color-8">
+                                    <img src="assets/img/home-1/cat/ai-ml.jpg" alt="">
+                                </div>
+                                <div class="single__cat__link d-flex flex-column">
+                                    <a href="/seeker/list-jobs?categoryId=22" aria-label="cat__label">AI & Máy học</a>
+                                    <span>140+ Việc làm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="single__cat d-flex gap-4">
+                                <div class="single__cat__icon color-9">
+                                    <img src="assets/img/home-1/cat/game-development.png" alt="">
+                                </div>
+                                <div class="single__cat__link d-flex flex-column">
+                                    <a href="/seeker/list-jobs?categoryId=7" aria-label="cat__label">Phát triển trò chơi</a>
+                                    <span>70+ Việc làm</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="single__cat d-flex gap-4">
+                                <div class="single__cat__icon color-10">
+                                    <img src="assets/img/home-1/cat/it-support.png" alt="">
+                                </div>
+                                <div class="single__cat__link d-flex flex-column">
+                                    <a href="/seeker/list-jobs?categoryId=79" aria-label="cat__label">Hỗ trợ IT</a>
+                                    <span>50+ Việc làm</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- cat slider end -->
+
+    <!-- what we are -->
+    <div class="rts__section pb-120">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5">
+                    <div class="rts__image__section">
+                        <img src="assets/img/home-1/we-are/image.webp" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="rts__content__section ms-lg-4 ms-md-0 wow animated fadeInUp">
+                        <h3 class="fw-bold mb-4">Tại sao TJobs được ưa chuộng</h3>
+                        <p>Dù bạn là một chuyên gia giàu kinh nghiệm hay một sinh viên mới tốt nghiệp muốn bắt đầu sự nghiệp, chúng tôi đều có cơ hội dành cho bạn. Từ các chuyên gia công nghệ đến những người làm marketing, từ chuyên gia tài chính đến các bộ óc sáng tạo, danh sách việc làm đa dạng của chúng tôi đáp ứng mọi kỹ năng và sở thích.</p>
+                        <div class="mt-40 rts__listing">
+                            <div class="single__listing d-flex align-items-center gap-4">
+                                <span class="icon">
+                                    <i class="fa-regular fa-check"></i>
+                                </span>
+                                <span>Công việc chất lượng</span>
+                            </div>
+                            <div class="single__listing d-flex align-items-center gap-4">
+                                <span class="icon">
+                                    <i class="fa-regular fa-check"></i>
+                                </span>
+                                <span>Kết nối với hàng trăm liên hệ</span>
+                            </div>
+                            <div class="single__listing d-flex align-items-center gap-4">
+                                <span class="icon">
+                                    <i class="fa-regular fa-check"></i>
+                                </span>
+                                <span>Không tính phí phụ</span>
+                            </div>
+                            <div class="single__listing d-flex align-items-center gap-4">
+                                <span class="icon">
+                                    <i class="fa-regular fa-check"></i>
+                                </span>
+                                <span>Công việc quốc tế</span>
+                            </div>
+                        </div>
+                        <a href="/seeker/list-jobs" class="rts__btn common__btn fill__btn mt-50">Khám phá thêm <i class="fa-regular fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- what we are end -->
+
+    <!-- testimonial section -->
+    <div class="rts__section section__padding rts__testimonial__background">
+        <div class="container position-relative">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-lg-10">
+                    <div class="rts__section__content text-center wow animated fadeInUp mb-60">
+                        <h3 class="rts__section__title section__mb">Câu chuyện thành công từ ứng viên</h3>
+                        <p class="rts__section__desc">Nghe những chia sẻ từ các ứng viên đã tìm được công việc mơ ước qua nền tảng của chúng tôi!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="rts__testimonial__active overflow-hidden swiper-data"
+                        data-swiper='{
+                            "slidesPerView": 1,
+                            "autoplay": true,
+                            "loop": true,
+                            "navigation": {
+                                "nextEl": ".rts__slide__next",
+                                "prevEl": ".rts__slide__prev"
+                            }
+                        }'>
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="rts__single__testimonial text-center">
+                                    <div class="rts__quote mb-40">
+                                        <img class="opacity-50" src="assets/img/icon/quote.svg" alt="">
+                                    </div>
+                                    <div class="testimonial__text h6">Nhờ nền tảng này, tôi đã tìm được công việc mơ ước tại FPT Software chỉ sau 2 tuần ứng tuyển. Quy trình rất minh bạch và đội ngũ hỗ trợ cực kỳ nhiệt tình!</div>
+                                    <div class="d-flex align-items-center justify-content-center mx-auto gap-3 pt-40 max-content">
+                                        <div class="author__image">
+                                            <img src="assets/img/home-1/testimonial/author.jpg" alt="">
+                                        </div>
+                                        <div class="author__content text-start">
+                                            <span class="h6">Trần Minh Tuấn</span>
+                                            <p>Nhà phát triển phần mềm tại FPT Software</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="rts__single__testimonial text-center">
+                                    <div class="rts__quote mb-40">
+                                        <img class="opacity-50" src="assets/img/icon/quote.svg" alt="">
+                                    </div>
+                                    <div class="testimonial__text h6">Tôi rất ấn tượng với cách trang web gợi ý công việc phù hợp với kỹ năng của tôi. Tôi đã nhận được lời mời phỏng vấn từ VinAI chỉ sau 3 ngày nộp CV!</div>
+                                    <div class="d-flex align-items-center justify-content-center mx-auto gap-3 pt-40 max-content">
+                                        <div class="author__image">
+                                            <img src="assets/img/home-1/testimonial/author.jpg" alt="">
+                                        </div>
+                                        <div class="author__content text-start">
+                                            <span class="h6">Lê Thị Hồng Nhung</span>
+                                            <p>Chuyên viên AI tại VinAI</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="rts__slider__control d-lg-flex justify-content-between g-0 position-absolute top-50 translate-middle-y d-none">
+                    <div class="rts__slide__next slider__btn"><i class="fa-sharp fa-solid fa-chevron-left"></i></div>
+                    <div class="rts__slide__prev slider__btn"><i class="fa-sharp fa-solid fa-chevron-right"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- testimonial section end -->
+
+    <!-- funfact section -->
+    <div class="rts__section section__padding">
+        <div class="container">
+            <div class="row g-30 justify-content-center wow animated slideInUp">
+                <div class="col-lg-3 col-md-6">
+                    <div class="rts__single__counter">
+                        <h2 class="fw-bold ms-lg-3 mx-auto heading__color"><span class="counter">20</span>K</h2>
+                        <p class="h6 mb-0 fw-semibold">Nhà tuyển dụng hài lòng</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="rts__single__counter">
+                        <h2 class="fw-bold ms-lg-3 mx-auto heading__color"><span class="counter">11</span>K</h2>
+                        <p class="h6 mb-0 fw-semibold">Vị trí đang tuyển</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="rts__single__counter">
+                        <h2 class="fw-bold ms-lg-3 mx-auto heading__color"><span class="counter">1</span>M</h2>
+                        <p class="h6 mb-0 fw-semibold">Người dùng hoạt động hàng ngày</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="rts__single__counter">
+                        <h2 class="fw-bold ms-lg-3 mx-auto heading__color"><span class="counter">100</span>+</h2>
+                        <p class="h6 mb-0 fw-semibold">Danh mục công việc</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- funfact section end -->
+
+    <!-- pricing section -->
+    <div class="rts__section pt--10">
+         <!-- Hiển thị danh sách gói cước nếu chưa đăng ký hoặc người dùng muốn chọn gói khác -->
+         <div class="container">
+          <div class="row position-relative justify-content-lg-between justify-content-sm-center gap-4 mb-60">
+              <div class="col-xl-6 col-lg-10">
+                <h3 class="rts__section__title section__mb">Gói giá</h3>
+                <p class="rts__section__desc">Tìm kiếm cơ hội nghề nghiệp tiếp theo của bạn.</p>
+              </div>
+              <div class="d-flex align-items-end max-content gap-2 position-lg-absolute right-md-0 bottom-md-0">
+                  <p class="mb-0">Hàng tháng</p>
+                  <label for="pricing__toogle" class="switch">
+                      <input type="checkbox" name="pricing__toogle" class="pricing__toogle" id="pricing__toogle" [(ngModel)]="!isMonthly" (change)="togglePricing()" />
+                      <span class="slider round"></span>
+                  </label>
+                  <p class="mb-0">Hàng năm</p>
+              </div>
+          </div>
+
+          <!-- Tab Monthly -->
+          <div class="monthly__pricing" [ngClass]="{'active': isMonthly}">
+              <div class="row g-30" style="justify-content: space-around">
+                  <ng-container *ngIf="monthlyPlans.length > 0; else noMonthlyPlans">
+                      <div class="col-lg-6 col-xl-4 col-md-6" *ngFor="let plan of monthlyPlans">
+                          <div class="rts__pricing__box" style="height: 40em;">
+                              <div class="h6 fw-medium lh-1 mb-2 text-primary">{{ plan.name }}</div>
+                              <div class="plan__price lh-1 mb-40"><span class="h4">{{ plan.price | number:'1.0-0' }} VNĐ/</span>Tháng</div>
+                              <ul class="plan__feature" style="height: 60%;">
+                                  <li *ngFor="let feature of plan.description.split(',')">
+                                      <i class="fa-sharp fa-solid fa-check"></i> {{ feature.trim() }}
+                                  </li>
+                              </ul>
+                              <button (click)="showConfirmDialog(plan)" class="rts__btn pricing__btn no__fill__btn">Bắt đầu ngay</button>
+                          </div>
+                      </div>
+                  </ng-container>
+                  <ng-template #noMonthlyPlans>
+                      <div class="col-12 text-center">
+                          <p>Không có gói cước hàng tháng nào.</p>
+                      </div>
+                  </ng-template>
+              </div>
+          </div>
+
+          <!-- Tab Yearly -->
+          <div class="yearly__pricing" [ngClass]="{'active': !isMonthly}">
+              <div class="row g-30" style="justify-content: space-around">
+                  <ng-container *ngIf="yearlyPlans.length > 0; else noYearlyPlans">
+                      <div class="col-lg-6 col-xl-4 col-md-6" *ngFor="let plan of yearlyPlans">
+                          <div class="rts__pricing__box" style="height: 40em;">
+                              <div class="h6 fw-medium lh-1 mb-2 text-primary">{{ plan.name }}</div>
+                              <div class="plan__price lh-1 mb-40"><span class="h4" style="width: 100%; font-size: 36px">{{ plan.price | number:'1.0-0' }} VNĐ/</span>Năm</div>
+                              <ul class="plan__feature" style="height: 60%;">
+                                  <li *ngFor="let feature of plan.description.split(',')">
+                                      <i class="fa-sharp fa-solid fa-check"></i> {{ feature.trim() }}
+                                  </li>
+                              </ul>
+                              <button (click)="showConfirmDialog(plan)" class="rts__btn pricing__btn no__fill__btn mt-40">Bắt đầu ngay</button>
+                          </div>
+                      </div>
+                  </ng-container>
+                  <ng-template #noYearlyPlans>
+                      <div class="col-12 text-center">
+                          <p>Không có gói cước hàng năm nào.</p>
+                      </div>
+                  </ng-template>
+              </div>
+          </div>
+      </div>
+    </div>
+    <!-- pricing section end -->
+
+    <!-- blog section -->
+    <div class="rts__section section__padding">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-6 col-lg-10">
+                    <div class="rts__section__content text-center wow animated fadeIn mb-60">
+                        <h3 class="rts__section__title section__mb">Đọc tin tức mới nhất của chúng tôi</h3>
+                        <p class="rts__section__desc">Tìm kiếm cơ hội nghề nghiệp tiếp theo của bạn. Đừng bỏ lỡ!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center justify-content-lg-start g-30">
+                <div class="col-lg-6 col-xl-4 col-md-10">
+                    <div class="rts__single__blog">
+                        <a href="https://jobsgo.vn/blog/cach-dang-tin-tuyen-dung-thu-hut-ung-vien/" target="_blank" class="blog__img">
+                            <img src="assets/img/home-1/blog/1.webp" class="mb-2" alt="blog">
+                        </a>
+                        <div class="blog__meta">
+                            <div class="blog__meta__info d-flex gap-3 my-3">
+                                <span class="d-flex gap-1 align-items-center"> <img class="svg" src="assets/img/icon/calender.svg" alt=""> 20 Tháng 3, 2022</span>
+                                <a href="#" class="d-flex gap-1 align-items-center"> <img class="svg" src="assets/img/icon/user.svg" alt=""> Jon Adom</a>
+                            </div>
+                            <a href="https://jobsgo.vn/blog/cach-dang-tin-tuyen-dung-thu-hut-ung-vien/" target="_blank" class="h6 fw-semibold">
+                                7 cách đăng tin tuyển dụng cải thiện doanh nghiệp ngày nay
+                            </a>
+                            <a href="https://jobsgo.vn/blog/cach-dang-tin-tuyen-dung-thu-hut-ung-vien/" target="_blank" class="readmore__btn d-flex mt-3 gap-2 align-items-center">Xem thêm <i class="fa-light fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4 col-md-10">
+                    <div class="rts__single__blog">
+                        <a href="https://www.topcv.vn/viec-lam-online-tai-nha" target="_blank" class="blog__img">
+                            <img src="assets/img/home-1/blog/2.webp" class="mb-2" alt="blog">
+                        </a>
+                        <div class="blog__meta">
+                            <div class="blog__meta__info d-flex gap-3 my-3">
+                                <span class="d-flex gap-1 align-items-center"> <img class="svg" src="assets/img/icon/calender.svg" alt=""> 20 Tháng 3, 2022</span>
+                                <a href="#" class="d-flex gap-1 align-items-center"> <img class="svg" src="assets/img/icon/user.svg" alt=""> Jon Adom</a>
+                            </div>
+                            <a href="https://www.topcv.vn/viec-lam-online-tai-nha" target="_blank" class="h6 fw-semibold">
+                                Bắt đầu công việc trực tuyến và làm việc tại nhà
+                            </a>
+                            <a href="https://www.topcv.vn/viec-lam-online-tai-nha" target="_blank" class="readmore__btn d-flex mt-3 gap-2 align-items-center">Xem thêm <i class="fa-light fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xl-4 col-md-10">
+                    <div class="rts__single__blog">
+                        <a href="https://shiring.ai/vi/bi-quyet-dang-tin-tuyen-dung-hieu-qua-tren-cac-website-uy-tin/" target="_blank" class="blog__img">
+                            <img src="assets/img/home-1/blog/3.webp" class="mb-2" alt="blog">
+                        </a>
+                        <div class="blog__meta">
+                            <div class="blog__meta__info d-flex gap-3 my-3">
+                                <span class="d-flex gap-1 align-items-center"> <img class="svg" src="assets/img/icon/calender.svg" alt=""> 20 Tháng 3, 2022</span>
+                                <a href="#" class="d-flex gap-1 align-items-center"> <img class="svg" src="assets/img/icon/user.svg" alt=""> Jon Adom</a>
+                            </div>
+                            <a href="https://shiring.ai/vi/bi-quyet-dang-tin-tuyen-dung-hieu-qua-tren-cac-website-uy-tin/" target="_blank" class="h6 fw-semibold">
+                                Chiến lược thành công trên các trang web việc làm
+                            </a>
+                            <a href="https://shiring.ai/vi/bi-quyet-dang-tin-tuyen-dung-hieu-qua-tren-cac-website-uy-tin/" target="_blank" class="readmore__btn d-flex mt-3 gap-2 align-items-center">Xem thêm <i class="fa-light fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- blog section end -->
+
+    <div class="rts__section pb-120">
+        <div class="container">
+            <div class="row">
+                <div class="rts__appcenter">
+                    <div class="rts__appcenter__shape">
+                        <img src="assets/img/home-1/app/shape.png" alt="">
+                    </div>
+                    <div class="rts__appcenter__content d-flex flex-wrap flex-xl-nowrap align-items-center justify-content-between justify-content-lg-center">
+                        <div class="content__left align-items-end d-flex position-relative top-15px">
+                            <img src="assets/img/home-1/app/app_screen.png" alt="">
+                        </div>
+                        <div class="content__right text-white text-center text-xl-start max-630">
+                            <h3 class="l--1 mb-4 text-white wow animated fadeInUp" data-wow-delay=".1s">Tải ứng dụng miễn phí!</h3>
+                            <p class="wow animated fadeInUp" data-wow-delay=".2s">Tìm kiếm công việc mới có thể vừa thú vị vừa thách thức. Khám phá thị trường việc làm với nhiều cơ hội đa dạng.</p>
+                            <div class="d-flex gap-3 justify-content-center justify-content-xl-start flex-wrap mt-40 wow animated fadeInUp" data-wow-delay=".3s">
+                                <div class="link">
+                                    <a href="https://appstore.com" target="_blank" title="app store">
+                                        <img src="assets/img/home-1/app/app-store.svg" alt="">
+                                    </a>
+                                </div>
+                                <div class="link">
+                                    <a href="https://google.com" target="_blank" title="play store">
+                                        <img src="assets/img/home-1/app/play-store.svg" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="mapModal" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mapModalLabel">Chọn vị trí trên bản đồ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <app-map (locationSelected)="onLocationSelected($event)"></app-map>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p-toast></p-toast>
+    <!-- Dialog xác nhận -->
+<p-dialog header="Xác nhận thanh toán" [(visible)]="displayDialog" [modal]="true" [style]="{width: '450px'}" [baseZIndex]="10000">
+  <div *ngIf="selectedPlan">
+      <h5 class="mb-3">Thông tin gói cước</h5>
+      <p><strong>Tên gói:</strong> {{ selectedPlan.name }}</p>
+      <p><strong>Giá:</strong> {{ selectedPlan.price | number:'1.0-0' }} VNĐ/{{ selectedPlan.duration === 'MONTHLY' ? 'Tháng' : 'Năm' }}</p>
+      <p><strong>Mô tả:</strong></p>
+      <ul>
+          <li *ngFor="let feature of selectedPlan.description.split(',')">
+              {{ feature.trim() }}
+          </li>
+      </ul>
+      <div class="mt-4">
+          <p-checkbox [(ngModel)]="agreeToTerms" name="agreeToTerms" [binary]="true"
+          label="Tôi đồng ý với các điều khoản và điều kiện của dịch vụ." inputId="terms"></p-checkbox>
+      </div>
+  </div>
+  <ng-template pTemplate="footer">
+      <button pButton type="button" label="Hủy" class="p-button-secondary" (click)="displayDialog=false"></button>
+      <button pButton type="button" label="Thanh toán" class="p-button-primary" (click)="proceedToPayment()" [disabled]="!agreeToTerms"></button>
+  </ng-template>
+</p-dialog>
+
+<p-toast position="top-right"></p-toast>

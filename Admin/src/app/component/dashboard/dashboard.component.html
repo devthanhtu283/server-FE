@@ -1,0 +1,103 @@
+<div class="body-wrapper">
+  <div class="container-fluid">
+    <!-- Key Metrics Row -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-body p-4 pb-0" data-simplebar="">
+            <div class="row flex-nowrap">
+              <div class="col">
+                <div class="card primary-gradient">
+                  <div class="card-body text-center px-9 pb-4">
+                    <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-primary flex-shrink-0 mb-3 mx-auto">
+                      <iconify-icon icon="solar:user-linear" class="fs-7 text-white"></iconify-icon>
+                    </div>
+                    <h6 class="fw-normal fs-3 mb-1">Tổng Số Người Dùng</h6>
+                    <h4 class="mb-3 d-flex align-items-center justify-content-center gap-1">{{totalUser}}</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card warning-gradient">
+                  <div class="card-body text-center px-9 pb-4">
+                    <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-warning flex-shrink-0 mb-3 mx-auto">
+                      <iconify-icon icon="solar:bag-bold" class="fs-7 text-white"></iconify-icon>
+                    </div>
+                    <h6 class="fw-normal fs-3 mb-1">Tổng Số Công Việc</h6>
+                    <h4 class="mb-3 d-flex align-items-center justify-content-center gap-1">{{totalJob}}</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card secondary-gradient">
+                  <div class="card-body text-center px-9 pb-4">
+                    <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-secondary flex-shrink-0 mb-3 mx-auto">
+                      <iconify-icon icon="solar:clipboard-text-linear" class="fs-7 text-white"></iconify-icon>
+                    </div>
+                    <h6 class="fw-normal fs-3 mb-1">Tổng số hồ sơ xin việc</h6>
+                    <h4 class="mb-3 d-flex align-items-center justify-content-center gap-1">{{totalApplication}}</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card danger-gradient">
+                  <div class="card-body text-center px-9 pb-4">
+                    <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-danger flex-shrink-0 mb-3 mx-auto">
+                      <iconify-icon icon="ic:baseline-sync-problem" class="fs-7 text-white"></iconify-icon>
+                    </div>
+                    <h6 class="fw-normal fs-3 mb-1">Tổng Số Người Mua Gói Dịch Vụ</h6>
+                    <h4 class="mb-3 d-flex align-items-center justify-content-center gap-1">{{totalEmployerMembership}}</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card success-gradient">
+                  <div class="card-body text-center px-9 pb-4">
+                    <div class="d-flex align-items-center justify-content-center round-48 rounded text-bg-success flex-shrink-0 mb-3 mx-auto">
+                      <iconify-icon icon="ic:outline-forest" class="fs-7 text-white"></iconify-icon>
+                    </div>
+                    <h6 class="fw-normal fs-3 mb-1">Tổng doanh thu</h6>
+                    <h4 class="mb-3 d-flex align-items-center justify-content-center gap-1">{{totalAmount}} <span>VND</span></h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Canvas Charts -->
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card p-3 my-4">
+      
+          <div style="width: 300px; height: 300px; margin: auto;">
+            <canvas id="userTypeChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card p-3 my-4">
+        
+          <canvas id="revenueChart" height="300"></canvas>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card p-3 my-4">
+        
+          <canvas id="applicationStatusChart" height="300"></canvas>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card p-3 my-4">
+  
+          <canvas id="jobChart" height="300"></canvas>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>

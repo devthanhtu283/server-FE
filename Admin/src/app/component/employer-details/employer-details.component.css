@@ -1,0 +1,3 @@
+::ng-deep .p-confirm-dialog .p-dialog-footer button + button {
+  margin-left: 0.5rem;
+}

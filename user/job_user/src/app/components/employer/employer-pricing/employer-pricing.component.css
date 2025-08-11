@@ -1,0 +1,277 @@
+.dashboard__right {
+    padding: 2rem;
+    background: #f8f9fa;
+  }
+  
+  .dash__content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .sidebar__menu {
+    margin-bottom: 1rem;
+  }
+  
+  .sidebar__action {
+    cursor: pointer;
+    font-size: 1rem;
+    color: #007bff;
+  }
+  
+  .fw-semibold {
+    font-weight: 600;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .package__form {
+    margin-bottom: 2rem;
+  }
+  
+  .package__selection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .single__package__selection {
+    flex: 1 1 200px;
+  }
+  
+  .form-selection {
+    margin-right: 0.5rem;
+  }
+  
+  .form-selection-label {
+    cursor: pointer;
+    display: inline-block;
+  }
+  
+  .form-selection-label span {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .dash__pricing__plan {
+    margin-top: 2rem;
+  }
+  
+  .d-flex {
+    display: flex;
+  }
+  
+  .align-items-center {
+    align-items: center;
+  }
+  
+  .justify-content-between {
+    justify-content: space-between;
+  }
+  
+  .max-content {
+    width: max-content;
+  }
+  
+  .gap-2 {
+    gap: 0.5rem;
+  }
+  
+  .mb-0 {
+    margin-bottom: 0;
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 20px;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: '';
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+  
+  input:checked + .slider {
+    background-color: #007bff;
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(20px);
+  }
+  
+  .mt-40 {
+    margin-top: 2.5rem;
+  }
+  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+  }
+  
+  .g-30 {
+    gap: 1.875rem;
+  }
+  
+  .col-lg-6,
+  .col-xl-4,
+  .col-md-6 {
+    flex: 1 1 33.333%;
+    padding: 0 15px;
+  }
+  
+  .rts__pricing__box {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .text-primary {
+    color: #007bff;
+  }
+  
+  .lh-1 {
+    line-height: 1;
+  }
+  
+  .mb-2 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .plan__price {
+    font-size: 1.5rem;
+    color: #333;
+  }
+  
+  .plan__price .h2 {
+    font-size: 2rem;
+    font-weight: 700;
+  }
+  
+  .mb-40 {
+    margin-bottom: 2.5rem;
+  }
+  
+  .plan__feature {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem;
+    text-align: left;
+  }
+  
+  .plan__feature li {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .plan__feature i {
+    color: #28a745;
+    margin-right: 0.5rem;
+  }
+  
+  .rts__btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .pricing__btn {
+    background: #007bff;
+    color: #fff;
+    border: none;
+  }
+  
+  .pricing__btn:hover {
+    background: #0056b3;
+  }
+  
+  .no__fill__btn {
+    background: transparent;
+    border: 1px solid #007bff;
+    color: #007bff;
+  }
+  
+  .no__fill__btn:hover {
+    background: #007bff;
+    color: #fff;
+  }
+  
+  .mt-30 {
+    margin-top: 1.875rem;
+  }
+  
+  .copyright {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+  
+  .rts__section__title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+  
+  .mb-5 {
+    margin-bottom: 3rem;
+  }
+  
+  .text-md-start {
+    text-align: left;
+  }
+  
+  .text-sm-center {
+    text-align: center;
+  }
+  
+  @media (max-width: 1199px) {
+    .col-xl-4 {
+      flex: 1 1 50%;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .col-md-6 {
+      flex: 1 1 100%;
+    }
+  }

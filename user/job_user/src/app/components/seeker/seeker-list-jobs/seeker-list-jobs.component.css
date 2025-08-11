@@ -1,0 +1,276 @@
+/* src/app/components/seeker-list-jobs/seeker-list-jobs.component.css */
+.topcv-search-container {
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 50px; /* Bo tròn lớn kiểu TopCV */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+  overflow: hidden;
+}
+
+.search-field {
+  flex: 1;
+  position: relative;
+}
+
+.search-title input,
+.search-category select,
+.search-location select {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #333;
+}
+
+.search-title input::placeholder {
+  color: #aaa;
+}
+
+.search-category select,
+.search-location select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="%23333" d="M7 10l5 5 5-5z"/></svg>') no-repeat right 20px center;
+  background-size: 12px;
+  padding-right: 40px;
+}
+
+.search-field:not(:last-child) {
+  border-right: 1px solid #ddd; /* Đường phân cách giữa các trường */
+}
+
+.search-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 30px;
+  background: #ff6200; /* Màu cam giống TopCV */
+  color: white;
+  border: none;
+  border-radius: 0 50px 50px 0; /* Bo tròn bên phải */
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.search-button:hover {
+  background: #e55a00; /* Màu cam đậm hơn khi hover */
+}
+
+.search-button svg {
+  fill: none;
+  stroke: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .search-bar {
+    flex-direction: column;
+    border-radius: 15px;
+  }
+
+  .search-field {
+    width: 100%;
+    border-right: none !important;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .search-button {
+    border-radius: 15px;
+    margin-top: 10px;
+  }
+}
+
+
+/* src/app/components/seeker-list-jobs/seeker-list-jobs.component.css */
+
+/* Container chính */
+.rts__section.section__padding {
+  padding: 40px 0;
+}
+/* Khung tìm kiếm chi tiết */
+.job__search__section {
+  background-color: #f9f9f9 !important;
+  background: none !important;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
+  padding: 30px;
+  margin-bottom: 40px;
+}
+
+/* Form tìm kiếm */
+.job__search__section form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Khoảng cách giữa các trường */
+}
+
+/* Mỗi trường tìm kiếm */
+.search__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.search__item label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+/* Ô nhập liệu và dropdown */
+.search__item input,
+.search__item select {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Hiệu ứng focus và hover */
+.search__item input:focus,
+.search__item select:focus {
+  border-color: #007bff;
+  background-color: #f9f9f9;
+}
+
+.search__item input:hover,
+.search__item select:hover {
+  border-color: #007bff;
+  background-color: #f9f9f9;
+}
+
+/* Placeholder */
+.search__item input::placeholder {
+  color: #aaa;
+}
+
+/* Tùy chỉnh dropdown */
+.search__item select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="%23333" d="M7 10l5 5 5-5z"/></svg>') no-repeat right 15px center;
+  background-size: 12px;
+  padding-right: 40px;
+}
+
+/* Biểu tượng kính lúp trong ô tìm kiếm */
+.search__item .position-relative {
+  position: relative;
+}
+
+.search__item .fa-light.fa-magnifying-glass {
+  margin-top: 0;
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #aaa;
+  font-size: 16px;
+}
+
+.search__item input[type="text"] {
+  padding-left: 40px; /* Để dành chỗ cho biểu tượng kính lúp */
+}
+
+/* Nút tìm kiếm */
+.job__search__btn {
+  padding: 12px 30px;
+  background-color: #28a745; /* Màu xanh lá giống trong hình */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.job__search__btn:hover {
+  background-color: #218838; /* Màu xanh lá đậm hơn khi hover */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .job__search__section {
+    padding: 20px;
+  }
+
+  .search__item label {
+    font-size: 14px;
+  }
+
+  .search__item input,
+  .search__item select {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .job__search__btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+.no-data {
+  text-align: center;
+  margin: 50px auto;
+  padding: 20px;
+  max-width: 500px;
+}
+
+.no-data__img {
+  width: 300px; 
+  max-width: 100%; 
+  margin-bottom: 20px;
+}
+
+.no-data h2 {
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.no-data p {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.no-data .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.no-data .btn:hover {
+  background: #0056b3;
+}
+

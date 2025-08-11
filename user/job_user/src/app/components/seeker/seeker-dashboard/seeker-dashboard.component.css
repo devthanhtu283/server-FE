@@ -1,0 +1,71 @@
+.dashboard__right {
+    padding: 20px;
+  }
+  
+  .dash__content {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .dash__overview, .chart__and__notification, .applied__jobs {
+    margin-bottom: 30px;
+  }
+  
+  .rts__job__card__big {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  .company__icon img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+  }
+  
+  .job__title {
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .job__title:hover {
+    color: #34A853;
+  }
+  
+  .apply__btn {
+    background: #34A853;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .apply__btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .pagination {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  .pagination button {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    cursor: pointer;
+  }
+  
+  .pagination button.active {
+    background: #34A853;
+    color: #fff;
+  }
+  
+  .pagination button:disabled {
+    background: #f0f0f0;
+    cursor: not-allowed;
+  }

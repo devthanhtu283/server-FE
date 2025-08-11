@@ -1,0 +1,250 @@
+.rts__pagination ul li a.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.rts__pagination ul li a.inactive {
+  background-color: #ddd;
+  color: #888;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.no-data {
+  text-align: center;
+  margin: 50px auto;
+  padding: 20px;
+  max-width: 500px;
+}
+
+.no-data__img {
+  width: 300px;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.no-data h2 {
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.no-data p {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.no-data .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.no-data .btn:hover {
+  background: #0056b3;
+}
+
+.rts__section.section__padding {
+  padding: 40px 0;
+}
+/* Khung tìm kiếm chi tiết */
+.job__search__section {
+  background-color: #f9f9f9 !important;
+  background: none !important;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
+  padding: 30px;
+  margin-bottom: 40px;
+}
+
+/* Form tìm kiếm */
+.job__search__section form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Khoảng cách giữa các trường */
+}
+
+/* Mỗi trường tìm kiếm */
+.search__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.search__item label {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+/* Ô nhập liệu và dropdown */
+.search__item input,
+.search__item select {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+/* Hiệu ứng focus và hover */
+.search__item input:focus,
+.search__item select:focus {
+  border-color: #007bff;
+  background-color: #f9f9f9;
+}
+
+.search__item input:hover,
+.search__item select:hover {
+  border-color: #007bff;
+  background-color: #f9f9f9;
+}
+
+/* Placeholder */
+.search__item input::placeholder {
+  color: #aaa;
+}
+
+/* Tùy chỉnh dropdown */
+.search__item select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="%23333" d="M7 10l5 5 5-5z"/></svg>')
+    no-repeat right 15px center;
+  background-size: 12px;
+  padding-right: 40px;
+}
+
+/* Biểu tượng kính lúp trong ô tìm kiếm */
+.search__item .position-relative {
+  position: relative;
+}
+
+.search__item .fa-light.fa-magnifying-glass {
+  margin-top: 0;
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #aaa;
+  font-size: 16px;
+}
+
+.search__item input[type="text"] {
+  padding-left: 40px; /* Để dành chỗ cho biểu tượng kính lúp */
+}
+
+/* Nút tìm kiếm */
+.job__search__btn {
+  padding: 12px 30px;
+  background-color: #28a745; /* Màu xanh lá giống trong hình */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.job__search__btn:hover {
+  background-color: #218838; /* Màu xanh lá đậm hơn khi hover */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .job__search__section {
+    padding: 20px;
+  }
+
+  .search__item label {
+    font-size: 14px;
+  }
+
+  .search__item input,
+  .search__item select {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .job__search__btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+
+.job__label__badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-left: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.job__label__badge.not-suitable {
+  background-color: #dc3545; /* Vibrant red */
+  color: white;
+}
+
+.job__label__badge.not-suitable:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
+
+.job__label__badge.moderately-suitable {
+  background-color: #fd7e14; /* Bright orange */
+  color: white;
+}
+
+.job__label__badge.moderately-suitable:hover {
+  background-color: #e06c12;
+  transform: scale(1.05);
+}
+
+.job__label__badge.most-suitable {
+  background-color: #00cc00; /* Bright green */
+  color: white;
+  animation: pulse 1.5s ease-in-out 2; /* Pulse animation for emphasis */
+}
+
+.job__label__badge.most-suitable:hover {
+  background-color: #00b300;
+  transform: scale(1.05);
+}
+
+/* Pulse animation for Most Suitable */
+@keyframes pulse {
+  0% {
+      transform: scale(1);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+  50% {
+      transform: scale(1.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  }
+  100% {
+      transform: scale(1);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+}

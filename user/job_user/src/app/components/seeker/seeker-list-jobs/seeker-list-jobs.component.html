@@ -1,0 +1,320 @@
+ <!-- breadcrumb area -->
+ <div class="rts__section breadcrumb__background">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 position-relative d-flex justify-content-between align-items-center">
+                <div class="breadcrumb__area max-content breadcrumb__padding z-2">
+                    <h1 class="breadcrumb-title h3 mb-3">Việc làm IT</h1>
+                    <nav>
+                        <ul class="breadcrumb m-0 lh-1">
+                          <li class="breadcrumb-item"><a href="/seeker/home">Trang chủ</a></li>
+                          <li class="breadcrumb-item active" aria-current="page">Danh sách việc làm</li>
+                        </ul>
+                    </nav>                  
+                </div>
+                <div class="breadcrumb__area__shape d-flex gap-4 justify-content-end align-items-center">
+                    <div class="shape__one common">
+                        <img src="assets/img/breadcrumb/shape-1.svg" alt="">
+                    </div>
+                    <div class="shape__two common">
+                        <img src="assets/img/breadcrumb/shape-2.svg" alt="">
+                    </div>
+                    <div class="shape__three common">
+                        <img src="assets/img/breadcrumb/shape-3.svg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- breadcrumb area end -->
+    <!-- <div class="topcv-search-container">
+        <div class="search-bar">
+         
+          <div class="search-field search-title">
+            <input type="text" [(ngModel)]="searchTitle" placeholder="Nhập từ khóa (VD: Java)" (input)="onSearchChange()" (keyup.enter)="searchBarJobs()">
+          </div>
+      
+          <div class="search-field search-category">
+            <select [(ngModel)]="selectedCategoryId" (change)="searchBarJobs()">
+              <option [value]="null" disabled selected>Chọn danh mục</option>
+              <option *ngFor="let category of categories" [value]="category.id">{{ category.subcategoryName }}</option>
+            </select>
+          </div>
+      
+
+          <div class="search-field search-location">
+            <select [(ngModel)]="selectedLocationId" (change)="searchBarJobs()">
+              <option [value]="null" disabled selected>Chọn địa điểm</option>
+              <option *ngFor="let location of locations" [value]="location.id">{{ location.name }}</option>
+            </select>
+          </div>
+    
+          <button class="search-button" (click)="searchBarJobs()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            Tìm kiếm
+          </button>
+        </div>
+      </div> -->
+    <!-- job list one -->
+    <div class="rts__section section__padding">
+        <div class="container">
+            <div class="row g-30">
+                <div class="col-lg-5 col-xl-4">
+                    <div class="job__search__section mb-40">
+                        <form [formGroup]="searchForm" (ngSubmit)="searchJobs(1)" class="d-flex flex-column row-30">
+                            <div class="search__item">
+                                <label for="search" class="mb-3 font-20 fw-medium text-dark text-capitalize">Tiêu đề</label>
+                                <div class="position-relative">
+                                    <input type="text" id="search" formControlName="title" placeholder="Nhập từ khóa (VD: Java)">
+                                    <i class="fa-light fa-magnifying-glass"></i>
+                                </div>
+                            </div>
+                            <!-- job location -->
+                            <div class="search__item">
+                                <label for="location" class="mb-3 font-20 fw-medium text-dark text-capitalize">Địa điểm</label>
+                                <div class="position-relative">
+                                    <select id="location" formControlName="locationId" class="form-select">
+                                        <option value="" disabled selected>Chọn địa điểm</option>
+                                        <ng-container *ngFor="let location of locations">
+                                            <option value="{{location.id}}">{{location.name}}</option>
+                                        </ng-container>
+                                    </select>                          
+                                </div>
+                            </div>
+                            
+                            <!-- job category -->
+                            <div class="search__item">
+                                <label for="cat" class="mb-3 font-20 fw-medium text-dark text-capitalize">Kinh nghiệm</label>
+                                <div class="position-relative">
+                                    <select class="form-select" formControlName="experienceId">
+                                        <option value="" disabled selected>Chọn theo kinh nghiệm</option>
+                                        <ng-container *ngFor="let ex of experiences">
+                                            <option value="{{ex.id}}">{{ex.name}}</option>
+                                        </ng-container>
+                                    </select>                         
+                                </div>
+                            </div>
+                            <!-- job post time -->
+                            <div class="search__item">
+                                <div class="search__item__list">
+                                    <label for="location" class="mb-3 font-20 fw-medium text-dark text-capitalize">Hình thức làm việc</label>
+                                    <div class="position-relative">
+                                        <select class="form-select" formControlName="worktypeId">
+                                            <option value="" disabled selected>Chọn hình thức làm việc</option>
+                                            <ng-container *ngFor="let type of worktypes">
+                                                <option value="{{type.id}}">{{type.name}}</option>
+                                            </ng-container>
+                                        </select>                          
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="search__item">
+                                <div class="search__item__list">
+                                    <label for="location" class="mb-3 font-20 fw-medium text-dark text-capitalize">Lĩnh vực</label>
+                                    <div class="position-relative">
+                                        <select class="form-select" formControlName="categoryId">
+                                            <option value="" disabled selected>Chọn lĩnh vực</option>
+                                            <ng-container *ngFor="let cat of categories">
+                                                <option value="{{cat.id}}">{{cat.subcategoryName}}</option>
+                                            </ng-container>
+                                        </select>                         
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <button type="submit" class="rts__btn no__fill__btn max-content mx-auto job__search__btn font-sm" aria-label="Search">Tìm kiếm</button>
+                        </form>
+                    </div>
+    
+               
+                    
+                </div>
+                <div class="col-lg-7 col-xl-8">
+                    <div class="top__query mb-40 d-flex flex-wrap gap-4 gap-xl-0 justify-content-between align-items-center">
+                        <span class="text-dark font-20 fw-medium">{{getJobRange()}}</span>
+                        <div class="d-flex flex-wrap align-items-center gap-4">
+                            <!-- <form action="job-list-2.html#" class="category-select">
+                                <div class="position-relative">
+                                    <div class="nice-select" tabindex="0">
+                                        <span class="current">All Category</span>
+                                        <ul class="list">
+                                            <li data-value="Nothing" data-display="All Category" class="option selected focus">All Category</li>
+                                            <li data-value="1" class="option">Part Time</li>
+                                            <li data-value="2" class="option">Full Time</li>
+                                            <li data-value="3" class="option">Government</li>
+                                            <li data-value="4" class="option">NGO</li>
+                                            <li data-value="5" class="option">Private</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </form> -->
+                           
+                        </div>
+                    </div>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane grid__style fade" role="tabpanel" id="grid">
+                            <div class="row g-30">
+                                <div class="col-xl-6 col-md-6 col-lg-12">
+                                    <div class="rts__job__card">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="company__icon">
+                                                <img src="assets/img/home-1/company/google.svg" alt="">
+                                            </div>
+                                            <div class="featured__option">
+                                              
+                                            </div>
+                                        </div>
+                                        <div class="d-flex gap-3 flex-wrap mt-4">
+                                            <div class="d-flex gap-1 align-items-center">
+                                                <i class="fa-light fa-location-dot"></i> Newyork, USA
+                                            </div>
+                                            <div class="d-flex gap-1 align-items-center">
+                                                <i class="fa-light fa-briefcase"></i> Full Time
+                                            </div>
+                                        </div>
+                                        <div class="h6 job__title my-3">
+                                            <a href="job-list-2.html#" aria-label="job">
+                                                Senior UX Designer, Google
+                                            </a>
+                                        </div>
+                                        <p>Consectetur adipisicing elit. Possimus 
+                                            aut mollitia eum ipsum fugiat odio officiis odit mollitia eum ipsum.
+                                        </p>
+                                        <div class="job__tags d-flex flex-wrap gap-2 mt-4">
+                                            <a href="job-list-2.html#">Creative</a>
+                                            <a href="job-list-2.html#">user interface</a>
+                                            <a href="job-list-2.html#">web ui</a>
+                                        </div>
+                                    </div>
+                                </div>
+                              
+                                
+                            </div>
+                        </div>
+                        <div class="tab-pane fade show active list__style" role="tabpanel" id="list">
+                            <div class="row g-30">
+                                <!-- single item -->
+                            <ng-container *ngIf="jobs && jobs.length > 0; else noData">
+                               <ng-container *ngFor="let job of jobs">
+                                    <div class="col-lg-12">
+                                        <div class="rts__job__card__big style__gradient flex-wrap justify-content-between d-flex gap-4 align-items-center">
+                                            <div class="d-flex flex-wrap flex-md-nowrap flex-lg-wrap flex-xl-nowrap gap-4 align-items-center">
+                                                <div class="company__icon rounded-2">
+                                                    <img src="{{imgBaseUrl + job.employerLogo}}" alt="">
+                                                </div>
+                                                
+                                                
+                                                <div class="job__meta w-100 d-flex flex-column gap-2">
+                                                    <div class="d-flex justify-content-between align-items-center gap-3">
+                                                        <a [href]="'/seeker/job-details/' + job.id" class="job__title h6 mb-0">
+                                                            {{ job.title.length > 35 ? (job.title | slice: 0: 35) + '...' : job.title }}
+                                                        </a>
+                                                    </div>
+                                                    <div class="d-flex gap-2 align-items-center" style="color: black;">
+                                                        <span>
+                                                            <a class="job__company" [href]="'/seeker/company/' + job.employerId" style="color: #424e5c">
+                                                                {{ job.employerName.length > 20 ? (job.employerName | slice: 0: 20) + '...' : job.employerName.toUpperCase() }}
+                                                            </a>
+                                                        </span>
+                                                   </div>
+                                                    <div class="d-flex gap-2 align-items-center" style="color: black;">
+                                                         {{job.required}}
+                                                    </div>
+                                                    <div class="d-flex gap-3 gap-md-4 flex-wrap mb-2">
+                                                        <div class="d-flex gap-2 align-items-center">
+                                                            <i class="fa-light fa-location-dot"></i> {{job.locationName}}
+                                                        </div>
+                                                        <div class="d-flex gap-2 align-items-center">
+                                                            <i class="fa-light rt-briefcase"></i> {{job.worktypeName}}
+                                                        </div>
+                                                        <div class="d-flex gap-2 align-items-center">
+                                                            <i class="fa-light fa-clock"></i> {{job.postedExpired | date: 'dd/MM/yyyy'}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="job__tags d-flex flex-wrap gap-3">
+                                                        <a >{{job.requiredSkills}}</a>
+                                                        <a >{{job.salary}}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>  <br>
+                                            <div>
+                                                <button *ngIf="job.checkFavorite != true" type="button" class="bookmark__btn" (click)="addFavorite(job.id)"> <i class="fa fa-heart"></i></button>
+                                                <button *ngIf="job.checkFavorite" type="button" class="bookmark__btn" (click)="addFavorite(job.id)"> <i class="fa fa-heart text-danger"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                               </ng-container>
+                               <ng-template #noData>
+                                <div class="no-data">
+                                    <img src="assets/img/no-data.jpg" alt="Không có dữ liệu" class="no-data__img">
+                                    <h2>Không có việc làm nào</h2>
+                                    <p>Bạn chưa ứng tuyển công việc nào. Hãy tìm kiếm và ứng tuyển ngay!</p>
+                                    <a href="/seeker/list-jobs" class="btn btn-primary">Tìm việc ngay</a>
+                                </div>
+                            </ng-template>
+                               
+                                <!-- single item end -->
+        
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pagination mt-4">
+                        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Trang trước</button>
+                        <span *ngFor="let page of getPages()" (click)="changePage(page)" [class.active]="page === currentPage">
+                          {{ page }}
+                        </span>
+                        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Trang sau</button>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+     </div>
+    <!-- job list one end -->
+
+    <!-- app center -->
+    
+    <div class="rts__section pb-120">
+        <div class="container">
+            <div class="row">
+                <div class="rts__appcenter">
+                    <div class="rts__appcenter__shape">
+                        <img src="assets/img/home-1/app/shape.png" alt="">
+                    </div>
+                    <div class="rts__appcenter__content d-flex flex-wrap flex-xl-nowrap align-items-center justify-content-between justify-content-lg-center">
+                        <div class="content__left align-items-end d-flex position-relative top-15px">
+                            <img src="assets/img/home-1/app/app_screen.png" alt="">
+                        </div>
+                        <div class="content__right text-white text-center text-xl-start max-630">
+                            <h3 class="l--1 mb-4 text-white wow animated fadeInUp" data-wow-delay=".1s ">Download The app Free!</h3>
+                            <p class="wow animated fadeInUp" data-wow-delay=".2s">Looking for a new job can be both exciting and daunting. Navigating the job market involves exploring various avenues.</p>
+                            <div class="d-flex gap-3 justify-content-center justify-content-xl-start flex-wrap mt-40 wow animated fadeInUp" data-wow-delay=".3s">
+                                <div class="link">
+                                    <a href="https://appstore.com" target="_blank" title="app store">
+                                        <img src="assets/img/home-1/app/app-store.svg" alt="">
+                                    </a>
+                                </div>
+                                <div class="link">
+                                    <a href="https://google.com" target="_blank" title="play store">
+                                        <img src="assets/img/home-1/app/play-store.svg" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        
+    <!-- app center end -->
+
+    
+
+<p-toast></p-toast>

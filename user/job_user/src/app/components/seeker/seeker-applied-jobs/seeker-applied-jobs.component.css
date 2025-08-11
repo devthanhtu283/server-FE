@@ -1,0 +1,96 @@
+.single__applied__job .content__info {
+  display: table;
+  align-items: center;
+}
+
+.single__applied__job .content__flex {
+  display: inline-grid;
+}
+
+.rts__pagination ul li a.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.rts__pagination ul li a.inactive {
+  background-color: #ddd;
+  color: #888;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Giữ nguyên class mặc định */
+.single__applied__job .action__operation {
+  transition: var(--transition);
+}
+
+/* Ứng viên đã ứng tuyển (status = 0) */
+.single__applied__job .action__operation.pending {
+  background: linear-gradient(
+      228.34deg,
+      #fef2eb 0%,
+      #f1f1f1 46.31%,
+      #e4e0ea 100%
+    ),
+    #ffffff;
+  color: var(--rts-button-1);
+}
+
+/* Nhà tuyển dụng đã xem (status = 1) */
+.single__applied__job .action__operation.viewed {
+  border: 1px solid var(--rts-border);
+  color: #f70;
+}
+
+/* Đã được duyệt (status = 2) */
+.single__applied__job .action__operation.approved {
+  border: 1px solid var(--rts-border);
+  color: #00b14f;
+}
+
+/* Đã bị từ chối (status = 3) */
+.single__applied__job .action__operation.rejected {
+  border: 1px solid var(--rts-border);
+  color: #a6acb2;
+}
+.no-data {
+  text-align: center;
+  margin: 50px auto;
+  padding: 20px;
+  max-width: 500px;
+}
+
+.no-data__img {
+  width: 300px;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.no-data h2 {
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.no-data p {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.no-data .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.no-data .btn:hover {
+  background: #0056b3;
+}

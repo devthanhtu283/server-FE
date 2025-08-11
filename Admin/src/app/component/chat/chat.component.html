@@ -1,0 +1,223 @@
+<div class="card card-body py-3">
+  <div class="row align-items-center">
+    <div class="col-12">
+      <div class="d-sm-flex align-items-center justify-space-between">
+        <h4 class="mb-4 mb-sm-0 card-title">Chat</h4>
+        <nav aria-label="breadcrumb" class="ms-auto">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item d-flex align-items-center">
+              <a class="text-muted text-decoration-none d-flex" href="index-2.html">
+                <i class="fa fa-home fs-6"></i>
+              </a>
+            </li>
+            <li class="breadcrumb-item" aria-current="page">
+              <span class="badge fw-medium fs-2 bg-primary-subtle text-primary">Chat</span>
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card overflow-hidden chat-application">
+  <div class="d-flex align-items-center justify-content-between gap-6 m-3 d-lg-none">
+    <button class="btn btn-primary d-flex" type="button" data-bs-toggle="offcanvas" data-bs-target="#chat-sidebar" aria-controls="chat-sidebar">
+      <i class="fa fa-bars fs-5"></i>
+    </button>
+    <form class="position-relative w-100">
+      <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Contact" />
+      <i class="fa fa-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+    </form>
+  </div>
+  <div class="d-flex">
+    <!-- Sidebar for Receivers -->
+    <div class="w-30 d-none d-lg-block border-end user-chat-box">
+      <div class="px-4 pt-9 pb-6">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <div class="d-flex align-items-center">
+            <div class="position-relative">
+              <img src="../assets/images/profile/user-1.jpg" alt="user" width="54" height="54" class="rounded-circle" />
+              <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+                <span class="visually-hidden">Online</span>
+              </span>
+            </div>
+            <div class="ms-3">
+              <h6 class="fw-semibold mb-2">{{ user.username || 'User' }}</h6>
+              <p class="mb-0 fs-2">Admin</p>
+            </div>
+          </div>
+         
+        </div>
+        <form class="position-relative mb-4">
+          <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Contact" />
+          <i class="fa fa-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+        </form>
+       
+      </div>
+      <div class="app-chat">
+        <ul class="chat-users mb-0 mh-n100" data-simplebar>
+          <li *ngFor="let receiver of receivers" (click)="chooseReceiver(receiver)">
+            <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user" [ngClass]="{'bg-light-subtle': selectedReceiver?.data?.id === receiver.data.id}" [attr.data-user-id]="receiver.data.id">
+              <div class="d-flex align-items-center">
+                <span class="position-relative">
+                  <img
+                    [src]="imgBaseUrl + (receiver.data.companyName ? receiver.data.logo : receiver.data.avatar || 'default-avatar.jpg')"
+                    alt="user"
+                    width="48"
+                    height="48"
+                    class="rounded-circle"
+                  />
+                  <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+                    <span class="visually-hidden">Online</span>
+                  </span>
+                </span>
+                <div class="ms-3 d-inline-block w-75">
+                  <h6 class="mb-1 fw-semibold chat-title">
+                    {{ receiver.data.companyName || receiver.data.fullName }}
+                  </h6>
+                  <span class="fs-3 text-truncate text-body-color d-block">
+                    {{ receiver.chats.length > 0 ? (receiver.chats[receiver.chats.length - 1].message | slice:0:20) + '...' : 'No messages' }}
+                  </span>
+                </div>
+              </div>
+              <!-- <p class="fs-2 mb-0 text-muted">{{ receiver.chats.length > 0 ? getTimeAgo(receiver.chats[receiver.chats.length - 1].time) : '' }}</p> -->
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- Chat Area -->
+    <div class="w-70 w-xs-100 chat-container">
+      <div class="chat-box-inner-part h-100">
+        <div class="chat-not-selected h-100" *ngIf="!selectedReceiver?.data?.id">
+          <div class="d-flex align-items-center justify-content-center h-100 p-5">
+            <div class="text-center">
+              <span class="text-primary">
+                <i class="fa fa-comments fs-10"></i>
+              </span>
+              <h6 class="mt-2">Open chat from the list</h6>
+            </div>
+          </div>
+        </div>
+        <div class="chatting-box d-block" *ngIf="selectedReceiver?.data?.id">
+          <div class="p-9 border-bottom chat-meta-user d-flex align-items-center justify-content-between">
+            <div class="hstack gap-3 current-chat-user-name">
+              <div class="position-relative">
+                <img
+                  [src]="imgBaseUrl + (selectedReceiver.data.companyName ? selectedReceiver.data.logo : selectedReceiver.data.avatar || 'default-avatar.jpg')"
+                  alt="user"
+                  width="48"
+                  height="48"
+                  class="rounded-circle"
+              />
+                <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+                  <span class="visually-hidden">Online</span>
+                </span>
+              </div>
+              <div>
+                <h6 class="mb-1 name fw-semibold">
+                  {{ selectedReceiver.data.companyName || selectedReceiver.data.fullName }}
+                </h6>
+                <p class="mb-0">Online</p>
+              </div>
+              
+            </div>
+          
+          </div>
+          <div class="d-flex parent-chat-box">
+            <div class="chat-box w-100 w-xs-100">
+              <div class="chat-box-inner p-9" data-simplebar #chatContent>
+                <div class="chat-list chat active-chat" [attr.data-user-id]="selectedReceiver.data.id">
+                  <div *ngFor="let message of selectedReceiver.chats" class="hstack gap-3 align-items-start mb-7" [ngClass]="{'justify-content-end': message.senderId === user.id, 'justify-content-start': message.senderId !== user.id}">
+                    <img
+                      *ngIf="message.senderId !== user.id"
+                      [src]="imgBaseUrl + (selectedReceiver.data.companyName ? selectedReceiver.data.logo : selectedReceiver.data.avatar || 'default-avatar.jpg')"
+                      alt="user"
+                      width="40"
+                      height="40"
+                      class="rounded-circle"
+                    />
+                    <div [ngClass]="{'text-end': message.senderId === user.id}">
+                      <h6 class="fs-2 text-muted">{{ formatMessageTime(message.time) }}</h6>
+                      <div class="p-2 rounded-1 d-inline-block fs-3" [ngClass]="{'bg-info-subtle text-dark': message.senderId === user.id, 'text-bg-light text-dark': message.senderId !== user.id}">
+                        {{ message.message }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="px-9 py-6 border-top chat-send-message-footer">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="d-flex align-items-center gap-2 w-85">
+                  
+                    <input type="text" class="form-control message-type-box text-muted border-0 rounded-0 p-0 ms-2" placeholder="Type a Message" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" />
+                  </div>
+                  <ul class="list-unstyled mb-0 d-flex align-items-center">
+                    
+                    <li>
+                      <a class="text-dark px-2 fs-7 bg-hover-primary nav-icon-hover position-relative z-index-5" href="javascript:void(0)" (click)="sendMessage()">
+                        <i class="fa fa-paper-plane"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Mobile Sidebar -->
+    <div class="offcanvas offcanvas-start user-chat-box chat-offcanvas" tabindex="-1" id="chat-sidebar" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Chats</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="px-4 pt-9 pb-6">
+        <div class="d-flex align-items-center justify-content-between mb-3">
+          <div class="d-flex align-items-center">
+            <div class="position-relative">
+              <img [src]="imgBaseUrl + (user?.avatar || 'default-avatar.jpg')" alt="user" width="54" height="54" class="rounded-circle" />
+              <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+                <span class="visually-hidden">Online</span>
+              </span>
+            </div>
+            <div class="ms-3">
+              <h6 class="fw-semibold mb-2">{{ user.username || 'User' }}</h6>
+              <p class="mb-0 fs-2">{{ user?.role || 'Role' }}</p>
+            </div>
+          </div>
+         
+        <form class="position-relative mb-4">
+          <input type="text" class="form-control search-chat py-2 ps-5" id="text-srh" placeholder="Search Contact" />
+          <i class="fa fa-search position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+        </form>
+       
+      </div>
+      <div class="app-chat">
+        <ul class="chat-users mh-n100" data-simplebar>
+          <li *ngFor="let receiver of receivers" (click)="chooseReceiver(receiver)">
+            <a href="javascript:void(0)" class="px-4 py-3 bg-hover-light-black d-flex align-items-start justify-content-between chat-user" [ngClass]="{'bg-light-subtle': selectedReceiver?.data?.id === receiver.data.id}" [attr.data-user-id]="receiver.data.id">
+              <div class="d-flex align-items-center">
+                <span class="position-relative">
+                  <img [src]="imgBaseUrl + (receiver.data.logo || 'default-avatar.jpg')" alt="user" width="48" height="48" class="rounded-circle" />
+                  <span class="position-absolute bottom-0 end-0 p-1 badge rounded-pill bg-success">
+                    <span class="visually-hidden">Online</span>
+                  </span>
+                </span>
+                <div class="ms-3 d-inline-block w-75">
+                  <h6 class="mb-1 fw-semibold chat-title">{{ receiver.data.companyName }}</h6>
+                  <span class="fs-3 text-truncate text-body-color d-block">
+                    {{ receiver.chats.length > 0 ? (receiver.chats[receiver.chats.length - 1].message | slice:0:20) + '...' : 'No messages' }}
+                  </span>
+                </div>
+              </div>
+              <p class="fs-2 mb-0 text-muted">{{ receiver.chats.length > 0 ? getTimeAgo(receiver.chats[receiver.chats.length - 1].time) : '' }}</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

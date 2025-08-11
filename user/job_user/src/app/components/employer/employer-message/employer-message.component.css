@@ -1,0 +1,31 @@
+.chat__content {
+    max-height: 700px; /* Giới hạn chiều cao của khu vực tin nhắn */
+    overflow: auto; /* Hiển thị thanh cuộn dọc khi nội dung vượt quá */
+    padding: 10px; /* Thêm padding để giao diện đẹp hơn */
+    display: flex;
+    flex-direction: column; /* Đảm bảo các tin nhắn xếp theo cột */
+    scroll-behavior: smooth; /* Cuộn mượt mà */
+  }
+  
+  /* Tùy chỉnh thanh cuộn */
+  .chat__content::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .chat__content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  .chat__content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  .chat__content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  
+  /* Đảm bảo input nhập tin nhắn không bị ảnh hưởng */
+  .input__msg {
+    margin-top: auto; /* Đẩy form nhập tin nhắn xuống dưới cùng */
+  }

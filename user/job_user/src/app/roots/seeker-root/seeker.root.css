@@ -1,0 +1,40 @@
+.scrollable-dropdown {
+  max-height: 280px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;
+}
+
+/* Tùy chọn: làm đẹp scrollbar (Chrome/Safari) */
+.scrollable-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollable-dropdown::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.single__notification.unread {
+  background-color: #f0f8ff;
+  font-weight: bold;
+  border-left: 4px solid #007bff;
+}
+.notification__status .dot {
+  height: 10px;
+  width: 10px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.rts__dropdown__content .single__notification .notification__content span {
+  color: black;
+  font-weight: bold;
+}
+
+.navigation__menu--item {
+  position: relative;
+  margin: 0 15px;
+}

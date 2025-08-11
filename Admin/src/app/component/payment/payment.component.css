@@ -1,0 +1,5 @@
+.table-responsive {
+  overflow-x: auto;
+}
+.text-bg-success { background-color: #d4edda; }
+.text-bg-danger { background-color: #f8d7da; }

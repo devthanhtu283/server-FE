@@ -1,0 +1,21 @@
+select.form-select {
+  color: #000 !important;
+}
+.rts__pagination ul li a.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.rts__pagination ul li a.inactive {
+  background-color: #ddd;
+  color: #888;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.autocomplete-dropdown {
+  max-height: 250px;
+  overflow-y: auto;
+  z-index: 1000;
+}

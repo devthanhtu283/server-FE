@@ -1,0 +1,102 @@
+<div class="body-wrapper">
+  <div class="container-fluid">
+    <div class="card card-body py-3">
+      <div class="row align-items-center">
+        <div class="col-12">
+          <div class="d-sm-flex align-items-center justify-space-between">
+            <h4 class="mb-4 mb-sm-0 card-title">Quản Lý Công Việc</h4>
+            <nav aria-label="breadcrumb" class="ms-auto">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item" aria-current="page">
+                  <span class="badge fw-medium fs-2 bg-primary-subtle text-primary">Danh sách công việc</span>
+                </li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-list">
+      <div class="card">
+        <div class="card-body p-3">
+          <div class="d-flex justify-content-between align-items-center gap-6 mb-9">
+            <form class="position-relative">
+              <input type="text" class="form-control search-chat py-2 ps-5" placeholder="Tìm kiếm công việc" [(ngModel)]="searchQuery" (ngModelChange)="onSearch()" name="searchQuery">
+              <i class="fa-solid fa-magnifying-glass position-absolute top-50 start-0 translate-middle-y fs-6 text-dark ms-3"></i>
+            </form>
+          </div>
+          <div class="table-responsive border rounded">
+            <table class="table align-middle text-nowrap mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">Tiêu đề</th>
+                  <th scope="col">Công ty đăng bài</th>
+                  <th scope="col">Ngày đăng bài</th>
+                  <th scope="col">Trạng thái</th>
+                  <th scope="col">Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let job of jobs">
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <!-- <img *ngIf="job.employerLogo" [src]="job.employerLogo" class="rounded-circle" alt="user-img"
+                      width="56" height="56"> -->
+                      <div class="ms-3">
+                        <h6 class="fw-semibold mb-0 fs-4">{{ job.title }}</h6>
+                        <p class="mb-0">{{ job.address }}</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <p class="mb-0">{{ job.employerName }}</p>
+                  </td>
+                  <td>
+                    <p class="mb-0">{{ job.postedExpired | date: 'dd/MM/yyyy HH:mm:ss' }}</p>
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <span class="text-bg-{{ job.status === true ? 'success' : 'danger' }} p-1 rounded-circle"></span>
+                      <p class="mb-0 ms-2">{{ job.status === true ? "Hoạt động" : "Không hoạt động" }}</p>
+                    </div>
+                  </td>
+                  <td>
+                    <a class="fs-6 text-muted" href="javascript:void(0)" style="margin-right: 18px;">
+                      <i class="fa-solid fa-pen-to-square" (click)="editJob(job.id, job.status, job.title)" pTooltip="Click để chỉnh sửa" tooltipPosition="top"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex align-items-center justify-content-end py-1">
+              <p class="mb-0 fs-2">Số hàng mỗi trang:</p>
+              <select class="form-select w-auto ms-2 me-4 py-1 pe-7 ps-2 border-0" [(ngModel)]="pageSize" (ngModelChange)="onPageSizeChange()">
+                <option [value]="5">5</option>
+                <option [value]="10">10</option>
+                <option [value]="25">25</option>
+              </select>
+              <p class="mb-0 fs-2">{{ pageInfo }}</p>
+              <nav aria-label="pagination">
+                <ul class="pagination justify-content-center mb-0 ms-9">
+                  <li class="page-item p-1" [class.disabled]="currentPage === 1">
+                    <a class="page-link border-0 rounded-circle text-dark fs-6 round-32 d-flex align-items-center justify-content-center" href="javascript:void(0)" (click)="onPageChange(currentPage - 1)">
+                      <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                  </li>
+                  <li class="page-item p-1" [class.disabled]="currentPage === totalPages">
+                    <a class="page-link border-0 rounded-circle text-dark fs-6 round-32 d-flex align-items-center justify-content-center" href="javascript:void(0)" (click)="onPageChange(currentPage + 1)">
+                      <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<p-confirmDialog header="Xác nhận" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>

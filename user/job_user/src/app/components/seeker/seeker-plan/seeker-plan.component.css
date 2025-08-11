@@ -1,0 +1,41 @@
+:host ::ng-deep .p-dialog {
+    border-radius: 8px;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+    padding: 1.5rem;
+}
+
+:host ::ng-deep .p-checkbox .p-checkbox-box.p-highlight {
+    background-color: #2196F3;
+    border-color: #2196F3;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card h5 {
+    color: #333;
+}
+
+.card p {
+    margin-bottom: 0.5rem;
+}
+
+.card ul {
+    padding-left: 20px;
+    margin-bottom: 1rem;
+}
+
+.card ul li {
+    margin-bottom: 0.5rem;
+}

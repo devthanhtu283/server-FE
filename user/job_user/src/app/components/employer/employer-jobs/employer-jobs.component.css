@@ -1,0 +1,367 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  td {
+    padding: 12px;
+    vertical-align: top;
+    width: 50%;
+  }
+  
+  td label {
+    font-weight: bold;
+  }
+  
+  p-dropdown, p-inputText, p-inputNumber, p-calendar, p-editor {
+    width: 100%;
+  }
+  
+  button {
+    margin-top: 10px;
+  }
+  .button-container {
+    display: flex;
+    justify-content: center; /* Căn giữa các button theo chiều ngang */
+    gap: 20px; /* Khoảng cách đều giữa các button */
+    margin-top: 20px; /* Nếu cần khoảng cách phía trên */
+  }
+/* Container for the table */
+.table-container {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* Table Styling */
+.applicant-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 15px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Column Widths for Balance */
+.applicant-table th, .applicant-table td {
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+  color: #333;
+}
+
+.applicant-table th.avatar-col, .applicant-table td.avatar-col {
+  width: 10%; /* Avatar column */
+}
+
+.applicant-table th.name-col, .applicant-table td.name-col {
+  width: 25%; /* Applicant Name column */
+}
+
+.applicant-table th.applied-col, .applicant-table td.applied-col {
+  width: 25%; /* Applied At column */
+}
+
+.applicant-table th.status-col, .applicant-table td.status-col {
+  width: 15%; /* Status column */
+}
+
+.applicant-table th.actions-col, .applicant-table td.actions-col {
+  width: 25%; /* Actions column */
+}
+
+/* Header Styling */
+.applicant-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #555;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Alternating Row Colors */
+.applicant-table tbody tr.alternate-row {
+  background-color: #f9f9f9;
+}
+
+/* Row Hover Effect */
+.applicant-table tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+/* Avatar Styling */
+.applicant-table td img.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #e0e0e0;
+}
+
+/* Status Styling */
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 13px;
+  text-align: center;
+  min-width: 80px; /* Ensure consistent width for status badges */
+}
+
+.status-pending {
+  background-color: #ff9800;
+  color: white;
+}
+
+.status-approved {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status-rejected {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Button Group Styling */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Button Styling */
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  font-weight: 500;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Kiểu cho <select> */
+/* Wrapper chứa select và mũi tên */
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 300px; /* Giới hạn chiều rộng */
+}
+
+/* Kiểu cho select */
+.custom-select {
+  width: 100%; /* Chiếm toàn bộ chiều rộng */
+  padding: 12px 16px; /* Tăng padding bên trong */
+  border: 2px solid #ced4da; /* Viền xám */
+  border-radius: 8px; /* Bo góc */
+  background-color: #fff; /* Màu nền trắng */
+  font-size: 16px; /* Kích thước font */
+  color: #333; /* Màu chữ */
+  outline: none; /* Xóa viền mặc định khi focus */
+  transition: all 0.3s ease; /* Hiệu ứng mượt mà khi hover */
+  height: 40px; /* Đảm bảo dropdown có đủ chiều cao */
+  line-height: 1.5; /* Tăng khoảng cách dòng */
+}
+
+/* Tạo hiệu ứng khi focus trên select */
+.custom-select:focus {
+  border-color: #007bff; /* Viền xanh dương khi focus */
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Hiệu ứng shadow xung quanh */
+}
+
+/* Tùy chỉnh các option trong dropdown */
+.custom-select option {
+  padding: 12px 16px; /* Tăng padding cho các option */
+  font-size: 16px; /* Kích thước font của các option */
+  line-height: 1.5; /* Đảm bảo dòng chữ có khoảng cách đủ lớn */
+}
+
+/* Làm đẹp placeholder */
+.custom-select option:disabled {
+  color: #aaa; /* Màu cho option disabled */
+  background-color: #f1f1f1; /* Màu nền cho option disabled */
+}
+
+/* Thêm kiểu cho dropdown khi chọn */
+.custom-select option:selected {
+  background-color: #4CAF50; /* Màu nền khi item được chọn */
+  color: white; /* Màu chữ khi item được chọn */
+}
+
+/* Mũi tên dropdown */
+.arrow-icon {
+  position: absolute;
+  right: 10px; /* Điều chỉnh vị trí mũi tên */
+  top: 50%; /* Đặt mũi tên giữa */
+  transform: translateY(-50%); /* Canh giữa mũi tên theo chiều dọc */
+  cursor: pointer; /* Hiển thị con trỏ chuột khi hover */
+}
+
+/* Hiệu ứng hover cho mũi tên */
+.arrow-icon:hover svg path {
+  fill: #4CAF50; /* Màu xanh khi hover */
+}
+
+/* Kiểu mũi tên */
+.arrow-icon svg path {
+  fill: #333; /* Màu mũi tên */
+}
+
+
+.custom-select-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.custom-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    padding-right: 30px;
+}
+
+.arrow-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+
+/* Add this to your component's .scss or .css file */
+
+.p-dialog-content {
+  padding: 20px; /* Add some padding inside the dialog */
+}
+
+.p-4 {
+  padding: 0 !important; /* Remove the default padding from the form */
+}
+
+.table-auto {
+  width: 100%;
+}
+
+.border-separate {
+  border-spacing: 0 15px; /* Increase vertical spacing between rows */
+}
+
+label.font-semibold {
+  display: block; /* Make labels take full width */
+  margin-bottom: 5px; /* Add some space below the label */
+  color: #333; /* Darker text for better readability */
+}
+
+input.pInputText,
+textarea.pInputTextarea,
+.custom-select-wrapper .custom-select,
+.p-calendar {
+  width: 100% !important; /* Make input fields take full width of their container */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.custom-select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.custom-select {
+  appearance: none; /* Remove default browser styling */
+  background-color: white;
+  padding-right: 2.5em; /* Space for the arrow */
+}
+
+.arrow-icon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none; /* Allows clicking through the arrow */
+  color: #777;
+}
+
+.pl-6 {
+  padding-left: 20px; /* Increase left padding for the second column */
+}
+
+.mt-2 {
+  margin-top: 10px; /* Add some top margin for better spacing */
+}
+
+.button-container {
+  margin-top: 30px; /* Add more space above the buttons */
+  padding-top: 20px;
+  border-top: 1px solid #eee; /* Subtle separator for buttons */
+}
+
+/* Style for the p-editor */
+.p-editor-container {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.p-editor-toolbar {
+  border-bottom: 1px solid #ccc;
+  padding: 0.5rem;
+  background-color: #f8f8f8;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.p-editor-content {
+  padding: 0.75rem;
+  min-height: 100px; /* Ensure some minimum height */
+}
+
+/* Specific width adjustments based on the HTML table layout */
+table td:first-child {
+  width: 50%; /* Adjust as needed */
+  padding-right: 10px;
+}
+
+table td:nth-child(2) {
+  width: 50%; /* Adjust as needed */
+}
+
+/* Adjust width for full-width elements */
+table tr > td[colspan="2"] > * {
+  width: calc(100% - 20px); /* Account for some horizontal padding */
+}

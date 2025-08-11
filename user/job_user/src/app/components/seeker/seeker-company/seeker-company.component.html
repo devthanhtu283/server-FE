@@ -1,0 +1,203 @@
+    <!-- breadcrumb area -->
+    <div class="rts__section breadcrumb__background">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 position-relative d-flex justify-content-between align-items-center">
+                    <div class="breadcrumb__area max-content breadcrumb__padding z-2">
+                        <h1 class="breadcrumb-title h3 mb-3">Các công ty IT</h1>
+                        <nav>
+                            <ul class="breadcrumb m-0 lh-1">
+                              <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                              <li class="breadcrumb-item active" aria-current="page">Danh sách công ty IT</li>
+                            </ul>
+                        </nav>                  
+                    </div>
+                    <div class="breadcrumb__area__shape d-flex gap-4 justify-content-end align-items-center">
+                        <div class="shape__one common">
+                            <img src="assets/img/breadcrumb/shape-1.svg" alt="">
+                        </div>
+                        <div class="shape__two common">
+                            <img src="assets/img/breadcrumb/shape-2.svg" alt="">
+                        </div>
+                        <div class="shape__three common">
+                            <img src="assets/img/breadcrumb/shape-3.svg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- breadcrumb area end -->
+    
+        <!-- job list one -->
+         <div class="rts__section section__padding">
+            <div class="container">
+                <div class="row g-30">
+                    <div class="col-lg-12 col-xl-12">
+                        <!-- search form -->
+                        <div class="top__query mb-40 d-flex flex-wrap gap-4 gap-xl-0 justify-content-between align-items-center">
+                            <span class="text-dark font-20 fw-medium">{{getCompanyRange()}}</span>
+                            <div class="d-flex flex-wrap align-items-center gap-4">
+                                <div class="position-relative">
+                                    <input
+                                      type="text"
+                                      class="form-control"
+                                      placeholder="Tìm công ty..."
+                                      [(ngModel)]="searchKeyword"
+                                      (input)="onSearchInput()"
+                                      (blur)="hideSuggestions()"
+                                      (focus)="showSuggestions = true"
+                                      autocomplete="off"
+                                    />
+                                    <!-- Danh sách gợi ý -->
+                                    <ul class="list-group position-absolute w-100 autocomplete-dropdown"
+                                        *ngIf="showSuggestions && filteredSuggestions.length">
+                                    <li
+                                        class="list-group-item list-group-item-action"
+                                        *ngFor="let suggestion of filteredSuggestions">
+                                       <a [href]="'/seeker/company/' + suggestion.id">
+                                            <span style="color: black;">{{ suggestion.companyName }}</span>
+                                       </a>
+                                    </li>
+                                    </ul>
+
+                                  </div>
+                                  
+                                <form action="employer-2.html#" class="category-select">
+                                    <div class="position-relative">
+                                        <form>
+                                            <select
+                                              name="categoryFilter"
+                                              [(ngModel)]="selectedCategory"
+                                              (change)="onCategoryChange()"
+                                              class="form-select"
+                                            >
+                                              <option [value]="'large'">Các công ty lớn</option>
+                                              <option [value]="'medium-small'">Các công ty vừa và nhỏ</option>
+                                            </select>
+                                          </form>
+                                          
+                                          
+
+                                    </div>
+                                </form>
+                                <div class="d-flex align-items-center gap-3" id="nav-tab" role="tablist">
+                                    <button class="rts__btn no__fill__btn list-style nav-link active" data-bs-toggle="tab" data-bs-target="#list"> <i class="fa-solid fa-list"></i></button>
+                                    <button class="rts__btn no__fill__btn grid-style nav-link" data-bs-toggle="tab" data-bs-target="#grid"> <i class="fa-solid fa-grid"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- search form end -->
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade"  role="tabpanel" id="grid">
+                                <div class="row g-30">
+                                    <ng-container *ngFor="let company of companies">
+                                        <div class="col-lg-6 col-md-6">
+                                            <div class="rts__job__card rounded-2 style__four">
+                                                <div class="company__icon mx-auto rounded-0">
+                                                    <img src="{{imgUrl + company.logo}}" alt="">
+                                                </div>
+                                                <div class="h6 job__title mt-3 mb-2">
+                                                    <a [href]="'/seeker/company/' + company.id" aria-label="job">
+                                                   {{company.companyName}}
+                                                    </a>
+                                                </div>
+                                                <p>{{company.companyField}}</p>
+                                                <div class="d-flex justify-content-center gap-3 mt-3">
+                                                    <div class="d-flex gap-2 align-items-center">
+                                                        <i class="fa-light fa-location-dot"></i> {{company.address}}
+                                                    </div>
+                                                </div>
+                                                <a href="employer-2.html#" class="rts__btn fill__btn rounded-2">open Job 20</a>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                   
+                                </div>
+                            </div>
+                            <div class="tab-pane grid__style fade show active" role="tabpanel" id="list">
+                                <div class="row g-30">
+                                    <ng-container *ngFor="let company of companies">
+                                    <!-- single employer -->
+                                        <div class="col-lg-12">
+                                            <div class="rts__single__employer employer__style__two flex-wrap gap-4 d-flex justify-content-between align-items-center">
+                                                <div class="flex-wrap d-flex gap-4 align-items-center">
+                                                    <div class="icon rounded-0">
+                                                        <img src="{{imgUrl + company.logo}}" alt="">
+                                                    </div>
+                                                    <div class="content">
+                                                        <a [href]="'/seeker/company/' + company.id" class="h6 mb-0 d-block fw-semibold text-dark">{{company.companyName}}</a>
+                                                        <span class="d-block">{{company.companyField}}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex gap-2 align-items-center">
+                                                    <i class="fa-light fa-location-dot text-dark"></i> {{company.companyField}}
+                                                </div>
+                                                <div class="flex-wrap d-flex gap-4 align-items-center">
+                                                    <button class="apply__btn style__two">
+                                                        <a [href]="'/seeker/company/' + company.id">
+                                                            <span style="color: #7D8087"> {{ openJob[company.id] || 0 }} vị trí đang tuyển dụng</span>
+                                                            
+                                                        </a>
+
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                    <!-- single employer end -->
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- pagination -->
+                        <div class="pagination mt-4">
+                            <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Trang trước</button>
+                            <span *ngFor="let page of getPages()" (click)="changePage(page)" [class.active]="page === currentPage">
+                              {{ page }}
+                            </span>
+                            <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Trang sau</button>
+                        </div>
+                        <!-- pagination end -->
+                    </div>
+                </div>
+            </div>
+         </div>
+        <!-- job list one end -->
+    
+        <!-- app center -->
+        
+        <div class="rts__section pb-120">
+            <div class="container">
+                <div class="row">
+                    <div class="rts__appcenter">
+                        <div class="rts__appcenter__shape">
+                            <img src="assets/img/home-1/app/shape.png" alt="">
+                        </div>
+                        <div class="rts__appcenter__content d-flex flex-wrap flex-xl-nowrap align-items-center justify-content-between justify-content-lg-center">
+                            <div class="content__left align-items-end d-flex position-relative top-15px">
+                                <img src="assets/img/home-1/app/app_screen.png" alt="">
+                            </div>
+                            <div class="content__right text-white text-center text-xl-start max-630">
+                                <h3 class="l--1 mb-4 text-white wow animated fadeInUp" data-wow-delay=".1s ">Download The app Free!</h3>
+                                <p class="wow animated fadeInUp" data-wow-delay=".2s">Looking for a new job can be both exciting and daunting. Navigating the job market involves exploring various avenues.</p>
+                                <div class="d-flex gap-3 justify-content-center justify-content-xl-start flex-wrap mt-40 wow animated fadeInUp" data-wow-delay=".3s">
+                                    <div class="link">
+                                        <a href="https://appstore.com" target="_blank" title="app store">
+                                            <img src="assets/img/home-1/app/app-store.svg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="link">
+                                        <a href="https://google.com" target="_blank" title="play store">
+                                            <img src="assets/img/home-1/app/play-store.svg" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        <!-- app center end -->

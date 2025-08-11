@@ -1,0 +1,52 @@
+.rts__pagination ul li a.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.rts__pagination ul li a.inactive {
+  background-color: #ddd;
+  color: #888;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.no-data {
+  text-align: center;
+  margin: 50px auto;
+  padding: 20px;
+  max-width: 500px;
+}
+
+.no-data__img {
+  width: 300px;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.no-data h2 {
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.no-data p {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 20px;
+}
+
+.no-data .btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.no-data .btn:hover {
+  background: #0056b3;
+}

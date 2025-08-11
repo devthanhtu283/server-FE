@@ -1,0 +1,140 @@
+<div class="rts__section section__padding">
+    <div class="container">
+      <div class="row g-30">
+        <div class="col-xl-8 col-lg-7">
+
+          <!-- Form Đánh Giá -->
+          <div class="employer__review mt-40" id="review-section">
+            <h6 class="fw-semibold mb-20">Đánh giá <strong style="font-weight: bold;">{{employer.companyName}}</strong></h6>
+            <p>
+              Bạn chỉ mất 1 phút để hoàn thành bảng đánh giá này. Ý kiến của bạn sẽ giúp ích rất nhiều cho cộng đồng Developer đang tìm việc.
+            </p>
+  
+            <form>
+              <!-- Đánh giá chung -->
+              <div class="form-group">
+                <label>Đánh giá chung <span class="required">*</span></label>
+                <div class="rating">
+                  <i class="fas fa-star" *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+                     [class.filled]="i < rating"
+                     (click)="setRating(i + 1)"></i>
+                </div>
+              </div>
+  
+              <!-- Câu hỏi 1: Chế độ OT -->
+              <div class="form-group">
+                <label>Bạn cảm thấy như thế nào về chế độ OT? <span class="required">*</span></label>
+                <div class="radio-group">
+                  <label>
+                    <input type="radio" name="otRating" [(ngModel)]="otRating" value="true" required /> Hài lòng
+                  </label>
+                  <label>
+                    <input type="radio" name="otRating" [(ngModel)]="otRating" value="false" /> Không hài lòng
+                  </label>
+                </div>
+              </div>
+  
+              <!-- Câu hỏi 2: Lý do -->
+              <div class="form-group">
+                <label>Nhập lý do của bạn</label>
+                <textarea
+                  [(ngModel)]="reason"
+                  name="reason"
+                  class="form-control"
+                  placeholder="Nhập lý do của bạn"
+                  rows="3"
+                ></textarea>
+                <small>Giới hạn từ 10 đến 140 ký tự.</small>
+              </div>
+  
+              <!-- Câu hỏi 3: Điều thích -->
+              <div class="form-group">
+                <label>Điều làm bạn thích làm việc tại đây <span class="required">*</span></label>
+                <textarea
+                  [(ngModel)]="goodMessage"
+                  name="goodMessage"
+                  class="form-control"
+                  placeholder="Nhập nội dung"
+                  rows="3"
+                  required
+                ></textarea>
+                <small>Giới hạn từ 10 đến 10000 ký tự.</small>
+              </div>
+  
+              <!-- Câu hỏi 4: Đề nghị cải thiện -->
+              <div class="form-group">
+                <label>Đề nghị cải thiện <span class="required">*</span></label>
+                <textarea
+                  [(ngModel)]="improve"
+                  name="improve"
+                  class="form-control"
+                  placeholder="Nhập nội dung"
+                  rows="3"
+                  required
+                ></textarea>
+              </div>
+  
+              <!-- Nút submit -->
+              <button type="submit" class="btn btn-primary" (click)="onSubmit()">Đánh giá chung</button>
+            </form>
+          </div>
+        </div>
+  
+        <!-- Sidebar: Danh sách việc làm & Hướng dẫn -->
+        <div class="col-lg-5 col-xl-4 d-flex flex-column gap-40">
+          <!-- Hướng dẫn và điều kiện đánh giá -->
+          <div class="sidebar">
+            <h6 class="fw-semibold mb-20">Hướng dẫn và điều kiện để đánh giá</h6>
+            <p><strong>Mọi đánh giá phụ thuộc vào Hướng Dẫn & Điều kiện để đánh giá để được hiển thị trên website.</strong></p>
+            <p>Xin vui lòng:</p>
+            <ul>
+              <li>Không sử dụng từ ngữ mang ý xúc phạm, miễn phí, thô tục</li>
+              <li>Không cung cấp thông tin cá nhân</li>
+              <li>Không cung cấp thông tin bảo mật của một bên, bí mật kinh doanh chẳng hạn</li>
+            </ul>
+            <p>
+              Cảm ơn bạn đã dành thời gian để chia sẻ ý kiến về Hướng Dẫn & Điều kiện để đánh giá.
+              <a [routerLink]="'/seeker/policy'">Xem chi tiết</a>
+            </p>
+          </div>        
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Employer Details End -->
+  
+  <!-- App Center -->
+  <div class="rts__section pb-120">
+    <div class="container">
+      <div class="row">
+        <div class="rts__appcenter">
+          <div class="rts__appcenter__shape">
+            <img src="assets/img/home-1/app/shape.png" alt="">
+          </div>
+          <div class="rts__appcenter__content d-flex flex-wrap flex-xl-nowrap align-items-center justify-content-between justify-content-lg-center">
+            <div class="content__left align-items-end d-flex position-relative top-15px">
+              <img src="assets/img/home-1/app/app_screen.png" alt="">
+            </div>
+            <div class="content__right text-white text-center text-xl-start max-630">
+              <h3 class="l--1 mb-4 text-white wow animated fadeInUp" data-wow-delay=".1s">Download The app Free!</h3>
+              <p class="wow animated fadeInUp" data-wow-delay=".2s">Looking for a new job can be both exciting and daunting. Navigating the job market involves exploring various avenues.</p>
+              <div class="d-flex gap-3 justify-content-center justify-content-xl-start flex-wrap mt-40 wow animated fadeInUp" data-wow-delay=".3s">
+                <div class="link">
+                  <a href="https://appstore.com" target="_blank" title="app store">
+                    <img src="assets/img/home-1/app/app-store.svg" alt="">
+                  </a>
+                </div>
+                <div class="link">
+                  <a href="https://google.com" target="_blank" title="play store">
+                    <img src="assets/img/home-1/app/play-store.svg" alt="">
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- App Center End -->
+   <p-toast></p-toast>

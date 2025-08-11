@@ -1,0 +1,127 @@
+<br><br>
+
+<div style="display: flex; justify-content: center; align-items: center; margin-bottom: -100px;">
+  <h1>Bài thi {{ title }}</h1>
+</div>
+<br>
+<p-toast></p-toast>
+<main class="overflow-hidden">
+  <!-- Màn hình hướng dẫn -->
+  <div *ngIf="!startTest">
+    <div class="instruction-container">
+      <h2>Chào bạn!</h2>
+      <p>
+        Đây là bài thi của công ty <strong>{{ companyName }}</strong>.
+      </p>
+      <p>
+        Bài thi bao gồm <strong>{{ totalSteps }}</strong> câu hỏi và bạn có
+        <strong>30 phút</strong> để hoàn thành.
+      </p>
+      <p>Hãy chuẩn bị sẵn sàng và nhấn nút "Bắt đầu" để bắt đầu làm bài.</p>
+      <button (click)="startTest = true; startTimer()" class="start-btn">
+        Bắt đầu
+      </button>
+    </div>
+  </div>
+
+  <!-- Phần bài thi -->
+  <div style="margin-top: -200px;" *ngIf="startTest && !showResultPage">
+    <!-- Đồng hồ đếm ngược -->
+    <div class="timer-container">
+      <h3>Thời gian còn lại: {{ formatTime(timeLeft) }}</h3>
+    </div>
+
+    <!-- Phần bài thi hiện tại -->
+    <div class="step-number">
+      <div class="step-number-inner" style="color: white;">
+        Câu hỏi <span id="activeStep">{{ now + 1 }}</span
+        >/{{ totalSteps }}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="tab-100 order-c col-md-5 p-relative">
+          <div class="side-img">
+            <img src="assets/images/2 - Copy.png" height="400" alt="side-img" />
+          </div>
+
+          <div class="step-bar">
+            <div *ngFor="let step of steps; let i = index" class="bar">
+              <div [class.w-100]="i <= now" class="fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-100 col-md-7">
+          <div class="show-section wrapper">
+            <section *ngIf="now < steps.length">
+              <h2 class="q-heading">{{ getCurrentStep().content }}</h2>
+
+              <div class="form-inner">
+                <div *ngIf="getCurrentStep().questionType === 'choiceAnswer'">
+                  <div
+                    *ngFor="let option of getCurrentStep().answers"
+                    class="bounce-left radio-field" style="padding: 20px; padding-top: 50px !important; padding-bottom: 50px !important;"
+                  >
+                    <input
+                      class="checkmark"
+                      type="radio"
+                      [name]="'op' + getCurrentStep().id"
+                      [value]="option.content"
+                      [(ngModel)]="selectedOptions[now + 1]"
+                      (click)="onOptionSelected(now + 1, option.content)"
+                    />
+                    <label>{{ option.content }}</label>
+                  </div>
+                </div>
+
+                <div *ngIf="getCurrentStep().questionType === 'textAnswer'">
+                  <textarea
+                    class="form-control"
+                    [(ngModel)]="textAnswers[now + 1]"
+                    (input)="
+                      onTextAnswerChange(now + 1, $any($event.target).value)
+                    "
+                    placeholder="Enter your answer here..."
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="next-prev">
+                <button *ngIf="now > 0" (click)="prevStep()">
+                  Câu trước
+                </button>
+                <button *ngIf="now < totalSteps - 1" (click)="nextStep()">
+                  Câu sau
+                </button>
+                <button
+                  *ngIf="now === totalSteps - 1"
+                  (click)="calculateScore()"
+                >
+                  Hoàn thành
+                </button>
+              </div>
+
+              <div id="error" *ngIf="errorMsg" class="alert alert-danger">
+                {{ errorMsg }}
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phần kết quả -->
+  <div *ngIf="showResultPage">
+    <div class="result_inner">
+      <h2 class="result_title">Chúc mừng bạn đã hoàn thành bài test!</h2>
+      <p>Kết quả bài test sẽ được nhà tuyển dụng xem xét và đánh giá.</p>
+
+      <button (click)="goToJobWeb()" class="return-btn">
+        Trở về Web job
+      </button>
+    </div>
+  </div>
+</main>

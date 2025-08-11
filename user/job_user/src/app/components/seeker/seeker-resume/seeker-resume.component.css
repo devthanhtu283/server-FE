@@ -1,0 +1,550 @@
+/* Skill & Experience Section */
+.my__education {
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Card Wrapper for Skills */
+.my__skills__card {
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Skill Section */
+.my__skillset {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill__tags {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  gap: 10px;
+}
+
+.skill__tags li {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: #f0f0f0; /* Changed to gray */
+  border-radius: 20px;
+  font-size: 14px;
+  color: #333; /* Darker text color for readability */
+  transition: background 0.2s; /* Added transition for hover effect */
+}
+
+.skill__tags li:hover {
+  background: #ddd; /* Hover effect to match .suggested-skill */
+}
+
+.skill__item {
+  margin-right: 5px;
+}
+
+.skill__item.text-muted {
+  background: #f8f9fa;
+  color: #666;
+  border: 1px dashed #e0e0e0;
+  font-style: italic;
+}
+
+.skill__tag {
+  margin-right: 5px;
+}
+
+.skill__item__add {
+  font-size: 16px;
+  cursor: pointer;
+  color: #007bff;
+}
+
+.skill__item__add:hover {
+  color: #0056b3;
+}
+
+/* Ô nhập skill */
+.skill__input__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.skill__input {
+  border: none;
+  outline: none;
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 15px;
+  background: white;
+  min-width: 100px;
+  border: 1px solid #ddd;
+}
+
+/* Danh sách gợi ý */
+.skill__suggestions {
+  position: absolute;
+  top: 45px;
+  left: 0px;
+  width: 200px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  z-index: 10;
+  border: 1px solid #ddd;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.skill__suggestions li {
+  padding: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.skill__suggestions li:hover {
+  background: #0056b3;
+  color: white;
+}
+
+/* Nút xóa skill */
+.skill__remove {
+  margin-left: 5px;
+  cursor: pointer;
+  color: #666; /* Changed to a darker color for visibility on gray background */
+  font-size: 16px;
+}
+
+.skill__remove:hover {
+  color: #333; /* Slightly darker on hover */
+}
+
+/* Nút Lưu Kỹ Năng */
+.save__skills__btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.save__skills__btn:hover {
+  background: #218838;
+}
+
+/* Nút Lưu Lại Kỹ Năng */
+.save__my_skills__btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.save__my_skills__btn:hover:not(.saved) {
+  background: #218838;
+}
+
+.save__my_skills__btn.saved {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Danh sách Skills có sẵn */
+.available-skills {
+  margin-top: 15px;
+  width: 100%;
+}
+
+.available-skills h6 {
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.available-skills ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.available-skills ul li {
+  background: #f0f0f0; /* Changed to gray */
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s ease; /* Updated transition */
+  color: #333; /* Darker text color for readability */
+}
+
+.available-skills ul li:hover {
+  background: #ddd; /* Hover effect to match .suggested-skill */
+}
+
+/* Khu vực Upload CV */
+.my__profile__tab {
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.cv__upload__section {
+  display: flex;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  max-width: 200px;
+}
+
+.file-upload__label {
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.file-upload__input {
+  display: none;
+}
+
+/* Uploaded CV */
+.uploaded__cv {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8f9fa;
+  padding: 12px 15px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  transition: background 0.3s ease;
+}
+
+.uploaded__cv:hover {
+  background: #f1f3f5;
+}
+
+.cv__avatar {
+  width: 50px;
+  height: 70px;
+  object-fit: cover;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.cv__details {
+  flex: 1;
+}
+
+.cv__name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  display: block;
+}
+
+.cv__size {
+  font-size: 12px;
+  color: #666;
+  display: block;
+}
+
+/* Nút Lưu CV */
+.save__cv__btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.save__cv__btn:hover {
+  background: #218838;
+}
+
+/* Danh sách CV */
+.cv__list {
+  width: 100%;
+}
+
+.cv__items {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.cv__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8f9fa;
+  padding: 12px 15px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 8px;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.cv__item:hover {
+  background: #f1f3f5;
+}
+
+.cv__item.text-muted {
+  background: #f8f9fa;
+  border: 1px dashed #e0e0e0;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Nút xóa CV */
+.cv__remove {
+  color: #ff4d4f;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.cv__remove:hover {
+  color: #d9363e;
+}
+
+/* Danh sách education */
+.education__list {
+  list-style: none;
+  padding: 0;
+}
+
+.education__item {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 0;
+}
+
+.education__item:last-child {
+  border-bottom: none;
+}
+
+.edu__info {
+  padding: 5px;
+}
+
+.edu__title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.edu__date {
+  font-size: 14px;
+  color: #6c757d;
+  margin: 5px 0;
+}
+
+.edu__desc {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+}
+
+/* Experience Section */
+.my__experience {
+  border: 1px solid #e0e0e0;
+}
+
+.experience__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.experience__item {
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.experience__item:last-child {
+  border-bottom: none;
+}
+
+.exp__info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.exp__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.exp__company {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.exp__actions {
+  display: flex;
+  gap: 5px;
+}
+
+.exp__date {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.exp__desc {
+  font-size: 14px;
+  color: #444;
+  margin: 0;
+}
+
+/* Edit Experience Form */
+.edit-experience-form {
+  border: 1px solid #e0e0e0;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #007bff;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Thêm style cho các tiêu đề */
+.fw-medium {
+  font-weight: 500;
+}
+
+.mt-30 {
+  margin-top: 30px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.p-30 {
+  padding: 30px;
+}
+
+.p-20 {
+  padding: 20px;
+}
+
+.bg-white {
+  background: #ffffff;
+}
+
+.radius-16 {
+  border-radius: 16px;
+}
+
+.suggested-skill {
+  display: inline-block;
+  margin: 5px;
+  padding: 6px 12px;
+  background-color: #f0f0f0;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.suggested-skill:hover {
+  background-color: #ddd;
+}
+
+/* Nút Lưu Lại Kinh Nghiệm */
+.save__my_experiences__btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.save__my_experiences__btn:hover:not(.saved) {
+  background: #218838;
+}
+
+.save__my_experiences__btn.saved {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+/* Nút Lưu Lại Học vấn */
+.save__my_educations__btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.save__my_educations__btn:hover:not(.saved) {
+  background: #218838;
+}
+
+.save__my_educations__btn.saved {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+.file-upload__label.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}

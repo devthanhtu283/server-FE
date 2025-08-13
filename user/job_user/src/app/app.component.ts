@@ -65,9 +65,9 @@ export class AppComponent implements OnInit {
       if (url.startsWith('/seeker/job-details/')) {
         return true;
       }
-      if (url.startsWith('/seeker/')) {
-        return true;
-      }
+      // if (url.startsWith('/seeker/')) {
+      //   return true;
+      // }
       return false;
     }
     

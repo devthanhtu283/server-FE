@@ -23,6 +23,7 @@ export class SeekerHomeComponent implements OnInit {
   totalPages: number = 1;
   totalJobs: number = 0;
   pageSize: number = 6;
+  readonly pageWindow = 6;
   locations: Location[] = [];
   worktypes: Worktype[] = [];
   experiences: Experience[] = [];
@@ -213,10 +214,24 @@ export class SeekerHomeComponent implements OnInit {
   }
 
   getPages(): number[] {
-    const pages = [];
-    for (let i = 1; i <= this.totalPages; i++) {
-      pages.push(i);
+    if (this.totalPages <= 0) return [];
+  
+    const windowSize = this.pageWindow;
+    const half = Math.floor(windowSize / 2);
+  
+    // start mặc định: canh giữa quanh currentPage
+    let start = Math.max(1, this.currentPage - half);
+    let end = start + windowSize - 1;
+  
+    // nếu end vượt quá totalPages, kéo ngược lại
+    if (end > this.totalPages) {
+      end = this.totalPages;
+      start = Math.max(1, end - windowSize + 1);
     }
+  
+    // build mảng trang
+    const pages: number[] = [];
+    for (let i = start; i <= end; i++) pages.push(i);
     return pages;
   }
 

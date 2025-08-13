@@ -4,6 +4,7 @@ import { Application } from "src/app/models/application.model";
 import { Job } from "src/app/models/job.model";
 import { User } from 'src/app/models/user.model';
 import { ApplicationService } from "src/app/services/application.service";
+import { BaseUrl } from "src/app/services/baseUrl.service";
 import { UserService } from "src/app/services/user.service";
 
 @Component({
@@ -15,16 +16,18 @@ export class SeekerAppliedJobsComponent implements OnInit {
   totalPages: number;
   pageSize: number;
   status: number;
+  imgBaseUrl: string;
 
   constructor(
     private applicationService: ApplicationService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-
+    private baseUrl: BaseUrl,
   ) {}
   user: User;
   applications: Application[];
   ngOnInit(): void {
+    this.imgBaseUrl = this.baseUrl.getUserImageUrl();
     const user = JSON.parse(localStorage.getItem('user'));
     this.user = user;
     this.status = 0;

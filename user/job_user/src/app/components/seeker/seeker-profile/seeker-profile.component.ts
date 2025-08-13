@@ -25,7 +25,9 @@ export class SeekerProfileComponent implements OnInit {
   avatarUrl: string = 'assets/img/dashboard/no-avatar.jpg';
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
-  imageUrl: File | null = null;
+  imageUrl: string | File | null = null;
+
+  coverFile?: File;
 
   provinces: any[] = [];
   districts: any[] = [];
@@ -35,6 +37,7 @@ export class SeekerProfileComponent implements OnInit {
   selectedDistrict: number | null = null;
   selectedWard: number | null = null;
   coverImgPreview: string | null = null;
+  coverImgUrl: string | null = null; 
 
   constructor(
     private formBuilder: FormBuilder,
@@ -253,25 +256,40 @@ export class SeekerProfileComponent implements OnInit {
   //     reader.readAsDataURL(file);
   //   }
   // }
-  onFileChange(event: any): void {
-    this.imageUrl = event.target.files[0] || null;
-    if (this.imageUrl) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.coverImgPreview = reader.result as string;
-        console.log('Cover image preview updated:', this.coverImgPreview);
-      };
-      reader.readAsDataURL(this.imageUrl);
-    } else {
-      this.coverImgPreview = this.seeker?.avatar ? `${this.baseUrl.getUserImageUrl()}${this.seeker.avatar}` : null;
-    }
+onFileChange(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  const file = input.files && input.files[0] ? input.files[0] : null;
+
+  if (file) {
+    this.coverFile = file;            // GIỮ FILE TẠI ĐÂY
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.coverImgPreview = reader.result as string;  // preview
+      console.log('Cover image preview updated:', this.coverImgPreview);
+    };
+    reader.readAsDataURL(file);
+
+    // KHÔNG gán file vào imageUrl nữa!
+    // imageUrl = string (URL) sẽ được gán sau khi upload thành công
+  } else {
+    // không có file -> dùng ảnh hiện có (avatar) hoặc null
+    this.coverImgPreview = null;
+    this.imageUrl = this.seeker?.avatar
+      ? `${this.baseUrl.getUserImageUrl()}${this.seeker.avatar}`
+      : null;
   }
+}
 
 
   // Hàm submit để cập nhật thông tin
   onSubmit() {
     const birthday = this.candidateForm.value.dob;
-    const formattedBirthday = moment(birthday, 'YYYY-MM-DD').format('DD/MM/YYYY');
+    const formattedBirthday = birthday
+      ? moment(birthday, 'YYYY-MM-DD').format('DD/MM/YYYY')
+      : null;
+
+    // Lấy avatar hiện có từ LS để không ghi đè null
+    const current = JSON.parse(localStorage.getItem('candidate') || 'null');
 
     this.seeker = {
       id: this.user.id,
@@ -282,81 +300,68 @@ export class SeekerProfileComponent implements OnInit {
       status: 1,
       dob: formattedBirthday,
       updatedAt: null,
-      avatar: null,
+      avatar: current?.avatar ?? null,
     };
-    console.log(this.seeker);
 
-    var formData = new FormData();
-    if (this.selectedFile) {
-      formData.append('file', this.selectedFile, this.selectedFile.name);
+    const formData = new FormData();
+    if (this.coverFile) {
+      formData.append('file', this.coverFile, this.coverFile.name);
     }
-
     formData.append('seekerDTO', JSON.stringify(this.seeker));
+
     this.userService.updateCandidate(formData).then(
       (res) => {
+        const updated = res?.data;
+
+        // cập nhật ảnh thật + clear preview
+        this.avatarUrl = this.getImageUrl(updated?.avatar);
+        this.coverImgPreview = null;
+
+        // lưu LS
+        localStorage.setItem('candidate', JSON.stringify(updated));
+
         this.messageService.add({
           severity: 'success',
           summary: 'Cập nhật thành công',
           detail: 'Bạn đã cập nhật thông tin thành công.',
         });
-        localStorage.removeItem('candidate');
-        // this.avatarUrl = this.getImageUrl(res.data.avatar);
-        // if(res.avatarUrl) {
-        //   this.imageUrl = `http://103.153.68.231:8081/assets/images/${res.avatarUrl}`;
-        // }
-        this.coverImgPreview = null;
-        localStorage.setItem('candidate', JSON.stringify(res.data));
-        this.coverImgPreview = res.data.avatar ? `${this.baseUrl.getUserImageUrl()}${res.data.avatar}` : null;
-        setTimeout(() => {
-            this.router.navigate(['/seeker/profile']);
-        }, 500);
+
+        this.router.navigate(['/seeker/profile']);
       },
       (err) => {
         console.log(err);
         this.messageService.add({
           severity: 'error',
           summary: 'Cập nhật thất bại',
-          detail:
-            'Quá trình cập nhật thông tin không thành công. Vui lòng kiểm tra lại.',
+          detail: 'Quá trình cập nhật thông tin không thành công. Vui lòng kiểm tra lại.',
         });
         this.router.navigate(['/seeker-profile']);
       }
     );
-    if (this.seeker.dob) {
-      const parts = this.seeker.dob.split('/');
-      // Giả sử dob có định dạng "dd/MM/yyyy"
-      this.seeker.dob = `${parts[2]}-${parts[1]}-${parts[0]}`; // yyyy-MM-dd
-    }
-
-
   }
 
-  getImageUrl(avatarPath: string): string {
-    const candidate = JSON.parse(localStorage.getItem('candidate'));
-
-    // Nếu avatarPath không có giá trị, sử dụng avatar từ candidate hoặc ảnh mặc định
-    if (!avatarPath) {
-      return candidate?.data?.avatar || 'assets/img/dashboard/no-avatar.jpg';
+  getImageUrl(avatarPath?: string | null): string {
+    // 1) Ưu tiên tham số truyền vào
+    let p = avatarPath;
+  
+    // 2) Nếu không có, lấy từ localStorage (hỗ trợ cả 2 dạng: candidate.avatar hoặc candidate.data.avatar)
+    if (!p) {
+      const cached = JSON.parse(localStorage.getItem('candidate') || 'null');
+      p = cached?.avatar ?? cached?.data?.avatar ?? null;
     }
-
-    // Nếu avatarPath là một URL tạm thời (data:image hoặc blob:)
-    if (avatarPath.startsWith('data:image') || avatarPath.startsWith('blob:')) {
-      return avatarPath;
-    }
-
-    // Nếu avatarPath đã có tiền tố http://103.153.68.231:8081/uploads/, trả về trực tiếp
-    if (avatarPath.startsWith('http://103.153.68.231:8081/uploads/')) {
-      return avatarPath;
-    }
-
-    // Nếu avatarPath là một đường dẫn tương đối (bắt đầu bằng assets/)
-    if (avatarPath.startsWith('assets/')) {
-      return avatarPath;
-    }
-
-    // Nếu avatarPath là một đường dẫn tương đối khác, thêm tiền tố
-    return `http://103.153.68.231:8081/uploads/${avatarPath}`;
+  
+    // 3) Không có gì -> ảnh mặc định
+    if (!p) return 'assets/img/dashboard/no-avatar.jpg';
+  
+    // 4) Các trường hợp đã là URL/preview
+    if (p.startsWith('data:') || p.startsWith('blob:')) return p; // preview
+    if (p.startsWith('http://') || p.startsWith('https://')) return p; // URL tuyệt đối
+    if (p.startsWith('assets/')) return p; // asset cục bộ
+  
+    // 5) Trường hợp backend trả relative path -> nối base
+    return `${this.baseUrl.getUserImageUrl()}${p}`;
   }
+  
 
   convertDateFormat(dateString: string): string {
     if (!dateString) return '';
@@ -372,4 +377,10 @@ export class SeekerProfileComponent implements OnInit {
     const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
     return formattedDate;
   }
+  onAvatarError(ev: Event) {
+    const img = ev.target as HTMLImageElement;
+    img.src = 'assets/img/dashboard/no-avatar.jpg';     
+    this.avatarUrl = 'assets/img/dashboard/no-avatar.jpg'; 
+  }
+  
 }

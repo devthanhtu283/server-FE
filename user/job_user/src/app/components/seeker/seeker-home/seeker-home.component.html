@@ -171,13 +171,21 @@
                         </div>
                     </ng-container>
                 </div>
-                <div class="pagination mt-4">
-                        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Trang trước</button>
-                        <span *ngFor="let page of getPages()" (click)="changePage(page)" [class.active]="page === currentPage">
-                          {{ page }}
-                        </span>
-                        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Trang sau</button>
-                </div>
+                <div class="pagination mt-4" *ngIf="totalPages > 1">
+                    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+                      Trang trước
+                    </button>
+                  
+                    <span *ngFor="let page of getPages()"
+                          (click)="changePage(page)"
+                          [class.active]="page === currentPage">
+                      {{ page }}
+                    </span>
+                  
+                    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+                      Trang sau
+                    </button>
+                  </div>
             </div>
             <ng-template #noData>
                 <div class="no-data">

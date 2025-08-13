@@ -7,7 +7,8 @@ import { JobService } from "src/app/services/job.service";
 import { UserService } from "src/app/services/user.service";
 
 @Component({
-  templateUrl: "./seeker-favorite.component.html"
+  templateUrl: "./seeker-favorite.component.html",
+  styleUrls: ['./seeker-favorite.component.css']
 })
 export class SeekerFavoriteComponent implements OnInit {
   seekerId: number;

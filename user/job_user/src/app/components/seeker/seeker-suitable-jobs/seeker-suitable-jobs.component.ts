@@ -50,64 +50,72 @@ export class SeekerSuitableJobsComponent implements OnInit {
   ) {}
   user: User;
   ngOnInit(): void {
+
+  
     this.imgBaseUrl = this.baseUrl.getUserImageUrl();
-
-    const seekerInfo = localStorage.getItem('candidate');
-    if (seekerInfo) {
-      const seeker = JSON.parse(seekerInfo);
-      this.seekerId = seeker.data.id;
+  
+    // Lấy seekerId an toàn từ localStorage (hỗ trợ cả candidate.id lẫn candidate.data.id)
+    try {
+      const seekerRaw = localStorage.getItem('candidate');
+      if (seekerRaw) {
+        const seekerObj = JSON.parse(seekerRaw);
+        this.seekerId = seekerObj?.id ?? seekerObj?.data?.id ?? null;
+      }
+    } catch (e) {
+      this.seekerId = null;
     }
-
-    const user = JSON.parse(localStorage.getItem('user'));
-    if (false) {
-      this.router.navigate(['/']); // Điều hướng lại nếu không tìm thấy user
-    } else {
-      this.user = user; // Gán dữ liệu người dùng
+  
+    // Lấy user (không điều hướng vô điều kiện)
+    try {
+      const userRaw = localStorage.getItem('user');
+      this.user = userRaw ? JSON.parse(userRaw) : null;
+    } catch (e) {
+      this.user = null;
     }
+  
+    // Khởi tạo form
     this.searchForm = this.fb.group({
       title: [''],
       locationId: [null],
       worktypeId: [null],
       experienceId: [null],
-      categoryId: [null]
+      categoryId: [null],
+    });
+  
+    // Load dropdowns
+    this.jobService.locationFindAll().then((res) => {
+      this.locations = (res || []).filter((x: any) => x.status === true);
+      this.changeDetectorRef.detectChanges();
+    }).catch(err => console.error('[ngOnInit] locationFindAll error:', err));
+  
+    this.jobService.worktypeFindAll().then((res) => {
+      this.worktypes = (res || []).filter((x: any) => x.status === true);
+      this.changeDetectorRef.detectChanges();
+    }).catch(err => console.error('[ngOnInit] worktypeFindAll error:', err));
+  
+    this.jobService.categoryFindAll().then((res) => {
+      this.categories = (res || []).filter((x: any) => x.status === 1);
+      this.changeDetectorRef.detectChanges();
+    }).catch(err => console.error('[ngOnInit] categoryFindAll error:', err));
+  
+    this.jobService.experienceFindAll().then((res) => {
+      this.experiences = (res || []).filter((x: any) => x.status === true);
+      this.changeDetectorRef.detectChanges();
+    }).catch(err => console.error('[ngOnInit] experienceFindAll error:', err));
+  
+    // Debounce tìm kiếm TopCV
+    this.searchSubject.pipe(debounceTime(300)).subscribe(() => {
+      console.log('[ngOnInit] debounce -> searchBarJobs');
+      this.searchBarJobs(this.currentPage);
     });
 
+    this.loadJobs(this.currentPage);
 
-     // Lấy danh sách dữ liệu cho dropdown
-        this.jobService.locationFindAll().then((res) => {
-          this.locations = res.filter((location: any) => location.status === true);
-          this.changeDetectorRef.detectChanges();
-        });
-    
-        this.jobService.worktypeFindAll().then((res) => {
-          this.worktypes = res.filter((worktype: any) => worktype.status === true);
-          this.changeDetectorRef.detectChanges();
-        });
-    
-        this.jobService.categoryFindAll().then((res) => {
-          this.categories = res.filter((category: any) => category.status === 1);
-          this.changeDetectorRef.detectChanges();
-        });
-    
-        this.jobService.experienceFindAll().then((res) => {
-          this.experiences = res.filter((experience: any) => experience.status === true);
-          this.changeDetectorRef.detectChanges();
-        });
-    
-        // Thiết lập debounce cho tìm kiếm TopCV
-        this.searchSubject.pipe(debounceTime(300)).subscribe(() => {
-          this.searchBarJobs(this.currentPage);
-        });
-    
-        // Tải danh sách công việc mặc định
-        this.loadJobs(this.currentPage);
-
-    
   }
+  
   
   loadJobs(page: number): void {
     this.currentPage = page;
-
     // Ưu tiên tìm kiếm từ khung chi tiết (searchJobs) nếu isSearchingForm là true
     if (this.isSearchingForm) {
       this.searchJobs(page);
@@ -119,7 +127,7 @@ export class SeekerSuitableJobsComponent implements OnInit {
     // Nếu không có tìm kiếm nào, tải danh sách công việc mặc định
     else {
       const seeker = JSON.parse(localStorage.getItem('candidate'));
-      this.jobService.getRecommendJobsBySeekerId(seeker["data"]["id"], this.currentPage).then(
+      this.jobService.getRecommendJobsBySeekerId(seeker.id, this.currentPage).then(
         (res) => {
           this.jobs = res["data"]["content"];
           this.totalPages = res["data"]["totalPages"];

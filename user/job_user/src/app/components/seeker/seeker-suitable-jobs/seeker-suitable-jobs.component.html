@@ -108,7 +108,7 @@
                         <span class="text-dark font-20 fw-medium">{{getJobRange()}}</span>
                         <div class="d-flex flex-wrap align-items-center gap-4">
                             <div class="d-flex align-items-center gap-3" id="nav-tab" role="tablist">
-                                <button class="rts__btn no__fill__btn reload-style nav-link" style="display: inline-block; padding: 10px 14px; border: 1px solid #28a745; border-radius: 4px;" (click)="loadJobs(currentPage)"
+                                <button type="button"  class="rts__btn no__fill__btn reload-style nav-link" style="display: inline-block; padding: 10px 14px; border: 1px solid #28a745; border-radius: 4px;" (click)="loadJobs(currentPage)"
                                 pTooltip="Làm mới cơ hội việc làm của bạn!" tooltipPosition="top">
                                     <i class="fa-solid fa-redo"></i>
                                 </button>
@@ -199,7 +199,7 @@
                                                                 {{ job.title.length > 35 ? (job.title | slice: 0: 35) + '...' : job.title }}
                                                             </a>
                                                             <!-- Added Label Badge -->
-                                                            <span class="job__label__badge" 
+                                                            <!-- <span class="job__label__badge" 
                                                                 [ngClass]="{
                                                                     'not-suitable': job.label === 'Not Suitable',
                                                                     'moderately-suitable': job.label === 'Moderately Suitable',
@@ -209,7 +209,7 @@
                                                                 <i *ngIf="job.label === 'Moderately Suitable'" class="fa-solid fa-minus me-1"></i>
                                                                 <i *ngIf="job.label === 'Most Suitable'" class="fa-solid fa-check me-1"></i>
                                                                 {{ job.label || 'Not Suitable' }}
-                                                            </span>
+                                                            </span> -->
                                                         </div>
                                                         <div class="d-flex gap-2 align-items-center" style="color: black;">
                                                             <span>

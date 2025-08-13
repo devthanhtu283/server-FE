@@ -171,6 +171,7 @@
 
                     <div class="applied__job__list">
                         <!-- single job -->
+                        <ng-container *ngIf="filteredJobs && filteredJobs.length > 0; else noData">
                         <ng-container *ngFor="let job of filteredJobs">
                             <div class="single__applied__job">
                                 <div class="single__applied__job__content">
@@ -207,7 +208,15 @@
                                 </div>
                             </div>
                         </ng-container>
-
+                    </ng-container>
+                    <ng-template #noData>
+                        <div class="no-data">
+                            <img src="assets/img/no-data.jpg" alt="Không có dữ liệu" class="no-data__img">
+                            <h2>Không có việc làm nào</h2>
+                            <p>Bạn chưa có công việc yêu thích nào!</p>
+                            <a href="/seeker/list-jobs" class="btn btn-primary">Tìm việc ngay</a>
+                        </div>
+                    </ng-template>
                         <!--single job end  -->
                     </div>
                     <!-- pagination -->

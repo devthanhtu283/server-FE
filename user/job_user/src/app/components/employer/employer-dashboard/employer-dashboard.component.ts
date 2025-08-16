@@ -56,13 +56,11 @@ export class EmployerDashboardComponent implements OnInit {
         const jobId = job.id;
   
         // Lấy tất cả application theo job (status -1 là tất cả)
-        const appRes = await this.ApplicationService.listApplication(jobId, 1, 2);
-        console.log(appRes);
-        const applications = appRes.data || [];
+        const appRes = await this.ApplicationService.listApplication(jobId, 0, 0);
+
   
-        totalApplications += applications.length;
+        totalApplications += appRes["data"]["totalElements"];
       }
-  
       // 3. Gán tổng số
       this.applicationCount = totalApplications;
     } catch (err) {

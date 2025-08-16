@@ -31,6 +31,19 @@ export class EmployerMeetingComponent implements OnInit {
   user: User;
   ngOnInit(): void {
     const user = JSON.parse(localStorage.getItem('user'));
+    this.user = user;
+    this.userService.findEmployerMembershipByUserId(this.user.id).then(
+      (res) => {
+        
+        console.log(res);
+        if (res && res.membershipId >= 3 && res.membershipId <= 6) {
+          
+        } else {
+          alert('Vui lòng mua gói cước để sử dụng tính năng pro.');
+          this.router.navigate(['/employer/pricing']);
+        }
+        
+      });
     if (!user) {
       this.router.navigate(['/']); // Điều hướng lại nếu không tìm thấy user
     } else {

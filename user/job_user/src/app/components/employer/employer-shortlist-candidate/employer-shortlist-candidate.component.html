@@ -219,39 +219,116 @@
 
 <div class="modal fade" id="appointmentModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="eventModalLabel">Tạo Sự Kiện Google Calendar</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="modal-content"
+           style="border:0; border-radius:16px; overflow:hidden; box-shadow:0 18px 60px rgba(0,0,0,.18);">
+        <!-- Header -->
+        <div class="modal-header"
+             style="border:0; padding:18px 22px; background:linear-gradient(180deg,#f8fafc, #fff);">
+          <h5 class="modal-title" id="eventModalLabel"
+              style="margin:0; font-weight:800; letter-spacing:.2px; display:flex; gap:12px; align-items:center;">
+            <span style="width:12px; height:12px; border-radius:50%; background:#22c55e; display:inline-block;"></span>
+            Tạo Lịch Họp Phỏng Vấn
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                  style="opacity:.6; outline:none; box-shadow:none;"></button>
         </div>
-        <div class="modal-body">
-          <form [formGroup]="eventForm" (ngSubmit)="prepareEventCreation()">
+  
+        <div class="modal-body" style="padding:18px 20px 8px;">
+          <!-- Timezone chip -->
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+            <span style="background:#e6f9ff; color:#0369a1; border:1px solid #bae6fd;
+                         padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700;">
+              Múi giờ hiển thị: (GMT+7) Việt Nam
+            </span>
+            <span style="font-size:12px; color:#64748b;">* Dùng múi giờ của trình duyệt</span>
+          </div>
+  
+          <form [formGroup]="eventForm" (ngSubmit)="prepareEventCreation()" autocomplete="off" novalidate>
+  
+            <!-- SUMMARY -->
             <div class="mb-3">
-              <label for="summary" class="form-label">Tiêu đề:</label>
-              <input id="summary" formControlName="summary" type="text" class="form-control" required>
+              <label for="summary" class="form-label" style="font-weight:700; margin-bottom:6px;">Tiêu đề</label>
+              <div class="input-group" style="border-radius:10px; overflow:hidden;">
+                <span class="input-group-text" style="background:#f8fafc; border-color:#e5e7eb;">
+                  <i class="bi bi-type" style="opacity:.8;"></i>
+                </span>
+                <input id="summary" formControlName="summary" type="text" class="form-control" required
+                       placeholder="VD: Phỏng vấn vị trí Backend Developer"
+                       style="border-color:#e5e7eb; padding:.6rem .85rem;">
+              </div>
+              <small style="display:block; margin-top:6px; color:#6b7280;">Ngắn gọn, dễ quét (≤ 60 ký tự).</small>
             </div>
   
+            <!-- DESCRIPTION -->
             <div class="mb-3">
-              <label for="description" class="form-label">Mô tả:</label>
-              <input id="description" formControlName="description" type="text" class="form-control" required>
+              <label for="description" class="form-label" style="font-weight:700; margin-bottom:6px;">Mô tả</label>
+              <div class="input-group" style="border-radius:10px; overflow:hidden;">
+                <span class="input-group-text" style="background:#f8fafc; border-color:#e5e7eb;">
+                  <i class="bi bi-card-text" style="opacity:.8;"></i>
+                </span>
+                <input id="description" formControlName="description" type="text" class="form-control" required
+                       placeholder="Mục tiêu cuộc họp, nội dung chính…"
+                       style="border-color:#e5e7eb; padding:.6rem .85rem;">
+              </div>
             </div>
   
-            <div class="mb-3">
-              <label for="startDateTime" class="form-label">Thời gian bắt đầu:</label>
-              <input id="startDateTime" formControlName="startDateTime" type="datetime-local" class="form-control" required>
+            <!-- TIME -->
+            <div class="row" style="gap:0;">
+              <div class="col-md-6 mb-3">
+                <label for="startDateTime" class="form-label" style="font-weight:700; margin-bottom:6px;">
+                  Thời gian bắt đầu
+                </label>
+                <div class="input-group" style="border-radius:10px; overflow:hidden;">
+                  <span class="input-group-text" style="background:#f8fafc; border-color:#e5e7eb;">
+                    <i class="bi bi-clock" style="opacity:.8;"></i>
+                  </span>
+                  <input id="startDateTime" formControlName="startDateTime" type="datetime-local" class="form-control"
+                         required [attr.step]="60"
+                         style="border-color:#e5e7eb; padding:.6rem .85rem;">
+                </div>
+                <small style="display:block; margin-top:6px; color:#6b7280;">
+                  Hiển thị theo múi giờ máy bạn (GMT+7 nếu đặt VN).
+                </small>
+              </div>
+  
+              <div class="col-md-6 mb-3">
+                <label for="endDateTime" class="form-label" style="font-weight:700; margin-bottom:6px;">
+                  Thời gian kết thúc
+                </label>
+                <div class="input-group" style="border-radius:10px; overflow:hidden;">
+                  <span class="input-group-text" style="background:#f8fafc; border-color:#e5e7eb;">
+                    <i class="bi bi-hourglass-split" style="opacity:.8;"></i>
+                  </span>
+                  <input id="endDateTime" formControlName="endDateTime" type="datetime-local" class="form-control"
+                         required [attr.step]="60" [attr.min]="eventForm?.value?.startDateTime || null"
+                         style="border-color:#e5e7eb; padding:.6rem .85rem;">
+                </div>
+                <small style="display:block; margin-top:6px; color:#6b7280;">
+                  Nên đặt sau giờ bắt đầu ≥ 15 phút.
+                </small>
+              </div>
             </div>
   
-            <div class="mb-3">
-              <label for="endDateTime" class="form-label">Thời gian kết thúc:</label>
-              <input id="endDateTime" formControlName="endDateTime" type="datetime-local" class="form-control" required>
-            </div>
+            <!-- DIVIDER -->
+            <div style="height:1px; background:#f1f5f9; margin:4px 0 14px;"></div>
   
-            <button type="submit" class="btn btn-success w-100" [disabled]="eventForm.invalid">Tạo Sự Kiện</button>
+            <!-- SUBMIT -->
+            <button type="submit" class="btn w-100"
+                    [disabled]="eventForm.invalid"
+                    style="background:#16a34a; border:0; color:#fff; height:46px; font-weight:800; border-radius:12px;
+                           letter-spacing:.2px;">
+              Tạo Sự Kiện
+            </button>
           </form>
         </div>
+  
+        <!-- footer spacing -->
+        <div style="height:12px;"></div>
       </div>
     </div>
   </div>
+  
+  
   
   <!-- Hiển thị link Google Meet sau khi tạo thành công -->
   <!-- <div *ngIf="meetLink" class="alert alert-success mt-3">

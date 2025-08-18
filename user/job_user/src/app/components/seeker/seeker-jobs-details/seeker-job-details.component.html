@@ -1,10 +1,11 @@
-  <!-- breadcrumb area -->
-  <div class="rts__section breadcrumb__background">
+<!-- breadcrumb area -->
+<div class="rts__section breadcrumb__background">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 position-relative d-flex justify-content-between align-items-center">
                 <div class="breadcrumb__area max-content breadcrumb__padding">
-                    <div class="rts__job__card__big bg-transparent p-0 position-relative z-1 flex-wrap justify-content-between d-flex gap-4 align-items-center">
+                    <div
+                        class="rts__job__card__big bg-transparent p-0 position-relative z-1 flex-wrap justify-content-between d-flex gap-4 align-items-center">
                         <div class="d-flex gap-4 align-items-center flex-md-row flex-column mx-auto mx-md-0">
                             <div class="company__icon rounded-2 bg-white">
                                 <img class="" src="{{imgBaseUrl + job.employerLogo}}" alt="">
@@ -13,7 +14,8 @@
                                 <div class="">
                                     <h3 class="job__title h3 mb-0">{{job.title}}</h3>
                                 </div>
-                                <div class="d-flex gap-3 justify-content-center justify-content-md-start flex-wrap mb-3 mt-2">
+                                <div
+                                    class="d-flex gap-3 justify-content-center justify-content-md-start flex-wrap mb-3 mt-2">
                                     <div class="d-flex gap-2 align-items-center">
                                         <i class="fa-light fa-location-dot"></i> {{job.locationName}}
                                     </div>
@@ -28,7 +30,8 @@
                                         <i class="fa-light fa-dollar-sign"></i> {{job.salary}}
                                     </div>
                                 </div>
-                                <div class="job__tags d-flex justify-content-center justify-content-md-start flex-wrap gap-3">
+                                <div
+                                    class="job__tags d-flex justify-content-center justify-content-md-start flex-wrap gap-3">
                                     <a style="cursor: pointer;">{{job.requiredSkills}}</a>
                                 </div>
                             </div>
@@ -50,107 +53,173 @@
         </div>
     </div>
 </div>
-    <!-- breadcrumb area end -->
+<!-- breadcrumb area end -->
 
-    <!-- job list one -->
-     <div class="rts__section section__padding">
-        <div class="container">
-            <div class="row g-30">
-               <div class="col-lg-8">
+<!-- job list one -->
+<div class="rts__section section__padding">
+    <div class="container">
+        <div class="row g-30">
+            <div class="col-lg-8">
                 <div class="rts__job__details">
                     <div id="responsibility" class="mb-30">
                         <h6 class="fw-semibold mb-20">Mô tả công việc</h6>
-                        <div class="list-style-dot" [innerHTML]="job.descriptionJson.job_description.overview"></div>
-                        <div class="list-style-dot" style="margin-top: 20px;">
+                        <!-- Overview -->
+                        <div class="list-style-dot"
+                            *ngIf="job?.descriptionJson?.job_description?.overview; else noOverview"
+                            [innerHTML]="job?.descriptionJson?.job_description?.overview">
+                        </div>
+                        <ng-template #noOverview>
+                            <div style="padding:12px; border:1px dashed #e5e7eb; border-radius:8px; color:#6b7280;">
+                                Nhà tuyển dụng chưa cập nhật mô tả tổng quan.
+                            </div>
+                        </ng-template>
+
+                        <div class="list-style-dot" style="margin-top: 20px;"
+                            *ngIf="(job?.descriptionJson?.job_description?.responsibilities || []).length > 0; else noResp">
                             <ul class="list-style-dot">
-                              <li *ngFor="let responsibility of job.descriptionJson.job_description.responsibilities">
-                                {{ responsibility }}
-                              </li>
+                                <li
+                                    *ngFor="let responsibility of job?.descriptionJson?.job_description?.responsibilities">
+                                    {{ responsibility }}
+                                </li>
                             </ul>
                         </div>
+                        <ng-template #noResp>
+                            <div style="margin-top:16px; display:inline-flex; align-items:center; gap:8px; padding:8px 12px;
+                background:#f9fafb; border:1px solid #f3f4f6; border-radius:8px; color:#6b7280;">
+                                <i class="fa-regular fa-circle-info"></i>
+                                <span>Chưa có danh sách trách nhiệm cụ thể.</span>
+                            </div>
+                        </ng-template>
                     </div>
 
+                    <!-- YÊU CẦU ỨNG VIÊN -->
                     <div id="requirements" class="mb-30">
                         <h6 class="fw-semibold mb-20">Yêu cầu ứng viên</h6>
-                        <div class="list-style-dot" [innerHTML]="job.descriptionJson.job_description.responsibilities || job.required"></div>
+
+                        <!-- Nếu có responsibilities dạng list thì ưu tiên hiện list -->
+                        <ul class="list-style-dot"
+                            *ngIf="(job?.descriptionJson?.job_description?.responsibilities || []).length > 0; else reqFallback">
+                            <li *ngFor="let item of job?.descriptionJson?.job_description?.responsibilities">
+                                {{ item }}
+                            </li>
+                        </ul>
+
+                        <!-- Fallback: hiện chuỗi job.required nếu có, nếu không thì hiện note -->
+                        <ng-template #reqFallback>
+                            <div class="list-style-dot" *ngIf="job?.required; else noReqText"
+                                [innerHTML]="job?.required">
+                            </div>
+                            <ng-template #noReqText>
+                                <div style="padding:12px; border:1px dashed #e5e7eb; border-radius:8px; color:#6b7280;">
+                                    Chưa có yêu cầu cụ thể cho vị trí này.
+                                </div>
+                            </ng-template>
+                        </ng-template>
                     </div>
 
                     <div id="salary" class="mb-30">
                         <h6 class="fw-semibold mb-20">Quyền lợi</h6>
-                        <ul class="list-style-dot">
-                            <li>
-                               Mức lương: {{ job.salary ? job.salary : 'Thỏa thuận' }}
+
+                        <!-- Nếu hoàn toàn trống thì hiện block thông báo -->
+                        <div
+                            *ngIf="!(job?.salary || job?.descriptionJson?.benefits?.bonus || (job?.descriptionJson?.benefits?.additional_benefits || []).length)">
+                            <div style="padding:12px; border:1px dashed #e5e7eb; border-radius:8px; color:#6b7280;">
+                                Quyền lợi sẽ được cập nhật trong quá trình phỏng vấn.
+                            </div>
+                        </div>
+
+                        <ul class="list-style-dot"
+                            *ngIf="job?.salary || job?.descriptionJson?.benefits?.bonus || (job?.descriptionJson?.benefits?.additional_benefits || []).length">
+                            <li>Mức lương: {{ job?.salary || 'Thỏa thuận' }}</li>
+                            <li *ngIf="job?.descriptionJson?.benefits?.bonus || true">
+                                {{ job?.descriptionJson?.benefits?.bonus || 'Thỏa thuận' }}
                             </li>
-                            <li>
-                                {{ job.descriptionJson.benefits.bonus ? job.descriptionJson.benefits.bonus : 'Thỏa thuận' }}
-                            </li>
-                            <li *ngFor="let additional_benefits of job.descriptionJson.benefits.additional_benefits">
-                                {{ additional_benefits }}
+                            <li *ngFor="let b of (job?.descriptionJson?.benefits?.additional_benefits || [])">
+                                {{ b }}
                             </li>
                         </ul>
                     </div>
 
+                    <!-- KỸ NĂNG CẦN CÓ -->
                     <div id="skill" class="mb-30">
                         <h6 class="fw-semibold mb-20">Kỹ năng cần có</h6>
-                        <div class="job__tags job__details__tags">
-                            <a style="cursor: pointer;" *ngFor="let skill of splitSkills(job.requiredSkills)" class="job__tag">
+                        <div class="job__tags job__details__tags"
+                            *ngIf="splitSkills(job?.requiredSkills)?.length; else noSkills">
+                            <a style="cursor: pointer;" *ngFor="let skill of splitSkills(job?.requiredSkills)"
+                                class="job__tag">
                                 {{ skill }}
                             </a>
                         </div>
+                        <ng-template #noSkills>
+                            <div
+                                style="padding:8px 12px; display:inline-block; background:#f9fafb; border:1px solid #f3f4f6; border-radius:999px; color:#6b7280;">
+                                Chưa yêu cầu kỹ năng cụ thể
+                            </div>
+                        </ng-template>
                     </div>
+                    <!-- ĐỊA CHỈ & THỜI GIAN -->
                     <div id="address" class="mb-30">
                         <h6 class="fw-semibold mb-20">Địa chỉ và thời gian làm việc:</h6>
-                        <div class="job__tags job__details__tags">
-                            <a style="cursor: pointer;" class="job__tag">{{job.descriptionJson.work_hours}}</a>
-                            <a style="cursor: pointer;" class="job__tag">{{job.address}}</a>
+
+                        <!-- Nếu thiếu cả 2, hiển thị 1 chip thông báo -->
+                        <div *ngIf="!(job?.descriptionJson?.work_hours || job?.worktypeName || job?.address)">
+                            <div
+                                style="padding:8px 12px; display:inline-block; background:#fef3c7; border:1px solid #fde68a; border-radius:8px; color:#92400e;">
+                                Thông tin sẽ được bổ sung sau
+                            </div>
+                        </div>
+
+                        <div class="job__tags job__details__tags"
+                            *ngIf="job?.descriptionJson?.work_hours || job?.worktypeName || job?.address">
+                            <a style="cursor: pointer;" class="job__tag">
+                                {{ job?.descriptionJson?.work_hours || job?.worktypeName || 'Giờ làm việc: cập nhật sau'
+                                }}
+                            </a>
+                            <a style="cursor: pointer;" class="job__tag" *ngIf="job?.address">
+                                {{ job?.address }}
+                            </a>
                         </div>
                     </div>
 
                     <div id="address" class="mb-30">
                         <h6 class="fw-semibold mb-20">Cách thức ứng tuyển</h6>
                         <div class="list-style-dot">
-                            <span>Ứng viên nộp hồ sơ trực tuyến bằng cách bấm <strong style="color: black; font-weight: bold;">Ứng tuyển ngay</strong> dưới đây.</span>
+                            <span>Ứng viên nộp hồ sơ trực tuyến bằng cách bấm <strong
+                                    style="color: black; font-weight: bold;">Ứng tuyển ngay</strong> dưới đây.</span>
                         </div>
                     </div>
                     <div class="d-flex flex-wrap gap-4 mt-40 mb-60">
-                        <button
-                        *ngIf="!isApplied"
-                        (click)="openCVModal()"
-                        class="rts__btn apply__btn fw-bold">
-                        {{ result === 3 ? 'Ứng tuyển lại 1' : applied ? 'Ứng tuyển lại' : 'Ứng tuyển ngay' }}
-                      </button>
+                        <button *ngIf="!isApplied" (click)="openCVModal()" class="rts__btn apply__btn fw-bold">
+                            {{ result === 3 ? 'Ứng tuyển lại 1' : applied ? 'Ứng tuyển lại' : 'Ứng tuyển ngay' }}
+                        </button>
 
-                      <!-- Nếu đã ứng tuyển rồi, hiển thị nút "Ứng tuyển lại" -->
-                      <button
-                        *ngIf="isApplied"
-                        (click)="openCVModal()"
-                        class="rts__btn apply__btn fw-bold"
-                        [ngClass]="{'disabled-btn': appliedOverThreeTimes}"
-                        [disabled]="appliedOverThreeTimes">
-                        {{ isApplied ? 'Ứng tuyển lại' : 'Ứng tuyển ngay' }}
-                      </button>
+                        <!-- Nếu đã ứng tuyển rồi, hiển thị nút "Ứng tuyển lại" -->
+                        <button *ngIf="isApplied" (click)="openCVModal()" class="rts__btn apply__btn fw-bold"
+                            [ngClass]="{'disabled-btn': appliedOverThreeTimes}" [disabled]="appliedOverThreeTimes">
+                            {{ isApplied ? 'Ứng tuyển lại' : 'Ứng tuyển ngay' }}
+                        </button>
 
 
 
                         <div class="d-flex gap-3 align-items-center">
                             <span class="h6 fw-semibold">Share</span>
                             <div class="rts__social d-flex gap-3">
-    <a target="_blank" href="https://facebook.com"  aria-label="facebook">
-        <i class="fa-brands fa-facebook"></i>
-    </a>
-    <a target="_blank" href="https://instagram.com"  aria-label="instagram">
-        <i class="fa-brands fa-instagram"></i>
-    </a>
-    <a target="_blank" href="https://linkedin.com"  aria-label="linkedin">
-        <i class="fa-brands fa-linkedin"></i>
-    </a>
-    <a target="_blank" href="https://pinterest.com"  aria-label="pinterest">
-        <i class="fa-brands fa-pinterest"></i>
-    </a>
-    <a target="_blank" href="https://youtube.com"  aria-label="youtube">
-        <i class="fa-brands fa-youtube"></i>
-    </a>
-</div>
+                                <a target="_blank" href="https://facebook.com" aria-label="facebook">
+                                    <i class="fa-brands fa-facebook"></i>
+                                </a>
+                                <a target="_blank" href="https://instagram.com" aria-label="instagram">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                                <a target="_blank" href="https://linkedin.com" aria-label="linkedin">
+                                    <i class="fa-brands fa-linkedin"></i>
+                                </a>
+                                <a target="_blank" href="https://pinterest.com" aria-label="pinterest">
+                                    <i class="fa-brands fa-pinterest"></i>
+                                </a>
+                                <a target="_blank" href="https://youtube.com" aria-label="youtube">
+                                    <i class="fa-brands fa-youtube"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -158,96 +227,95 @@
                     <h5 class="mb-30 d-block">Job apply Process video</h5>
                     <div class="video__section__content">
                         <img src="assets/img/pages/video-bg.webp" alt="">
-                        <a href="https://www.youtube.com/watch?v=C9U1U15GSlM" class="video__play__btn" title="Play Video" data-lightbox>
+                        <a href="https://www.youtube.com/watch?v=C9U1U15GSlM" class="video__play__btn"
+                            title="Play Video" data-lightbox>
                             <i class="fa-sharp fa-solid fa-play"></i>
                         </a>
                     </div>
                 </div>
-               </div>
-               <div class="col-lg-4 d-flex flex-column gap-40">
-                    <div class="company__card">
-                        <div class="icon">
-                            <img src="{{imgBaseUrl + job.employerLogo}}" alt="">
-                        </div>
-                        <h5 class="company__name mt-20">{{job.employerName}}</h5>
-                        <a href="job-details-1.html#" class="company__link d-block mt-20" aria-label="Visit Website" target="_blank">Visit Website</a>
-                        <button
-                        *ngIf="!isApplied"
-                        (click)="openCVModal()"
-                        class="rts__btn apply__btn fw-bold mt-4">
-                        {{ result === 3 ? 'Ứng tuyển lại 1' : applied ? 'Ứng tuyển lại' : 'Ứng tuyển ngay' }}
-                      </button>
-
-                      <!-- Nếu đã ứng tuyển rồi, hiển thị nút "Ứng tuyển lại" -->
-                      <button
-                        *ngIf="isApplied"
-                        (click)="openCVModal()"
-                        class="rts__btn apply__btn fw-bold mt-4"
-                        [ngClass]="{'disabled-btn': appliedOverThreeTimes}"
-                        [disabled]="appliedOverThreeTimes">
-                        {{ isApplied ? 'Ứng tuyển lại' : 'Ứng tuyển ngay' }}
-                      </button>
-                    </div>
-                    <div class="job__overview">
-                        <h6 class="fw-semibold mb-20">Tổng quan công việc</h6>
-                        <div class="job__overview__content">
-                            <ul>
-                                <li class="d-flex flex-wrap gap-3 gap-sm-0 align-items-center justify-content-between">
-                                    <span class="left-text"> <i class="fa-light fa-clock"></i> Ngày đăng tin</span>
-                                    <span class="text">{{job.postedAt | date:'dd/MM/yyyy'}}</span>
-                                </li>
-                                <li class="d-flex flex-wrap gap-3 gap-sm-0 align-items-center justify-content-between">
-                                    <span class="left-text"> <i class="fa-light fa-user"></i> Số lượng tuyển</span>
-                                    <span class="text">: {{job.member}}</span>
-                                </li>
-                                <li class="d-flex flex-wrap gap-3 gap-sm-0 align-items-center justify-content-between">
-                                    <span class="left-text"> <i class="fa-light fa-chart-line"></i> Kinh nghiệm</span>
-                                    <span class="text">: {{job.experienceName}}</span>
-                                </li>
-                                <li class="d-flex flex-wrap gap-3 gap-sm-0 align-items-center justify-content-between">
-                                    <span class="left-text"> <i class="fa-light fa-dollar-sign"></i> Mức lương</span>
-                                    <span class="text">: {{job.salary}}</span>
-                                </li>
-                                <li class="d-flex flex-wrap gap-3 gap-sm-0 align-items-center justify-content-between">
-                                    <span class="left-text"><i class="fa-solid fa-clock"></i> Thời hạn ứng tuyển</span>
-                                    <span class="text">: {{ job.postedExpired | date:'dd/MM/yyyy' }}</span>
-                                </li>
-
-                                <li class="d-flex flex-wrap gap-3 gap-sm-0 align-items-center justify-content-between">
-                                    <span class="left-text"> <i class="fa-sharp fa-thin fa-location-dot"></i> Địa điểm</span>
-                                    <span class="text"> {{job.locationName}}</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="job__location">
-                        <h6 class="fw-semibold mb-20">Địa điểm làm việc</h6>
-                        <div class="gmap">
-                            <iframe src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Reacthemes+(ReacThemes)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
-                        </div>
-                    </div>
-               </div>
             </div>
-        </div>
-     </div>
-    <!-- job list one end -->
+            <div class="col-lg-4 d-flex flex-column gap-40">
+                <div class="company__card">
+                    <div class="icon">
+                        <img src="{{imgBaseUrl + job.employerLogo}}" alt="">
+                    </div>
+                    <h5 class="company__name mt-20">{{job.employerName}}</h5>
+                    <a [href]="'/seeker/company/' + job.employerId" class="company__link d-block mt-20" aria-label="Visit Website"
+                        target="_blank">Xem chi tiết</a>
+                    <button *ngIf="!isApplied" (click)="openCVModal()" class="rts__btn apply__btn fw-bold mt-4">
+                        {{ result === 3 ? 'Ứng tuyển lại 1' : applied ? 'Ứng tuyển lại' : 'Ứng tuyển ngay' }}
+                    </button>
 
-    <!-- top employer -->
-    <div class="rts__section pb-120 overflow-hidden">
-        <div class="container">
-            <div class="row justify-content-center position-relative">
-                <div class="col-xl-6 col-lg-10">
-    <div class="rts__section__content text-center mb-60">
-        <h3 class="rts__section__title section__mb">Các công việc liên quan</h3>
-        <p class="rts__section__desc">Bạn đang tìm kiếm cơ hội nghề nghiệp tiếp theo. Không cần tìm đâu xa nữa.</p>
-    </div>
-</div>
-                <div class="rts__slider__control d-none d-md-flex style-gray z-3 w-100 justify-content-between g-0 position-absolute top-50  translate-middle-y">
-                    <div class="rts__slide__next slider__btn"><i class="fa-sharp fa-solid fa-chevron-left"></i></div>
-                    <div class="rts__slide__prev slider__btn"><i class="fa-sharp fa-solid fa-chevron-right"></i></div>
+                    <!-- Nếu đã ứng tuyển rồi, hiển thị nút "Ứng tuyển lại" -->
+                    <button *ngIf="isApplied" (click)="openCVModal()" class="rts__btn apply__btn fw-bold mt-4"
+                        [ngClass]="{'disabled-btn': appliedOverThreeTimes}" [disabled]="appliedOverThreeTimes">
+                        {{ isApplied ? 'Ứng tuyển lại' : 'Ứng tuyển ngay' }}
+                    </button>
+                </div>
+                <div class="job__overview">
+                    <h6 class="fw-semibold mb-20">Tổng quan công việc</h6>
+                    <div class="job__overview__content">
+                        <ul>
+                            <li class="d-flex flex-wrap gap-3 gap-sm-0 align-items-center justify-content-between">
+                                <span class="left-text"> <i class="fa-light fa-clock"></i> Ngày đăng tin</span>
+                                <span class="text">{{job.postedAt | date:'dd/MM/yyyy'}}</span>
+                            </li>
+                            <li class="d-flex flex-wrap gap-3 gap-sm-0 align-items-center justify-content-between">
+                                <span class="left-text"> <i class="fa-light fa-user"></i> Số lượng tuyển</span>
+                                <span class="text">: {{job.member}}</span>
+                            </li>
+                            <li class="d-flex flex-wrap gap-3 gap-sm-0 align-items-center justify-content-between">
+                                <span class="left-text"> <i class="fa-light fa-chart-line"></i> Kinh nghiệm</span>
+                                <span class="text">: {{job.experienceName}}</span>
+                            </li>
+                            <li class="d-flex flex-wrap gap-3 gap-sm-0 align-items-center justify-content-between">
+                                <span class="left-text"> <i class="fa-light fa-dollar-sign"></i> Mức lương</span>
+                                <span class="text">: {{job.salary}}</span>
+                            </li>
+                            <li class="d-flex flex-wrap gap-3 gap-sm-0 align-items-center justify-content-between">
+                                <span class="left-text"><i class="fa-solid fa-clock"></i> Thời hạn ứng tuyển</span>
+                                <span class="text">: {{ job.postedExpired | date:'dd/MM/yyyy' }}</span>
+                            </li>
+
+                            <li class="d-flex flex-wrap gap-3 gap-sm-0 align-items-center justify-content-between">
+                                <span class="left-text"> <i class="fa-sharp fa-thin fa-location-dot"></i> Địa
+                                    điểm</span>
+                                <span class="text"> {{job.locationName}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="job__location">
+                    <h6 class="fw-semibold mb-20">Địa điểm làm việc</h6>
+                    <div class="gmap">
+                        <iframe
+                            src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=Reacthemes+(ReacThemes)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+                    </div>
                 </div>
             </div>
-            <div class="row swiper-data overflow-hidden" data-swiper='{
+        </div>
+    </div>
+</div>
+<!-- job list one end -->
+
+<!-- top employer -->
+<div class="rts__section pb-120 overflow-hidden">
+    <div class="container">
+        <div class="row justify-content-center position-relative">
+            <div class="col-xl-6 col-lg-10">
+                <div class="rts__section__content text-center mb-60">
+                    <h3 class="rts__section__title section__mb">Các công việc liên quan</h3>
+                    <p class="rts__section__desc">Bạn đang tìm kiếm cơ hội nghề nghiệp tiếp theo. Không cần tìm đâu xa
+                        nữa.</p>
+                </div>
+            </div>
+            <div
+                class="rts__slider__control d-none d-md-flex style-gray z-3 w-100 justify-content-between g-0 position-absolute top-50  translate-middle-y">
+                <div class="rts__slide__next slider__btn"><i class="fa-sharp fa-solid fa-chevron-left"></i></div>
+                <div class="rts__slide__prev slider__btn"><i class="fa-sharp fa-solid fa-chevron-right"></i></div>
+            </div>
+        </div>
+        <div class="row swiper-data overflow-hidden" data-swiper='{
                 "slidesPerView": 4.1,
                     "autoplay": true,
                     "loop": true,
@@ -274,92 +342,96 @@
                     }
 
                 }'>
-                <div class="swiper-wrapper">
-                    <!-- single slide -->
-                    <ng-container *ngFor="let job of jobs">
-                        <div class="swiper-slide" style="width: 300px;">
-                            <div class="rts__job__card style__five">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="company__icon">
-                                        <img src="{{imgBaseUrl + job.employerLogo}}" alt="">
-                                    </div>
-                                    <!-- <div class="featured__option">
+            <div class="swiper-wrapper">
+                <!-- single slide -->
+                <ng-container *ngFor="let job of jobs">
+                    <div class="swiper-slide" style="width: 300px;">
+                        <div class="rts__job__card style__five">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="company__icon">
+                                    <img src="{{imgBaseUrl + job.employerLogo}}" alt="">
+                                </div>
+                                <!-- <div class="featured__option">
                                         <span>Các công việc liên quan</span>
                                     </div> -->
-                                </div>
-                                <div class="d-flex gap-3 mt-4 flex-wrap">
-                                    <div class="d-flex gap-2 align-items-center font-sm">
-                                        <i class="fa-light fa-location-dot"></i> {{job.locationName}}
-                                    </div>
-                                    <div class="d-flex gap-2 align-items-center font-sm">
-                                        <i class="fa-light fa-briefcase"></i> {{job.worktypeName}}
-                                    </div>
-                                </div>
-                                <div class="font-20 fw-medium job__title mt-3 mb-2">
-                                    <a href="/seeker/job-details/{{ job.id }}"  aria-label="job">
-                                        {{ job.title.length > 40 ? (job.title | slice:0:40) + '...' : job.title }}
-                                    </a>
+                            </div>
+                            <div class="d-flex gap-3 mt-4 flex-wrap">
+                                <div class="d-flex gap-2 align-items-center font-sm">
+                                    <i class="fa-light fa-location-dot"></i> {{job.locationName}}
                                 </div>
                                 <div class="d-flex gap-2 align-items-center font-sm">
-                                    {{ job.descriptionJson?.job_description?.overview?.length > 90
-                                        ? (job.descriptionJson?.job_description?.overview | slice:0:90) + '...'
-                                        : job.descriptionJson?.job_description?.overview }}
-
-                                </div>
-                                <div class="job__tags d-flex flex-wrap gap-2 mt-4">
-                                    <a >{{job.requiredSkills}}</a>
-
-                                </div>
-                                <div class="job__tags d-flex flex-wrap gap-2 mt-4">
-                                    <a >{{job.salary}}</a>
-
+                                    <i class="fa-light fa-briefcase"></i> {{job.worktypeName}}
                                 </div>
                             </div>
-                        </div>
-                    </ng-container>
+                            <div class="font-20 fw-medium job__title mt-3 mb-2">
+                                <a href="/seeker/job-details/{{ job.id }}" aria-label="job">
+                                    {{ job.title.length > 40 ? (job.title | slice:0:40) + '...' : job.title }}
+                                </a>
+                            </div>
+                            <div class="d-flex gap-2 align-items-center font-sm">
+                                {{ job.descriptionJson?.job_description?.overview?.length > 90
+                                ? (job.descriptionJson?.job_description?.overview | slice:0:90) + '...'
+                                : job.descriptionJson?.job_description?.overview }}
 
+                            </div>
+                            <div class="job__tags d-flex flex-wrap gap-2 mt-4">
+                                <a>{{job.requiredSkills}}</a>
+
+                            </div>
+                            <div class="job__tags d-flex flex-wrap gap-2 mt-4">
+                                <a>{{job.salary}}</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- top employer end -->
+
+<!-- app center -->
+
+<div class="rts__section pb-120">
+    <div class="container">
+        <div class="row">
+            <div class="rts__appcenter">
+                <div class="rts__appcenter__shape">
+                    <img src="assets/img/home-1/app/shape.png" alt="">
+                </div>
+                <div
+                    class="rts__appcenter__content d-flex flex-wrap flex-xl-nowrap align-items-center justify-content-between justify-content-lg-center">
+                    <div class="content__left align-items-end d-flex position-relative top-15px">
+                        <img src="assets/img/home-1/app/app_screen.png" alt="">
+                    </div>
+                    <div class="content__right text-white text-center text-xl-start max-630">
+                        <h3 class="l--1 mb-4 text-white wow animated fadeInUp" data-wow-delay=".1s ">Download The app
+                            Free!</h3>
+                        <p class="wow animated fadeInUp" data-wow-delay=".2s">Looking for a new job can be both exciting
+                            and daunting. Navigating the job market involves exploring various avenues.</p>
+                        <div class="d-flex gap-3 justify-content-center justify-content-xl-start flex-wrap mt-40 wow animated fadeInUp"
+                            data-wow-delay=".3s">
+                            <div class="link">
+                                <a href="https://appstore.com" target="_blank" title="app store">
+                                    <img src="assets/img/home-1/app/app-store.svg" alt="">
+                                </a>
+                            </div>
+                            <div class="link">
+                                <a href="https://google.com" target="_blank" title="play store">
+                                    <img src="assets/img/home-1/app/play-store.svg" alt="">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- top employer end -->
+</div>
 
-    <!-- app center -->
-
-    <div class="rts__section pb-120">
-        <div class="container">
-            <div class="row">
-                <div class="rts__appcenter">
-                    <div class="rts__appcenter__shape">
-                        <img src="assets/img/home-1/app/shape.png" alt="">
-                    </div>
-                    <div class="rts__appcenter__content d-flex flex-wrap flex-xl-nowrap align-items-center justify-content-between justify-content-lg-center">
-                        <div class="content__left align-items-end d-flex position-relative top-15px">
-                            <img src="assets/img/home-1/app/app_screen.png" alt="">
-                        </div>
-                        <div class="content__right text-white text-center text-xl-start max-630">
-                            <h3 class="l--1 mb-4 text-white wow animated fadeInUp" data-wow-delay=".1s ">Download The app Free!</h3>
-                            <p class="wow animated fadeInUp" data-wow-delay=".2s">Looking for a new job can be both exciting and daunting. Navigating the job market involves exploring various avenues.</p>
-                            <div class="d-flex gap-3 justify-content-center justify-content-xl-start flex-wrap mt-40 wow animated fadeInUp" data-wow-delay=".3s">
-                                <div class="link">
-                                    <a href="https://appstore.com" target="_blank" title="app store">
-                                        <img src="assets/img/home-1/app/app-store.svg" alt="">
-                                    </a>
-                                </div>
-                                <div class="link">
-                                    <a href="https://google.com" target="_blank" title="play store">
-                                        <img src="assets/img/home-1/app/play-store.svg" alt="">
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- app center end -->
+<!-- app center end -->
 
 
 <p-toast></p-toast>
@@ -389,51 +461,49 @@
   </p-dialog> -->
 
 
-  <p-dialog header="Tải CV ứng tuyển" [(visible)]="cvDialogVisible" [modal]="true" [style]="{width: '600px'}" [closable]="true" class="modern-dialog">
+<p-dialog header="Tải CV ứng tuyển" [(visible)]="cvDialogVisible" [modal]="true" [style]="{width: '600px'}"
+    [closable]="true" class="modern-dialog">
     <div class="p-fluid modern-dialog-content">
-      <!-- Hiển thị liên kết CV đã tải lên nếu có -->
-      <div *ngIf="userCVUrl" class="uploaded-cv-section">
-        <div class="uploaded-cv-card">
-            <div class="uploaded-cv-icon">
-              <i class="pi pi-file-pdf"></i>
-            </div>
-            <div class="uploaded-cv-info">
-              <p class="uploaded-cv-title">CV của bạn đã được tải lên:</p>
-              <a [href]="fileBaseUrl + userCVUrl" target="_blank" class="cv-link">
-                <i class="pi pi-eye"></i> Xem CV
-              </a>
-              <p class="uploaded-cv-note">
-                Đây là CV bạn đã tải lên trước đó. Nếu bạn muốn thay đổi, hãy tải lên CV mới hoặc xóa CV hiện tại.
-              </p>
-            </div>
+        <!-- Hiển thị liên kết CV đã tải lên nếu có -->
+        <div *ngIf="userCVUrl" class="uploaded-cv-section">
+            <div class="uploaded-cv-card">
+                <div class="uploaded-cv-icon">
+                    <i class="pi pi-file-pdf"></i>
+                </div>
+                <div class="uploaded-cv-info">
+                    <p class="uploaded-cv-title">CV của bạn đã được tải lên:</p>
+                    <a [href]="fileBaseUrl + userCVUrl" target="_blank" class="cv-link">
+                        <i class="pi pi-eye"></i> Xem CV
+                    </a>
+                    <p class="uploaded-cv-note">
+                        Đây là CV bạn đã tải lên trước đó. Nếu bạn muốn thay đổi, hãy tải lên CV mới hoặc xóa CV hiện
+                        tại.
+                    </p>
+                </div>
 
-          </div>
-      </div>
+            </div>
+        </div>
 
-      <!-- Khu vực kéo & thả file CV -->
-      <div class="upload-zone modern-upload-zone" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
-        <p><i class="pi pi-cloud-upload" style="font-size: 3rem; color: #007bff;"></i></p>
-        <p class="upload-instruction">Kéo & thả file CV vào đây hoặc</p>
-        <label for="cvFile" class="custom-upload-btn modern-upload-btn">Chọn tệp</label>
-        <input type="file" id="cvFile" (change)="onFileSelected($event)" hidden>
-        <p *ngIf="selectedFile" class="selected-file">📄 {{ selectedFile.name }}</p>
-        <p class="upload-note">
-            Lưu ý: File CV phải ở định dạng PDF và kích thước không vượt quá 5MB.
-        </p>
-      </div>
+        <!-- Khu vực kéo & thả file CV -->
+        <div class="upload-zone modern-upload-zone" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+            <p><i class="pi pi-cloud-upload" style="font-size: 3rem; color: #007bff;"></i></p>
+            <p class="upload-instruction">Kéo & thả file CV vào đây hoặc</p>
+            <label for="cvFile" class="custom-upload-btn modern-upload-btn">Chọn tệp</label>
+            <input type="file" id="cvFile" (change)="onFileSelected($event)" hidden>
+            <p *ngIf="selectedFile" class="selected-file">📄 {{ selectedFile.name }}</p>
+            <p class="upload-note">
+                Lưu ý: File CV phải ở định dạng PDF và kích thước không vượt quá 5MB.
+            </p>
+        </div>
     </div>
 
     <ng-template pTemplate="footer">
-      <div class="dialog-footer modern-footer">
-        <button pButton type="button" label="Hủy" class="p-button-text modern-cancel-btn" (click)="cvDialogVisible = false"></button>
-        <button
-          pButton
-          type="button"
-          label="Gửi CV"
-          class="p-button-primary modern-submit-btn"
-          (click)="submitApplication()"
-          [disabled]="!selectedFile && !userCVUrl">
-        </button>
-      </div>
+        <div class="dialog-footer modern-footer">
+            <button pButton type="button" label="Hủy" class="p-button-text modern-cancel-btn"
+                (click)="cvDialogVisible = false"></button>
+            <button pButton type="button" label="Gửi CV" class="p-button-primary modern-submit-btn"
+                (click)="submitApplication()" [disabled]="!selectedFile && !userCVUrl">
+            </button>
+        </div>
     </ng-template>
-  </p-dialog>
+</p-dialog>

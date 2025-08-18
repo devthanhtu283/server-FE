@@ -19,7 +19,7 @@ import { debounceTime } from 'rxjs/operators';
 export class SeekerSuitableJobsComponent implements OnInit {
 
   jobs: JobMatch[] = [];
-  currentPage: number = 0;
+  currentPage: number = 1;
   totalPages: number;
   pageSize: number;
   totalJobs: number = 0;
@@ -32,6 +32,7 @@ export class SeekerSuitableJobsComponent implements OnInit {
   categories: Category[] = [];
   searchForm: FormGroup;
   seekerId: number | null = null;
+  readonly pageWindow = 6;
   
     // Biến cho thanh tìm kiếm TopCV
   searchTitle: string = '';
@@ -127,7 +128,8 @@ export class SeekerSuitableJobsComponent implements OnInit {
     // Nếu không có tìm kiếm nào, tải danh sách công việc mặc định
     else {
       const seeker = JSON.parse(localStorage.getItem('candidate'));
-      this.jobService.getRecommendJobsBySeekerId(seeker.id, this.currentPage).then(
+      console.log(seeker["data"]['id']);
+      this.jobService.getRecommendJobsBySeekerId(seeker["data"]['id'], this.currentPage - 1).then(
         (res) => {
           this.jobs = res["data"]["content"];
           this.totalPages = res["data"]["totalPages"];
@@ -270,10 +272,24 @@ export class SeekerSuitableJobsComponent implements OnInit {
     }
   }
   getPages(): number[] {
-    const pages = [];
-    for (let i = 0; i < this.totalPages; i++) {
-      pages.push(i);
+    if (this.totalPages <= 0) return [];
+  
+    const windowSize = this.pageWindow;
+    const half = Math.floor(windowSize / 2);
+  
+    // start mặc định: canh giữa quanh currentPage
+    let start = Math.max(1, this.currentPage - half);
+    let end = start + windowSize - 1;
+  
+    // nếu end vượt quá totalPages, kéo ngược lại
+    if (end > this.totalPages) {
+      end = this.totalPages;
+      start = Math.max(1, end - windowSize + 1);
     }
+  
+    // build mảng trang
+    const pages: number[] = [];
+    for (let i = start; i <= end; i++) pages.push(i);
     return pages;
   }
 
@@ -285,8 +301,8 @@ export class SeekerSuitableJobsComponent implements OnInit {
       return `Không có kết quả nào`;
     }
   
-    const start = this.currentPage * 6 + 1;
-    const end = Math.min((this.currentPage + 1) * 6, this.totalJobs);
+    const start = (this.currentPage - 1) * 6 + 1;
+    const end = Math.min(this.currentPage * 6, this.totalJobs);
   
     return `Hiển thị ${start}-${end} trong tổng số ${jobCount} kết quả`;
   }

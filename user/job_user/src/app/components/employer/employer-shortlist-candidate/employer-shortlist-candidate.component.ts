@@ -299,7 +299,7 @@ createEvent(eventData?: any) {
                 }
               });
              
-              // alert("🎉 Sự kiện đã được tạo thành công!\nGoogle Meet Link: " + this.meetLink);
+              alert("🎉 Sự kiện đã được tạo thành công!\nGoogle Meet Link: " + this.meetLink);
           } else {
               alert("❌ Sự kiện đã được tạo nhưng không có Google Meet link.");
           }

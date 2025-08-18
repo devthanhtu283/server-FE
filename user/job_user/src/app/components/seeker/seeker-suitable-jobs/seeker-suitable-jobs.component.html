@@ -275,32 +275,21 @@
                         </div>
                     </div>
 
-                    <div class="rts__pagination d-block mx-auto pt-40 max-content">
-                        <ul class="d-flex gap-2">
-                            <!-- Nút "Previous" -->
-                            <li>
-                                <a href="javascript:void(0)" (click)="changePage(currentPage - 1)"
-                                    [class.inactive]="currentPage === 0">
-                                    <i class="fa-thin fa-arrow-left"></i>
-                                </a>
-                            </li>
-
-                            <!-- Danh sách các trang -->
-                            <li *ngFor="let page of getPages()">
-                                <a href="javascript:void(0)" (click)="changePage(page)"
-                                    [class.active]="page === currentPage">
-                                    {{ page + 1 }}
-                                </a>
-                            </li>
-
-                            <!-- Nút "Next" -->
-                            <li>
-                                <a href="javascript:void(0)" (click)="changePage(currentPage + 1)"
-                                    [class.inactive]="currentPage === totalPages - 1">
-                                    <i class="fa-thin fa-arrow-right"></i>
-                                </a>
-                            </li>
-                        </ul>
+                    <div class="rts__pagination d-block mx-auto pt-40 max-content" *ngIf="totalPages > 1">
+                        <div class="pagination mt-4" *ngIf="totalPages > 1">
+                            <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+                              <i class="fa-thin fa-arrow-left"></i>
+                            </button>
+                  
+                            <span *ngFor="let page of getPages()" (click)="changePage(page)" [class.active]="page === currentPage">
+                              {{ page }}
+                            </span>
+                  
+                            <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+                              <i class="fa-thin fa-arrow-right"></i>
+                            </button>
+                          </div>
+                       
                     </div>
                 </div>
             </div>

@@ -274,48 +274,65 @@ export class SeekerResumeComponent implements OnInit {
 
   saveMySkills(): void {
     const user = JSON.parse(localStorage.getItem('user'));
-
+  
     if (user) {
       const formattedSkills = this.mySkills.join(', ');
-
-      this.userService.findCVBySeekerId(user.id).then(
-        res => {
-          console.log(res);
-          var cv = res;
-          cv.skills = formattedSkills;
-          console.log(cv);
-          this.mySkillsModified = false;
-          this.userService.saveCV(cv).then(
-            r => {
-              console.log(r);
+  
+      this.userService.findCVBySeekerId(user.id).then(res => {
+        console.log(res);
+        var cv = res;
+        cv.skills = formattedSkills;
+        console.log(cv);
+        this.mySkillsModified = false;
+  
+        this.userService.saveCV(cv).then(r => {
+          console.log(r);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Thành công',
+            detail: 'Kỹ năng của bạn đã được cập nhật!',
+          });
+  
+          // ====== THÔNG BÁO ĐANG GỢI Ý ======
+          const recommendingKey = 'recommending';
+          this.messageService.add({
+            key: recommendingKey,
+            severity: 'info',
+            summary: 'Đang gợi ý việc làm',
+            detail: 'Hệ thống đang phân tích kỹ năng của bạn và tìm việc làm phù hợp...',
+            sticky: true
+          });
+          // ==================================
+  
+          this.recommendationService.recommendationJobs(cv.id).then(
+            (res) => {
+              // Xoá toast "đang gợi ý"
+              this.messageService.clear(recommendingKey);
+  
               this.messageService.add({
                 severity: 'success',
-                summary: 'Thành công',
-                detail: 'Kỹ năng của bạn đã được cập nhật!',
+                summary: 'Thông báo',
+                detail: 'Hệ thống đã gợi ý các việc làm phù hợp dựa trên kỹ năng của bạn!',
               });
-              this.recommendationService.recommendationJobs(cv.id).then(
-                (res) => {
-                  this.messageService.add({
-                    severity: 'success',
-                    summary: 'Thông báo',
-                    detail: 'Hệ thống đã gợi ý các việc làm phù hợp dựa trên kĩ năng của bạn!!',
-                  });
-                },
-                (error: any) => {
-                  console.error('Error fetching recommended jobs:', error);
-                  this.messageService.add({
-                    severity: 'error',
-                    summary: 'Lỗi',
-                    detail: 'Không thể lấy danh sách việc làm được gợi ý. Vui lòng thử lại sau.',
-                  });
-                }
-              )
+            },
+            (error: any) => {
+              console.error('Error fetching recommended jobs:', error);
+  
+              // Xoá toast "đang gợi ý"
+              this.messageService.clear(recommendingKey);
+  
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Lỗi',
+                detail: 'Không thể lấy danh sách việc làm được gợi ý. Vui lòng thử lại sau.',
+              });
             }
           );
-        }
-      );
+        });
+      });
     }
   }
+  
 
   saveMyExperiences(): void {
     const user = JSON.parse(localStorage.getItem('user'));

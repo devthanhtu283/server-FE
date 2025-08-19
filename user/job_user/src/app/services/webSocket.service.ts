@@ -12,7 +12,8 @@ export class WebSocketService {
 
   // Kết nối tới WebSocket
   connect(): void {
-    this.ws = new WebSocket('ws://103.153.68.231:8080/ws-chat');
+    // this.ws = new WebSocket('ws://103.153.68.231:8080/ws-chat');
+    this.ws = new WebSocket('ws://localhost:8080/ws-chat');
     this.ws.onopen = () => {
       console.log('WebSocket connected');
     };

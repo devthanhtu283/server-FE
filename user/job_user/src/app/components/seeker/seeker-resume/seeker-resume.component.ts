@@ -240,6 +240,7 @@ export class SeekerResumeComponent implements OnInit {
           summary: 'Thành công',
           detail: 'Bạn đã cập nhật CV thành công!',
         });
+        this.resetMySkillsOnNewCV();
         const extractedSkills = response.skills_required || [];
         this.selectedSkills = [...new Set([...this.selectedSkills, ...extractedSkills])];
 
@@ -544,4 +545,13 @@ export class SeekerResumeComponent implements OnInit {
   toggleSuggestedSkills(): void {
     this.showSuggestedSkills = !this.showSuggestedSkills;
   }
+
+  private resetMySkillsOnNewCV(): void {
+    if (Array.isArray(this.mySkills) && this.mySkills.length > 0) {
+      this.mySkills = [];
+      // Đánh dấu đã chỉnh sửa để nếu bạn có cơ chế lưu server sẽ nhận trạng thái mới
+      this.mySkillsModified = true; 
+    }
+  }
+  
 }

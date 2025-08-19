@@ -274,10 +274,33 @@
   <div class="loader-section section-right"></div>
 </div>
 <!-- THEME PRELOADER END -->
-<button type="button" class="rts__back__top" id="rts-back-to-top">
+<button type="button" class="rts__back__top" id="rts-back-to-top" style="bottom: 120px;">
   <i class="fas fa-arrow-up"></i>
 </button>
-<button id="chatButton" class="chat-button">Chat với AI hỗ trợ</button>
+<!-- Floating Chat AI Button -->
+<button id="chatButton" class="chat-fab" aria-label="Chat với AI hỗ trợ" data-tooltip="Tính năng đang phát triển">
+  <!-- vòng sáng pulse -->
+  <span class="fab-pulse" aria-hidden="true"></span>
+
+  <!-- Icon AI (SVG inline để khỏi lỗi link) -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none">
+    <!-- Thân robot -->
+    <rect x="4" y="6" width="16" height="12" rx="3" ry="3" fill="#7c3aed" stroke="#fff" stroke-width="1.4"/>
+    
+    <!-- Mắt -->
+    <circle cx="9" cy="12" r="1.5" fill="#fff"/>
+    <circle cx="15" cy="12" r="1.5" fill="#fff"/>
+    
+    <!-- Miệng -->
+    <path d="M9 15h6" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>
+    
+    <!-- Anten -->
+    <line x1="12" y1="3" x2="12" y2="6" stroke="#7c3aed" stroke-width="1.6"/>
+    <circle cx="12" cy="2" r="1" fill="#7c3aed" stroke="#fff" stroke-width="0.8"/>
+  </svg>
+  
+</button>
+
 
 <!-- Popup chat -->
 <div id="chatPopup" class="chat-popup">

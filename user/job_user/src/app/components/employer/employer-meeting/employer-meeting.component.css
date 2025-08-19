@@ -71,6 +71,11 @@
     background-color: #fef9c3;
     color: #b45309;
   }
+
+  .meeting-status.expired  {
+    background-color: #fef9c3;
+    color: red;
+  }
   
   .meeting-status i {
     margin-right: 6px;

@@ -236,7 +236,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="job__tags d-flex flex-wrap gap-3">
-                                                        <a >{{job.requiredSkills}}</a>
+                                                        <div class="job__tags d-flex flex-wrap gap-3">
+                                                            <a *ngFor="let skill of splitSkills(job.requiredSkills)" class="skill__tag">
+                                                                {{ skill }}
+                                                            </a>
+                                                            
+                                                        </div>
                                                         <a >{{job.salary}}</a>
                                                     </div>
                                                 </div>
@@ -264,13 +269,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pagination mt-4">
-                        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Trang trước</button>
-                        <span *ngFor="let page of getPages()" (click)="changePage(page)" [class.active]="page === currentPage">
+                    <div class="pagination mt-4" *ngIf="totalPages > 1">
+                        <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+                          Trang trước
+                        </button>
+                      
+                        <span *ngFor="let page of getPages()"
+                              (click)="changePage(page)"
+                              [class.active]="page === currentPage">
                           {{ page }}
                         </span>
-                        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Trang sau</button>
-                    </div>
+                      
+                        <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">
+                          Trang sau
+                        </button>
+                      </div>
                    
                 </div>
             </div>

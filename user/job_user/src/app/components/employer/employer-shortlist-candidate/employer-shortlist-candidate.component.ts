@@ -7,6 +7,7 @@ import { UserService } from "src/app/services/user.service";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Job } from "src/app/models/job.model";
+import { DatePipe } from '@angular/common';
 import { JobService } from "src/app/services/job.service";
 
 @Component({
@@ -32,6 +33,7 @@ export class EmployerShortListCandidateComponent implements OnInit {
     private jobService: JobService,
     private router: Router,
     private formBuilder: FormBuilder,
+    private datePipe: DatePipe,
     private http: HttpClient
   ) {
     this.eventForm = this.formBuilder.group({
@@ -134,31 +136,35 @@ export class EmployerShortListCandidateComponent implements OnInit {
 
   prepareEventCreation() {
     if (this.eventForm.valid) {
-        const eventData = this.eventForm.value;
-        console.log(eventData);
-        // 🔹 Lưu dữ liệu sự kiện vào Backend trước khi xác thực
-        this.applicationService.saveEventData(eventData).then(() => {
-            // 🔹 Kiểm tra xem đã xác thực chưa
-            this.applicationService.checkAuth().then((isAuthenticated) => {
-                if (isAuthenticated) {
-                    // Nếu đã xác thực, tạo sự kiện luôn
-                    this.createEvent();
-                } else {
-                    // Nếu chưa, chuyển hướng đến Google để xác thực
-                    window.location.href = this.authUrl;
-                }
-            });
-        }).catch(err => {
-            alert("❌ Lỗi khi lưu sự kiện trước khi xác thực.");
-            console.error(err);
+      const raw = this.eventForm.value;
+  
+      // Convert sang Date object
+      const start = new Date(raw.startDateTime);
+      const end = new Date(raw.endDateTime);
+  
+      // Chuẩn hóa về ISO (UTC, có Z ở cuối)
+      const eventData = {
+        ...raw,
+        startDateTime: start.toISOString(),
+        endDateTime: end.toISOString()
+      };
+  
+      this.applicationService.saveEventData(eventData).then(() => {
+        this.applicationService.checkAuth().then((isAuthenticated) => {
+          if (isAuthenticated) {
+            this.createEvent();
+          } else {
+            window.location.href = this.authUrl;
+          }
         });
+      }).catch(err => {
+        alert("❌ Lỗi khi lưu sự kiện trước khi xác thực.");
+        console.error(err);
+      });
     } else {
-        alert("❌ Vui lòng điền đầy đủ thông tin trước khi tạo sự kiện!");
+      alert("❌ Vui lòng điền đầy đủ thông tin trước khi tạo sự kiện!");
     }
-}
-
-
-
+  }
 
 handleOAuthCallback() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -235,11 +241,11 @@ createEvent(eventData?: any) {
                                 const emailContent = `
                                 <div style="max-width: 600px; margin: 20px auto; font-family: Arial, sans-serif; border: 1px solid #ddd; border-radius: 8px; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
                                   <div style="background-color: #28a745; color: white; padding: 20px; text-align: center; font-size: 20px; font-weight: bold;">
-                                    Thư Mời Phỏng Vấn - ${this.employee['data']['companyName']}
+                                    Thư Mời Phỏng Vấn - ${this.employee['data'].username}
                                   </div>
                                   <div style="padding: 20px; color: #333;">
                                     <p>Xin chào <strong>${this.user.username}</strong>,</p>
-                                    <p>Chúc mừng! Nhà tuyển dụng <strong>${this.employee['data']['companyName']}</strong> đã xem hồ sơ của bạn và muốn mời bạn tham gia phỏng vấn.</p>
+                                    <p>Chúc mừng! Nhà tuyển dụng <strong>${this.employee['data'].username}</strong> đã xem hồ sơ của bạn và muốn mời bạn tham gia phỏng vấn.</p>
                               
                                     <h3 style="color: #28a745;">📅 Thông tin lịch phỏng vấn:</h3>
                                     <div style="background: #f8f9fa; padding: 15px; border-left: 4px solid #28a745; margin: 15px 0;">
@@ -311,18 +317,7 @@ createEvent(eventData?: any) {
 }
 
 formatDateTime(dateTime: string): string {
-  const options: Intl.DateTimeFormatOptions = {
-      weekday: 'long',  // Hiển thị thứ
-      day: '2-digit',
-      month: 'long',  // Hiển thị tháng dưới dạng chữ
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false, // Sử dụng định dạng 24 giờ (nếu muốn AM/PM, đặt thành `true`)
-      timeZoneName: 'short' // Hiển thị múi giờ (nếu cần)
-  };
-  
-  return new Date(dateTime).toLocaleDateString('vi-VN', options);
+  return this.datePipe.transform(dateTime, "EEEE, dd MMMM yyyy, HH:mm", "Asia/Ho_Chi_Minh")!;
 }
 
 

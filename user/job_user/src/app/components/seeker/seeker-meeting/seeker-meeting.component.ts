@@ -42,6 +42,7 @@ export class SeekerMeetingComponent implements OnInit {
       .listInterviewOfSeeker(this.user.id, this.currentPage)
       .then((res) => {
         this.interviews = res['data']['content'];
+        this.interviews.sort((a: any, b: any) => b.id - a.id);
         this.totalPages = res['data']['totalPages'];
         this.pageSize = res['data']['size'];
       });

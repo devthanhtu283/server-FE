@@ -57,6 +57,7 @@ export class EmployerMeetingComponent implements OnInit {
       .listInterviewOfEmployer(this.user.id, this.currentPage)
       .then((res) => {
         this.interviews = res['data']['content'];
+        this.interviews.sort((a: any, b: any) => b.id - a.id);
         this.totalPages = res["data"]["totalPages"];
         this.pageSize = res["data"]["size"];
       });
@@ -101,4 +102,14 @@ export class EmployerMeetingComponent implements OnInit {
       }
     );
   } 
+
+  isExpired(interview: any): boolean {
+    const now = new Date();
+    const start = new Date(interview.scheduledAt);
+    
+    const end = new Date(start.getTime() + 60 * 60 * 1000);
+  
+    return now > end && interview.status !== 2;
+  }
+  
 }

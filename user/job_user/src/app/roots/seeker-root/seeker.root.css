@@ -38,3 +38,66 @@
   position: relative;
   margin: 0 15px;
 }
+
+/* Floating FAB cho chat AI */
+.chat-fab{
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 64px;
+  height: 64px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  background: conic-gradient(from 180deg at 50% 50%, #7c3aed, #db2777, #fb923c, #7c3aed);
+  box-shadow: 0 12px 28px rgba(0,0,0,.18), 0 2px 8px rgba(0,0,0,.12);
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+  z-index: 2147483647; /* luôn trên cùng */
+  -webkit-tap-highlight-color: transparent;
+  overflow: visible;
+}
+
+.chat-fab:hover{ transform: scale(1.07); box-shadow: 0 16px 36px rgba(0,0,0,.22), 0 3px 10px rgba(0,0,0,.14); }
+.chat-fab:active{ transform: scale(0.98); filter: brightness(.98); }
+
+.fab-icon{ width: 28px; height: 28px; }
+
+/* Vòng sáng */
+.fab-pulse{
+  position:absolute; inset:0; border-radius:50%;
+  box-shadow:0 0 0 0 rgba(124,58,237,.35);
+  animation: aiPulse 2s infinite;
+  pointer-events:none;
+}
+@keyframes aiPulse{
+  0%{   box-shadow:0 0 0 0 rgba(124,58,237,.35); }
+  70%{  box-shadow:0 0 0 18px rgba(124,58,237,0); }
+  100%{ box-shadow:0 0 0 0 rgba(124,58,237,0); }
+}
+
+/* Nếu phần chatPopup bị che, chắc chắn cho nó nổi cao */
+.chat-popup{ z-index: 2147483646; }
+
+/* Tooltip */
+.chat-fab::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 110%; /* trên nút */
+  right: 50%;
+  transform: translateX(50%);
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+.chat-fab:hover::after {
+  opacity: 1;
+  transform: translateX(10%) translateY(-4px);
+}

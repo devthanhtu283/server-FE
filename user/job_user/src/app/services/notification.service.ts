@@ -9,10 +9,10 @@ import { ApiResponse, Notification } from '../models/notification.model';
   providedIn: 'root'
 })
 export class NotificationService {
-  // private apiUrl = "http://103.153.68.231:8080/job/notification";
-  // private wsUrl = 'ws://103.153.68.231:8083/notifications-websocket';
-  private apiUrl = "http://localhost:8080/job/notification";
-  private wsUrl = 'ws://localhost:8083/notifications-websocket';
+  private apiUrl = "http://103.153.68.231:8080/job/notification";
+  private wsUrl = 'ws://103.153.68.231:8083/notifications-websocket';
+  // private apiUrl = "http://localhost:8080/job/notification";
+  // private wsUrl = 'ws://localhost:8083/notifications-websocket';
   private webSocket: WebSocket | null = null;
   private notificationsSubject = new BehaviorSubject<Notification[]>([]);
   private unreadCountSubject = new BehaviorSubject<number>(0);

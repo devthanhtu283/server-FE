@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ChatService {
-  private apiUrl = 'http://localhost:8000/python/chat'; // Thay bằng API endpoint của bạn
+  private apiUrl = 'http://103.153.68.231:8000/python/chat'; // Thay bằng API endpoint của bạn
 
   constructor(private http: HttpClient) {}
 

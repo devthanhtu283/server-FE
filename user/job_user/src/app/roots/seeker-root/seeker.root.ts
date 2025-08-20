@@ -733,11 +733,10 @@ document.head.appendChild(script);
         });
       }
     } catch (error) {
-      console.error(error);
       this.messageService.add({
         severity: 'error',
-        summary: 'Lỗi kết nối',
-        detail: 'Đã xảy ra lỗi khi kết nối tới máy chủ. Vui lòng thử lại sau.',
+        summary: 'Đăng nhập thất bại',
+        detail: 'Thông tin đăng nhập không chính xác.',
       });
     }
   }
